@@ -1,0 +1,202 @@
+# UpCourse — AI Skill File
+
+**Template:** UpCourse by Jiffy Courses (Bastiaan de Koning)  
+**Version:** 1.3.x  
+**Type:** Kajabi page used as a WYSIWYG lesson builder
+
+---
+
+## How UpCourse Works
+
+UpCourse is a **Kajabi page** — not a course lesson — used by the course creator to design styled lesson content. The creator drags and drops blocks, configures settings, then clicks **"Copy Lesson Content"** to copy the finished HTML to the clipboard. That HTML is pasted into a Kajabi **lesson body**, where injected scripts self-restore all styling at runtime.
+
+```
+Design in UpCourse page
+  → Save the page
+  → Click Preview to check the result
+  → Click "Copy Lesson Content" (top bar)
+  → Open the lesson in Kajabi
+  → Paste inside the <> (rich text) field
+  → Save the lesson
+```
+
+The lesson renders exactly as designed in the UpCourse editor.
+
+---
+
+## Why the Copy Mechanism Exists
+
+Kajabi's lesson body sanitizer **strips `<style>` tags** and **rewrites `<a>` tags** on save. UpCourse works around this by renaming them before copying:
+
+- `<style>` → `<customstyle data="lessonstyle">`
+- `<a>` → `<customstyle data="lessonhref">`
+
+Two inline scripts travel with the copied HTML and run on the lesson page:
+
+1. **Restores** all `<customstyle>` elements back to real `<style>` and `<a>` tags on page load
+2. **Blocks** UpCourse video blocks from accidentally triggering Kajabi's lesson-completion event
+
+This is automatic — the creator does not need to do anything special.
+
+---
+
+## Section Settings
+
+These four settings belong to the UpCourse editor section. They are baked into the copied lesson HTML (the values travel with the copy).
+
+| Setting | ID | What it does |
+|---|---|---|
+| Equal height blocks | `equal_height` | Stretches blocks in a row to the same height |
+| Background color | `lesson_background_color` | Sets the lesson container background |
+| Font color | `lesson_font_color` | Overrides all heading and paragraph colors |
+| Description | `lessondescription` | Hidden metadata field for the course outline |
+
+Global theme settings (fonts, primary color, button styles) affect the editor preview only — they do not travel with the copied lesson.
+
+---
+
+## Common Block Settings
+
+Every block has these settings, regardless of type:
+
+**Width** — `width` (grid, 1–12). Place multiple blocks side by side by giving them widths that add up to 12.
+
+**Background group** — `background_color`, `border_type` (none / solid / dotted / dashed / double / ridge), `border_width` (0–50), `border_color`, `border_radius` (0–50), `box_shadow` (none / small / medium / large)
+
+**Desktop Layout group** — `text_align` (left / center / right), `padding_desktop`, `margin_desktop`, `hide_on_desktop`, `make_flush` (removes padding), `make_block` (forces the block onto its own row)
+
+**Mobile Layout group** — `mobile_text_align`, `padding_mobile`, `margin_mobile`, `hide_on_mobile`
+
+**Call To Action group** (on most blocks) — `use_btn` or `show_cta` (checkbox to show), `btn_text`, `btn_action`, `new_tab`, `btn_width` (full / auto), `btn_style` (solid / outline), `btn_size` (small / medium / large), `btn_border_radius` (0–50), `btn_text_color`, `btn_background_color`
+
+---
+
+## UpC-Specific Blocks
+
+These five blocks are unique to UpCourse. Use them for the functionality described — the standard blocks (text, video, image, etc.) cannot replicate what these do.
+
+---
+
+### `textimage` — Text Wrap
+
+Rich text with a **floating image** beside it. The image wraps with the text flow, like a magazine layout.
+
+**Default width:** 12
+
+| Setting | ID | Values / Range | Default |
+|---|---|---|---|
+| Image | `image` | image picker | — |
+| Image placement | `imageposition` | `topleft` = left · `topright` = right | `topright` |
+| Image width % | `image_width` | 5–100 | `50` |
+| Spacing text & image | `image_margin` | 5–50 px | `15` |
+| Image border radius | `image_border_radius` | 0–50 px | `4` |
+| Image alt text | `image_alt` | text | `""` |
+| Text | `text` | rich text | — |
+| Drop cap | `drop_cap` | checkbox | `false` |
+| Drop cap color | `cap_color` | color | blank |
+
+⚠️ `imageposition: topleft` places the image on the **left**. The name is counterintuitive.
+
+Has a full Call To Action group.
+
+---
+
+### `table` — Table
+
+A structured data table with up to **5 columns × 6 rows**, editable via settings fields.
+
+**Default width:** 12
+
+| Setting | ID | Default |
+|---|---|---|
+| Make headings bold | `columnbold` | `true` |
+| Column headers | `header1` – `header5` | "Column 1"–"Column 5" |
+| Row data | `data1_1` – `data6_5` | "Row N field M" |
+| Table body (rich text below the table) | `text` | — |
+
+---
+
+### `author` — Author Card
+
+Author photo + bio text + optional CTA. Photo is circular by default.
+
+**Default width:** 12
+
+| Setting | ID | Values / Range | Default |
+|---|---|---|---|
+| Image | `image` | image picker (100×100 crop) | — |
+| Image action | `img_action` | action | — |
+| Text | `text` | rich text | — |
+| Hide image | `hide_image` | checkbox | `false` |
+| Image on top on mobile | `image_on_top` | checkbox | `true` |
+| Image border radius | `image_border_radius` | 0–100 | `100` (circular) |
+| Image width | `image_width` | 25–200 px | `100` |
+
+Background defaults: `border_type: solid`, `border_radius: 10`. Mobile default: `text_align: center`.
+
+---
+
+### `pdfslider` — PDF Slider
+
+A paginated PDF viewer with **Prev / Next** buttons. The PDF is uploaded as a Kajabi download asset.
+
+**Default width:** 12
+
+| Setting | ID | Notes |
+|---|---|---|
+| PDF file | `pdfslider` | Select 'Download' type, upload PDF |
+| Prev button text | `btn_text_prev` | default "Prev" |
+| Next button text | `btn_text_next` | default "Next" |
+| Button background | `btn_background_color` | color |
+| Button text color | `btn_text_color` | color |
+| Button width | `btn_width` | full / auto — default `full` |
+| Button style | `btn_style` | solid / outline |
+| Button size | `btn_size` | small / medium / large — default `small` |
+
+---
+
+### `audio` — Audio Player
+
+A Wistia audio player with optional cover image, title, and subtitle. Can be shrunk to a compact player bar.
+
+**Default width:** 10 (minimum: 6)
+
+| Setting | ID | Values | Default |
+|---|---|---|---|
+| Audio file | `audio` | Kajabi audio picker | — |
+| Shrink to compact player | `shrinkaudio` | checkbox — hides image/title/subtitle | `false` |
+| Cover image | `image` | image picker (1400×1400 crop) | — |
+| Title | `title` | text | "My Audio File" |
+| Subtitle | `subtitle` | text | "My Audio Category" |
+| Player accent color | `audio_color` | color | global `color_primary` |
+
+---
+
+## Standard Blocks
+
+These blocks work as expected in any Kajabi theme. No UpCourse-specific behavior:
+
+| Type | Name | Default width | Notes |
+|---|---|---|---|
+| `text` | Text | 6 | Rich text + optional drop cap + CTA |
+| `video` | Video | 10 | Wistia player — **always secondary**, never triggers lesson completion |
+| `video_embed` | Video Embed | 10 | Raw iframe (YouTube, Vimeo, etc.) |
+| `image` | Image | 10 | Single image with caption, overlay, and click action |
+| `card` | Card | 4 | Image + description + footer + CTA — use in groups of 3–4 |
+| `feature` | Feature | 3 | Icon/image + text + CTA — designed for 4-up rows |
+| `cta` | Call to Action | 4 | Button only, no body text |
+| `accordion` | Accordion | 8 | Single expandable panel (plus or arrow icon) |
+| `code` | Custom Code | 6 | Raw HTML/JS textarea — no sanitization |
+| `assessment` | Assessment | 10 | Kajabi-native quiz/survey embed |
+| `offer` | Offer | 4 | Kajabi offer block with optional buy CTA |
+
+---
+
+## What Does NOT Exist in UpCourse
+
+- No multi-column layout primitive — columns come from placing multiple blocks with widths that sum to 12
+- No sidebar
+- No header or footer blocks
+- No section-level background image
+- No global font settings in the lesson — only `lesson_font_color` travels with the copy
+- No "primary video" setting — all video blocks are secondary by design; lesson completion is not triggered by any UpCourse video block
