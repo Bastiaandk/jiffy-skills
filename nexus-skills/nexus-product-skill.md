@@ -13,6 +13,7 @@ to all visitors of that course's homepage immediately.
 - All section settings are at `settings.sections.{section_name}.settings`
 - Blocks live at `settings.sections.{section_name}.blocks`
 - `block_order` is load-bearing — always include it when adding or removing blocks
+- The section also has a `blockOrder` array (camelCase) that mirrors `block_order`. Update **both** in the same payload — the renderer behaviour differs per context and keeping them in sync prevents ghost ordering.
 - `{"updated": true}` does not mean the change rendered. Always call `get_theme_content` after writing.
 - Use `section_filter: "{section_name}"` to read one section at a time — the full settings hash can exceed the 200KB response cap.
 
@@ -161,14 +162,16 @@ Displays the course categories and modules as collection banners. Each block is 
 
 Each block is one collection/category display. Supports conditional visibility.
 
+> **Legacy fields:** existing blocks may contain `offer`, `preview_in_admin`, and `show_with_offer`. These are not part of the current schema and are silently ignored by the renderer. Do not copy them when creating new blocks.
+
 *Content*
 
 | Setting ID | Type | Options | Default |
 |---|---|---|---|
-| `collection_content` | select | `"demo"` / `"outline"` / `"category"` / `"highlights"` / `"favorites"` / `"replay"` / `"continue_watching"` / `"outline_categories"` | `"demo"` |
-| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | `"sliderbanner"` |
-| `hashtags` | text | `"#hashtag1, #hashtag2"` | Filter posts by hashtag in body |
-| `lesson_ids` | text | — | Comma-separated post IDs to include |
+| `collection_content` | select | `"demo"` / `"outline"` / `"category"` / `"highlights"` / `"favorites"` / `"replay"` / `"continue_watching"` / `"outline_categories"` | `"demo"` | Use `"highlights"` for a manually curated set via `lesson_ids`. Other values ignore `lesson_ids`. |
+| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | `"sliderbanner"` | |
+| `hashtags` | text | `"#hashtag1, #hashtag2"` | Filter posts by hashtag in body | |
+| `lesson_ids` | text | — | Comma-separated post IDs — only respected when `collection_content` is `"highlights"` |
 
 *Category title row*
 
