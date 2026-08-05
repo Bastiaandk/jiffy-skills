@@ -68,16 +68,14 @@ all relevant files before starting.
 
 ## GitHub raw URLs
 
-```
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-badges-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-sidebar-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-header-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-preferences-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-product-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-post-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-category-skill.md
-https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-categories-skill.md
-```
+- [nexus-badges-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-badges-skill.md)
+- [nexus-sidebar-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-sidebar-skill.md)
+- [nexus-header-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-header-skill.md)
+- [nexus-preferences-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-preferences-skill.md)
+- [nexus-product-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-product-skill.md)
+- [nexus-post-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-post-skill.md)
+- [nexus-category-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-category-skill.md)
+- [nexus-categories-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/nexus-categories-skill.md)
 
 ---
 
