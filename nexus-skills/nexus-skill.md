@@ -17,7 +17,7 @@ This file is the entry point. Do not write anything before completing these
 steps:
 
 1. Determine the site. Call `list_sites`. If the account has more than one site,
-   ask the user which one and wait for the answer.
+   present the list and ask the user which one to use. Wait for the answer.
 
 2. Determine the course product they want to update. Nexus is tied to a specific
    Kajabi product — it cannot function outside of one. If no product is
@@ -38,10 +38,10 @@ steps:
    - **Header** — logo, colors, breadcrumbs (applies to all pages)
    - **Preferences** — global theme settings (fonts, colors, license key, feature toggles)
 
-4. Based on the answer, fetch the required skill files from GitHub before doing
+5. Based on the answer, fetch the required skill files from GitHub before doing
    anything else. See the routing table below.
 
-5. Read all fetched skill files in full. Then follow the instructions in each.
+6. Read all fetched skill files in full. Then follow the instructions in each.
 
 If any file cannot be fetched, STOP and tell the user. Do not continue from
 what you think you know about Nexus.
