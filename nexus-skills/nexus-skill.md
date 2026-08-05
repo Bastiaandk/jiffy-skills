@@ -90,3 +90,4 @@ all relevant files before starting.
   omitted is preserved.
 - The sidebar section is named `product_outline` in the Kajabi theme.
 - The header section is named `header` in the Kajabi theme.
+- Sections with blocks have both `block_order` and `blockOrder` (camelCase) arrays with identical content. Update **both** in the same payload when adding, removing, or reordering blocks — keeping them out of sync causes ghost ordering.

@@ -13,7 +13,6 @@ to all visitors of that course's homepage immediately.
 - All section settings are at `settings.sections.{section_name}.settings`
 - Blocks live at `settings.sections.{section_name}.blocks`
 - `block_order` is load-bearing — always include it when adding or removing blocks
-- The section also has a `blockOrder` array (camelCase) that mirrors `block_order`. Update **both** in the same payload — the renderer behaviour differs per context and keeping them in sync prevents ghost ordering.
 - `{"updated": true}` does not mean the change rendered. Always call `get_theme_content` after writing.
 - Use `section_filter: "{section_name}"` to read one section at a time — the full settings hash can exceed the 200KB response cap.
 
