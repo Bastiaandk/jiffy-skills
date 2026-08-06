@@ -6,6 +6,23 @@
 
 ---
 
+## How to use this skill set
+
+This file is the entry point and covers what UpCourse is and how the Kajabi
+MCP transport layer works. Read it in full before doing anything else.
+
+If the user wants to **fill a lesson from a transcript**, also fetch and
+follow, in full and exactly:
+[upcourse-fill-procedure.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/upcourse-skills/upcourse-fill-procedure.md)
+
+If that file cannot be fetched, STOP and tell the user. Do not continue from
+what you think you know about the fill procedure.
+
+For any other task (e.g. auditing or troubleshooting an existing page), this
+file alone is enough.
+
+---
+
 ## Editing UpCourse via the Kajabi MCP
 
 These rules govern the transport layer — how a settings write reaches the page.
