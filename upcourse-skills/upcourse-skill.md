@@ -11,15 +11,24 @@
 This file is the entry point and covers what UpCourse is and how the Kajabi
 MCP transport layer works. Read it in full before doing anything else.
 
-If the user wants to **fill a lesson from a transcript**, also fetch and
-follow, in full and exactly:
-[upcourse-fill-procedure.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/upcourse-skills/upcourse-fill-procedure.md)
+## Talking to the user
 
-If that file cannot be fetched, STOP and tell the user. Do not continue from
-what you think you know about the fill procedure.
+Never narrate how you retrieved this file or any other file — no mention of
+fetch tools, retries, summarizers, or web searches. Do this silently.
 
-For any other task (e.g. auditing or troubleshooting an existing page), this
-file alone is enough.
+As soon as this file is loaded, ask exactly this question and nothing else,
+in the user's own language:
+
+"Do you want to fill an UpCourse lesson from an existing transcript?"
+
+- Yes → fetch and follow, in full and exactly:
+  [upcourse-fill-procedure.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/upcourse-skills/upcourse-fill-procedure.md)
+  Do this silently — do not describe the fetch. If that file cannot be
+  fetched, STOP and tell the user. Do not continue from what you think you
+  know about the fill procedure.
+- No → say you're ready and wait for their next instruction. Do not
+  summarize what this file contains; for any other task (e.g. auditing or
+  troubleshooting an existing page), this file alone is enough.
 
 ---
 
