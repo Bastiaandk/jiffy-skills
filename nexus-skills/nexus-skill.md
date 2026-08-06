@@ -11,6 +11,17 @@ If you find options in the skill file that cannot be found in the template you a
 
 ---
 
+## Talking to the user
+
+Sections and blocks have an internal code ID (e.g. `gamify_card`) and a
+customer-facing name (e.g. "Jiffy Card") — the name shown in the Kajabi
+editor's block picker. Always use the customer-facing name when talking to
+the user; use the code ID only in tool calls and payloads, never in chat.
+Skill files give both — the name is quoted in the block/section heading or
+listed in a "Name" column. If a name isn't documented anywhere for a block
+you need to discuss, ask the user what they see in their editor rather than
+reading out the code ID.
+
 ## How to use this skill set
 
 This file is the entry point. Do not write anything before completing these
@@ -27,19 +38,42 @@ steps:
    template will not work and MCP writes will have no visible effect. You cannot
    assign the theme yourself — tell the user to do this in Kajabi admin and stop.
 
-4. If unclear, ask the user what they want to configure on this course template. Use this exact list:
+4. If the user names a specific section or element (e.g. "bottom section",
+   "welcome banner", "progress bar", "paywall"), match it against the section
+   names below and go straight to that category — do not ask which of the
+   eight areas it belongs to. If nothing matches clearly, ask what they want
+   to configure on this course template, using this exact list:
 
-   - **Product homepage** — the main product page (welcome, sections, collections)
-   - **Post / lesson page** — video, body, completion, paywall
-   - **Category page** — single category view with progress bar
-   - **Categories overview** — library overview with favorites, rewards, downloads tabs
-   - **Badges** — badge definitions and display (global, shown on product and post page)
+   - **Product homepage** — the main product page: welcome banner
+     (`product_welcome`), top/middle/bottom content sections
+     (`product_section_top/middle/bottom`), the collections/modules display
+     (`jiffy_collections`), onboarding slideshow (`jiffy_onboarding`),
+     completion popups (`jiffy_popups`)
+   - **Post / lesson page** — the lesson page: action bar (`post_actions`),
+     video/media (`jiffy_post_media`), post body (`jiffy_post_body`),
+     completion popup (`post_completion`), paywall (`post_paywall`)
+   - **Category page** — a single category/module's post list
+     (`jiffy_category`) with its progress bar (`category_progress_bar`)
+   - **Categories overview** — the library page: Modules
+     (`jiffy_categories`), Favorites (`jiffy_categories_favorites`), Rewards
+     (`jiffy_categories_rewards`), Downloads (`jiffy_categories_downloads`)
+     tabs
+   - **Badges** — badge definitions and display (`jiffy_badges`, global,
+     shown on product and post page)
    - **Sidebar** — the course outline shown on all pages
-   - **Header** — logo, colors, breadcrumbs (applies to all pages)
-   - **Preferences** — global theme settings (fonts, colors, license key, feature toggles)
+     (`product_outline`)
+   - **Header** — logo, colors, breadcrumbs (`header`, applies to all pages)
+   - **Preferences** — global theme settings (fonts, colors, license key,
+     feature toggles)
 
 5. Based on the answer, fetch the required skill files from GitHub before doing
-   anything else. See the routing table below.
+   anything else. See the routing table below. Immediately before fetching
+   them, silently re-fetch this file (nexus-skill.md) again first, then fetch
+   the required file(s) right after, in that same turn, with no user turn in
+   between. A link to a file that was only read earlier in the conversation
+   has been observed to fail intermittently; re-fetching the linking document
+   right before following its link, in the same turn, reliably avoids that.
+   Do this silently — never narrate it.
 
 6. Read all fetched skill files in full. Then follow the instructions in each.
 

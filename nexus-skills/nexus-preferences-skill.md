@@ -109,19 +109,24 @@ Write via `update_theme_content` at the root settings level (not inside a sectio
 
 ## Icons
 
-All icons use Font Awesome 5 Free. Each icon setting has a `_custom` companion
-(a text field for a custom FA class) that activates when the select is set to `"custom"`.
+All icons use Font Awesome 5 Free. Each icon setting has an `_custom` companion
+(e.g. `outline_icon_custom`) — a text field for a raw FA class, used when the
+select is set to `"custom"`.
+
+⚠️ The values below are the full FA class strings — this is what must be
+written. The Kajabi editor shows short labels for these (e.g. "Bars" for
+`"fas fa-bars"`), but those labels are not valid values.
 
 | Setting ID | Default | Options |
 |---|---|---|
-| `outline_icon` | `"fas fa-user-graduate"` | bars / list / sitemap / student / graduation-cap / custom |
-| `chatbot_icon` | `"far fa-comment-dots"` | comment-dots / robot / question-circle / custom |
-| `icon_favorite` | `"far fa-heart"` | heart / star / bookmark / custom |
-| `icon_badges` | `"fas fa-trophy"` | trophy / award / gift / custom |
-| `icon_downloads` | `"fas fa-file-download"` | file-download / download / archive / custom |
-| `icon_external` | `"fas fa-link"` | link / external-link-alt / globe / compass / custom |
-| `paywall_icon` | `"fas fa-dollar-sign"` | dollar / euro / pound / yen / lock / shield / custom |
-| `icon_mobile_toggle` | `"fas fa-chevron-left"` | chevron-left / bars / arrow-left / custom |
+| `outline_icon` | `"fas fa-user-graduate"` | `"fas fa-bars"` / `"fas fa-list-ul"` / `"fas fa-sitemap"` / `"fas fa-user-graduate"` / `"fas fa-graduation-cap"` / `"custom"` |
+| `chatbot_icon` | `"far fa-comment-dots"` | `"far fa-comment-dots"` / `"fas fa-robot"` / `"fas fa-question-circle"` / `"custom"` |
+| `icon_favorite` | `"far fa-heart"` | `"far fa-heart"` / `"far fa-star"` / `"far fa-bookmark"` / `"custom"` |
+| `icon_badges` | `"fas fa-trophy"` | `"fas fa-trophy"` / `"fas fa-award"` / `"fas fa-gift"` / `"custom"` |
+| `icon_downloads` | `"fas fa-file-download"` | `"fas fa-file-download"` / `"fas fa-download"` / `"fas fa-archive"` / `"custom"` |
+| `icon_external` | `"fas fa-link"` | `"fas fa-link"` / `"fas fa-external-link-alt"` / `"fas fa-globe"` / `"fas fa-compass"` / `"custom"` |
+| `paywall_icon` | `"fas fa-dollar-sign"` | `"fas fa-dollar-sign"` / `"fas fa-euro-sign"` / `"fas fa-pound-sign"` / `"fas fa-yen-sign"` / `"fas fa-lock"` / `"fas fa-shield-alt"` / `"custom"` |
+| `icon_mobile_toggle` | `"fas fa-chevron-left"` | `"fas fa-chevron-left"` / `"fas fa-bars"` / `"fas fa-arrow-left"` / `"custom"` |
 
 ---
 

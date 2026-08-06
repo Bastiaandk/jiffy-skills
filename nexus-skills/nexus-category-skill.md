@@ -52,8 +52,9 @@ No blocks — all settings are at the section level.
 
 | Setting ID | Type | Options | Default |
 |---|---|---|---|
-| `heading` | text | — | — |
-| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | — |
+| `heading` | rich_text | — | — |
+| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | `"grid3"` |
+| `show_two` | pill_tabs | `"one"` / `"two"` | `"two"` — posts per row on mobile. Only applies to grid layouts |
 
 ### Post card display
 
@@ -70,9 +71,6 @@ No blocks — all settings are at the section level.
 | `show_description_mobile` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
 | `body_font_size` | range | — | `12` |
 | `truncate` | text | — | — |
-| `show_preview_border` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
-| `show_preview_post_info` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
-| `preview_text_display` | select | `"always"` / `"hover"` | `"hover"` |
 
 ### Post info
 

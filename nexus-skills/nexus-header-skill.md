@@ -44,7 +44,7 @@ These settings control the title shown on special pages.
 | `favorites_title` | text | `"Favorites"` | Favorites page |
 | `rewards_title` | text | `"Rewards"` | Rewards page |
 | `downloads_title` | text | `"Downloads"` | Downloads page |
-| `live_session_title` | text | — | Live session page |
+| `live_session_title` | text | — | Live session page — ⚠️ read by the template but has no entry in the section schema, so it has no picker in the Kajabi editor. Settable via MCP as plain text anyway. |
 
 ---
 

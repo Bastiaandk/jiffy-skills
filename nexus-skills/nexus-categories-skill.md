@@ -32,16 +32,38 @@ Modules, Favorites, Rewards, and Downloads. Section settings here are global.
 ## Shared post card settings
 
 `jiffy_categories` and `jiffy_categories_favorites` share an identical set of post
-card display settings. These are listed once here and referenced below.
+card display settings — both support every `collection_type` (banner/focus slide
+included). These are listed once here and referenced below.
+
+**Banner (focus slide)**
+
+| Setting ID | Type | Options | Default |
+|---|---|---|---|
+| `banner_auto_scroll` | pill_tabs | `"scroll"` / `"no-scroll"` | `"scroll"` |
+| `show_banner_dots` | pill_tabs | `"show"` / `"hide"` | `"show"` |
+| `banner_height` | range | — | `320` |
+| `banner_image_position` | range | — | `25` |
+| `banner_blur` | range | — | `15` |
+| `banner_dots_color` | color | — | `"#999999"` |
+| `show_focus_title` | pill_tabs | `"show"` / `"hide"` | `"show"` |
+| `show_focus_description` | pill_tabs | `"show"` / `"hide"` | `"show"` |
+| `show_focus_description_mobile` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
+| `show_focus_border` | pill_tabs | `"show"` / `"hide"` | `"show"` |
+| `show_focus_post_info` | pill_tabs | `"show"` / `"hide"` | `"show"` |
+| `focus_text_display` | select | `"always"` / `"hover"` | `"always"` |
+| `focus_title_font_size` | range | — | `22` |
+| `focus_body_font_size` | range | — | `14` |
 
 **Post card display**
 
 | Setting ID | Type | Options | Default |
 |---|---|---|---|
-| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | `"grid3"` |
 | `text_placement` | select | `"hover"` / `"on_image"` / `"below"` | `"on_image"` |
 | `text_align` | align | — | `"left"` |
 | `show_title` | pill_tabs | `"show"` / `"hide"` | `"show"` |
+| `show_preview_border` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
+| `show_preview_post_info` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
+| `preview_text_display` | select | `"always"` / `"hover"` | `"hover"` |
 | `title_font_size` | range | — | `14` |
 | `title_bold` | pill_tabs | `"bold"` / `"normal"` | `"bold"` |
 | `title_font_size_mobile` | range | — | `12` |
@@ -50,9 +72,6 @@ card display settings. These are listed once here and referenced below.
 | `show_description_mobile` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
 | `body_font_size` | range | — | `12` |
 | `truncate` | text | — | — |
-| `show_preview_border` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
-| `show_preview_post_info` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
-| `preview_text_display` | select | `"always"` / `"hover"` | `"hover"` |
 
 **Post info**
 
@@ -64,7 +83,6 @@ card display settings. These are listed once here and referenced below.
 | `show_post_info_mobile` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
 | `show_progress_bar` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
 | `progress_bar_color` | color | — | `"#ffffff"` |
-| `show_finished` | pill_tabs | `"show"` / `"hide"` | — |
 
 **Card styling**
 
@@ -102,28 +120,16 @@ Modules tab — displays the full course outline with post cards.
 
 In addition to the shared post card settings above:
 
-| Setting ID | Type | Default | Notes |
-|---|---|---|---|
-| `heading` | text | — | Section heading |
-| `category_id` | text | — | Limit to a specific category ID |
-| `max_posts` | — | — | Limit number of posts shown |
-| `hashtags` | text | `"#hashtag1, #hashtag2"` | Filter posts by hashtag |
-| `lesson_ids` | text | — | Comma-separated post IDs |
-| `show_two` | — | — | Two-column layout option |
-| `banner_auto_scroll` | pill_tabs | `"scroll"` / `"no-scroll"` | `"scroll"` |
-| `show_banner_dots` | pill_tabs | `"show"` / `"hide"` | `"show"` |
-| `banner_height` | range | — | `320` |
-| `banner_image_position` | range | — | `25` |
-| `banner_blur` | range | — | `10` |
-| `banner_dots_color` | color | — | `"#999999"` |
-| `show_focus_title` | pill_tabs | `"show"` / `"hide"` | `"show"` |
-| `show_focus_description` | pill_tabs | `"show"` / `"hide"` | `"show"` |
-| `show_focus_description_mobile` | pill_tabs | `"show"` / `"hide"` | `"hide"` |
-| `show_focus_border` | pill_tabs | `"show"` / `"hide"` | `"show"` |
-| `show_focus_post_info` | pill_tabs | `"show"` / `"hide"` | `"show"` |
-| `focus_text_display` | select | `"always"` / `"hover"` | `"always"` |
-| `focus_title_font_size` | range | — | `22` |
-| `focus_body_font_size` | range | — | `14` |
+| Setting ID | Type | Options | Default | Notes |
+|---|---|---|---|---|
+| `heading` | rich_text | — | — | |
+| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | `"sliderbanner"` | |
+| `show_two` | pill_tabs | `"one"` / `"two"` | `"two"` | Posts per row on mobile. Only applies to grid layouts |
+
+There is no per-category or per-hashtag filtering on this section — it always
+shows the full course outline. `category_id`, `hashtags`, `lesson_ids`, and
+`max_posts` are fields on the `collection_banner` block (see
+nexus-product-skill.md), not on this section.
 
 ---
 
@@ -133,16 +139,15 @@ Favorites tab — shows posts the member has favorited.
 
 In addition to the shared post card settings:
 
-| Setting ID | Type | Default |
-|---|---|---|
-| `heading` | text | — |
-| `empty_favorites_text` | text | — |
-| `show_favorites_admin` | — | — |
-| `category_id` | text | — |
-| `max_posts` | — | — |
-| `hashtags` | text | — |
-| `lesson_ids` | text | — |
-| `show_two` | — | — |
+| Setting ID | Type | Options | Default |
+|---|---|---|---|
+| `show_favorites_admin` | checkbox | — | `"false"` — admin preview toggle |
+| `empty_favorites_text` | text | — | `"You have no favorite lessons yet."` |
+| `collection_type` | select | `"lines"` / `"grid2"` / `"grid3"` / `"grid4"` / `"slider3"` / `"slider4"` / `"sliderfocus"` / `"sliderbanner"` | `"grid4"` |
+| `show_two` | pill_tabs | `"one"` / `"two"` | `"two"` |
+
+This section has no `heading` field — the tab title comes from the header's
+`favorites_title` setting instead (see nexus-header-skill.md).
 
 ---
 
@@ -155,8 +160,7 @@ Rewards tab — shows badges and reward cards earned by the member.
 | Setting ID | Type | Options | Default |
 |---|---|---|---|
 | `badges_position` | select | `"top"` / `"bottom"` / `"none"` | `"top"` |
-| `alignment` | align | — | — |
-| `show_awards_admin` | — | — | — |
+| `show_awards_admin` | checkbox | — | `"false"` — admin preview toggle |
 
 **Badge area styling**
 
@@ -189,10 +193,17 @@ Rewards tab — shows badges and reward cards earned by the member.
 | `margin_desktop` | spacer | — | — |
 | `margin_mobile` | spacer | — | — |
 
-### Block type: `gamify_card`
+### Block types available in this section
 
-Reward cards displayed in this section. Same settings as the gamify_card block
-in nexus-sidebar-skill.md (width, content, conditional visibility).
+Reward cards. Three block types can be placed here, each with the identical
+settings documented for the same block type on the product homepage (see
+nexus-product-skill.md):
+
+| Block type | Name |
+|---|---|
+| `gamify_card` | Jiffy Card |
+| `gamify_certificate` | Jiffy Certificate |
+| `coaching_scheduling_widget` | Coaching Scheduling Widget |
 
 ---
 
@@ -200,14 +211,14 @@ in nexus-sidebar-skill.md (width, content, conditional visibility).
 
 Downloads tab — shows downloadable files for the course.
 
+There is no badge-area sub-styling on this tab (no `show_badge_area` /
+`show_badge_position` fields) — that only exists on `jiffy_categories_rewards`.
+
 | Setting ID | Type | Default | Notes |
 |---|---|---|---|
-| `show_downloads_admin` | — | — | Admin preview toggle |
-| `show_badge_area` | — | — | |
-| `show_badge_position` | — | — | |
-| `alignment` | align | — | |
-| `vertical` | select | — | Same layout options as rewards section |
-| `horizontal` | select | — | |
+| `show_downloads_admin` | checkbox | `"false"` | Admin preview toggle |
+| `vertical` | select | `"start"` | Same options as the rewards section |
+| `horizontal` | select | `"start"` | Same options as the rewards section |
 | `equal_height` | checkbox | `"false"` | |
 | `showbgimage` | checkbox | `"false"` | |
 | `bgimage` | image_picker | — | |
@@ -216,4 +227,13 @@ Downloads tab — shows downloadable files for the course.
 | `shadow` | checkbox | `"false"` | |
 | `border_type` | select | `"none"` | |
 | `border_width` / `border_color` / `border_radius` | — | — | |
-| `padding_desktop` / `margin_desktop` / `margin_mobile` | spacer | — | |
+| `show_section_desktop` | pill_tabs | `"show"` | `"show"` / `"hide"` |
+| `padding_desktop` / `margin_desktop` | spacer | — | |
+| `show_section_mobile` | pill_tabs | `"show"` | `"show"` / `"hide"` |
+| `two_column_mobile` | pill_tabs | `"cascade"` | `"columns"` / `"cascade"` |
+| `margin_mobile` | spacer | — | |
+
+### Block type: `gamify_card` — "Jiffy Card"
+
+Downloadable-file cards. Same settings as the `gamify_card` block on the
+product homepage (see nexus-product-skill.md).

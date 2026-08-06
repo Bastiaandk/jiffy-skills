@@ -134,7 +134,7 @@ No blocks — single settings only.
 | Setting ID | Type | Options | Default |
 |---|---|---|---|
 | `confetti_lessoncompleted` | checkbox | — | `false` |
-| `lessonconfettistyle` | select | `"cannon"` / `"fireworks"` / `"school_parade"` / `"rain"` / `"stars"` | `"cannon"` |
+| `lessonconfettistyle` | select | `"cannon"` / `"fireworks"` / `"school"` / `"rain"` / `"stars"` | `"cannon"` — ⚠️ **not** `"school_parade"` despite the "School Parade" label |
 | `confetti_action_color` | color | — | `""` |
 | `editconfetti` | checkbox | — | `false` (test mode) |
 
@@ -158,7 +158,39 @@ Popup shown after a member marks a lesson complete.
 | `auto_advance` | checkbox | — | `false` |
 | `starts_text` | text | — | `"Next Lesson Starts In"` |
 | `seconds_text` | text | — | `"Seconds"` |
-| `overlay_background` | color | — | — |
+| `overlay_background` | color | — | `"rgba(220, 202, 184, 0.2)"` |
+| `box_background` | color | — | `"#ffffff"` |
+| `text_color` | color | — | `"#000000"` |
+| `button_color` | color | — | `"#000000"` — button background |
+| `button_text_color` | color | — | `"#ffffff"` |
+| `box_padding` | spacer | — | 40/40/10/40 |
+
+The settings above are the default popup shown for every lesson. A block on
+this section can override the popup for specific lessons instead:
+
+### Block type: `gamify_post_completion_individual` — "Individual Popup"
+
+Overrides the default completion popup for one or more specific lessons.
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `show-edit-block` | pill_tabs | `"hide"` | `"show"` / `"hide"` — edit mode preview |
+| `lesson_id` | text | `""` | Comma-separated post IDs this override applies to |
+| `image` | image_picker | — | |
+| `image_size` | range | `"200"` | 50–400 |
+| `title` | text | `"Congratulations!"` | |
+| `message` | rich_text | `"You've completed this lesson!"` | |
+| `button_text` | text | `"Continue"` | |
+| `button_action_type` | select | `"url"` | `"next"` (next lesson) / `"home"` (course home) / `"url"` (custom) |
+| `button_action` | action | — | The URL. Shown only when `button_action_type` is `"url"` |
+| `link_target` | checkbox | `"false"` | Open in new tab. Shown only when `button_action_type` is `"url"` |
+| `cancel_text` | text | `"Cancel"` | |
+| `overlay_background` | color | `"rgba(220, 202, 184, 0.2)"` | |
+| `box_background` | color | `"#ffffff"` | |
+| `text_color` | color | `"#000000"` | |
+| `button_color` | color | `"#000000"` | Button background |
+| `button_text_color` | color | `"#ffffff"` | |
+| `box_padding` | spacer | 40/40/10/40 | |
 
 ---
 
@@ -185,7 +217,51 @@ Modal overlay shown on lessons locked behind an offer.
 | `border_radius` | range | — | — |
 | `border_type` | select | `"none"` / `"solid"` / `"dotted"` / `"dashed"` / `"double"` / `"ridge"` | — |
 | `border_width` | range | — | — |
-| `alignment` | align | — | — |
+
+The settings above only style the purchase button and modal wrapper — the
+message shown inside it is built from blocks. Four block types are
+available, used in any combination and order:
+
+### Block type: `paywall_text` — "Text"
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `content` | rich_text | `"<h2 style=\"text-align: center;\">Upgrade to unlock</h2>..."` | |
+| `alignment` | align | `"left"` | |
+| `margin` | spacer | 1/0/1/0 | |
+
+### Block type: `paywall_video` — "Video"
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `autoplay` | checkbox | `"false"` | |
+| `video` | video picker | — | |
+| `image` | image_picker | — | Suggested 1856×1044 |
+| `margin` | spacer | 1/0/1/0 | |
+
+### Block type: `paywall_image` — "Image"
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `image` | image_picker | — | 2300×2300, suggested 1856×1044 |
+| `image_action` | action | `""` | |
+| `link_target` | checkbox | `"false"` | Open in new window |
+| `alignment` | align | `"center"` | |
+| `margin` | spacer | 1/0/1/0 | |
+
+### Block type: `cta_block` — "Call to Action"
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `btn_text` | text | `"Call To Action"` | |
+| `btn_action` | action | `""` | |
+| `btn_new_tab` | checkbox | `""` | |
+| `btn_background_color` | color | — | |
+| `btn_text_color` | color | — | Solid buttons only |
+| `btn_width` | pill_tabs | `"full"` | `"full"` / `"auto"` |
+| `btn_style` | pill_tabs | `"solid"` | `"solid"` / `"outline"` / `"subtle"` |
+| `btn_size` | pill_tabs | `"medium"` | `"small"` / `"medium"` / `"large"` |
+| `btn_alignment` | align | `"center"` | |
 
 ---
 

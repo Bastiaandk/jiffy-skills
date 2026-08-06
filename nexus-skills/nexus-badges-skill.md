@@ -26,6 +26,9 @@ Categories page — its badge area styling is separate from this section.
 
 | Setting ID | Type | Default |
 |---|---|---|
+| `badgeflex` | grid | `4` — badges per line on the product page |
+| `badgeflexrewards` | grid | `12` — badges per line on the Rewards tab and post page |
+| `badgeflexmob` | grid | `3` — badges per line on mobile |
 | `badge_title` | rich_text | `"Get all your badges"` |
 | `badge_titlecolor` | color | `""` |
 | `badge_labelcolor` | color | `""` |
@@ -42,7 +45,7 @@ Categories page — its badge area styling is separate from this section.
 
 ---
 
-## Block type: `gamify_badge`
+## Block type: `gamify_badge` — "Badge"
 
 Each block defines one badge with a locked and unlocked state. The unlock
 condition is determined by an offer, category completion, or post completion.
@@ -61,4 +64,4 @@ condition is determined by an offer, category completion, or post completion.
 | `badge_no_action` | action | `""` | Link when clicking locked badge |
 | `badge_no_target` | checkbox | `false` | Open link in new window |
 | `image_yes` | image_picker | — | Badge image when unlocked |
-| `badge_txtyes` | rich_text | — | Text shown when unlocked |
+| `badge_txtyes` | rich_text | `"Great, you own this badge!"` | Text shown when unlocked |

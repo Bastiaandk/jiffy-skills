@@ -117,13 +117,22 @@ These set the text displayed next to each navigation item.
 | `chatbot_action` | pill_tabs | `"popup"` / `"floating"` | `"popup"` |
 | `chatbot_height` | range | 300–800px, step 50 | `600` |
 | `chatbot_corner_radius` | range | 0–50px, step 2 | `10` |
+| `chatbot_overlay_background` | color | — | `"rgba(0, 0, 0, 0.5)"` |
 | `chatbot_primary` | color | — | — |
 | `chatbot_accent` | color | — | — |
 | `chatbot_text_color` | color | — | — |
 | `chatbot_agent_text_color` | color | — | — |
 | `chatbot_primary_text` | text | — | — |
 
-`chatbot_height` and `chatbot_corner_radius` are hidden when `chatbot_action` is `"floating"`.
+`chatbot_height`, `chatbot_corner_radius`, and `chatbot_overlay_background` are hidden when `chatbot_action` is `"floating"`.
+
+---
+
+## Store settings (shown when `show_store` is `"show"`)
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `store_action` | action | `"/store"` | Link target for the Store sidebar item |
 
 ---
 
@@ -134,6 +143,9 @@ These set the text displayed next to each navigation item.
 | `background_color` | color | `""` (blank) | Leave blank to use global `sidebar_background` preference |
 | `color` | color | `"#fff"` | Sidebar text color |
 | `searchinputfield` | color | `""` | Search input field color |
+| `kg_outline_border` | pill_tabs | `"none"` | `"border"` (show) / `"none"` (hide) — border around outline/category items |
+| `kg_outline_border_color` | color | `"#666666"` | Hidden when `kg_outline_border` is `"none"` |
+| `item_spacing` | range | `"10"` | 0–30px, spacing between cards |
 
 ---
 
@@ -142,7 +154,7 @@ These set the text displayed next to each navigation item.
 Blocks add extra items to the sidebar navigation (filters, external links) or cards below the navigation.
 Block order determines render order — update `block_order` in the same payload when adding or removing blocks.
 
-### Block type: `gamify_textfilter`
+### Block type: `gamify_textfilter` — "Filter"
 
 Adds a filter item to the navigation.
 
@@ -151,7 +163,7 @@ Adds a filter item to the navigation.
 | `filtertext` | text | `"Nexus"` |
 | `filtertexton` | text | `"#nexus"` |
 
-### Block type: `gamify_link`
+### Block type: `gamify_link` — "External Link"
 
 Adds an external link item to the navigation.
 
@@ -161,17 +173,104 @@ Adds an external link item to the navigation.
 | `link_action` | action | `"https://www.jiffycoursesonline.com"` |
 | `new_tab` | checkbox | `""` |
 
-### Block type: `gamify_card`
+### Block type: `gamify_card` — "Jiffy Card"
 
-Adds a content card below the navigation. Supports conditional visibility (show/hide based on offer, category completion, or post completion).
+A card block. Text, video, image, and a call-to-action button are independent
+groups on the same block, not one combined rich-text field — enable each you
+need. Supports conditional visibility (show/hide based on offer, category
+completion, or post completion).
 
 | Setting ID | Type | Default | Notes |
 |---|---|---|---|
-| `width` | grid | `"12"` | Column width (1–12) |
-| `content` | rich_text | `"<p>This is a Jiffy Card...</p>"` | |
+| `width` | grid | `"4"` | Column width (1–12) |
+| `content` | rich_text | `"<p>This is a Jiffy Card...</p>"` | Text shown on the card |
+
+#### Display Conditions
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
 | `visibility` | pill_tabs | `"show"` | `"show"` / `"conditional"` |
 | `visibility_action` | pill_tabs | `"show"` | `"show"` / `"hide"` (when condition is met) |
 | `visibility_trigger` | select | `"offer"` | `"offer"` / `"category"` / `"post"` |
 | `visibility_offer` | offer picker | `""` | Used when trigger is `"offer"` |
 | `visibility_categories` | text | `""` | Comma-separated category IDs |
 | `visibility_posts` | text | `""` | Comma-separated post IDs |
+
+#### Video Settings
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `videoyes` | checkbox | `"false"` | Master toggle — must be `"true"` for the video to show |
+| `video` | video picker | — | |
+| `video_color` | color | — | Player accent color |
+| `controls_on_load` | checkbox | `"false"` | Show controls on load |
+| `auto_play` | checkbox | `"false"` | Autoplays muted |
+| `loop` | checkbox | `"false"` | |
+| `play_button` | checkbox | `"true"` | Shown when autoplay is off, or the volume badge when autoplay is on |
+| `full_screen` | checkbox | `"false"` | Allow fullscreen |
+| `small_play_button` | checkbox | `"true"` | Small play button, bottom-left |
+| `playbar` | checkbox | `"false"` | |
+| `video_settings` | checkbox | `"false"` | Show quality/playback-rate controls |
+
+#### Image Settings
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `hide_image` | checkbox | `"true"` | ⚠️ Despite the ID, this is the "Use image" toggle — `"true"` shows the image, not hides it |
+| `image` | image_picker | — | Suggested 1856×1044 |
+| `img_action` | action | `""` | |
+| `link_target` | checkbox | `"false"` | Open in new window |
+| `image_alt` | text | `""` | |
+
+#### Text Settings
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `card_textcolor` | color | — | |
+| `card_textsize_mode` | pill_tabs | `"default"` | `"default"` / `"custom"` |
+| `card_textsize` | range | `"14"` | 6–48px. Hidden unless `card_textsize_mode` is `"custom"` |
+
+#### Call to Action
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `use_btn` | checkbox | `"true"` | |
+| `btn_text` | text | `"Call To Action"` | |
+| `btn_action` | action | `""` | |
+| `new_tab` | checkbox | `""` | |
+| `btn_background_color` | color | — | |
+| `btn_text_color` | color | — | Solid buttons only |
+| `btn_width` | pill_tabs | `"full"` | `"full"` / `"auto"` |
+| `btn_style` | pill_tabs | `"solid"` | `"solid"` / `"outline"` |
+| `btn_size` | pill_tabs | `"small"` | `"small"` / `"medium"` / `"large"` |
+| `btn_border_radius` | range | `"4"` | 0–100 |
+
+#### Background
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `background_color` | color | `"#ffffff"` | |
+| `shadow` | checkbox | `"true"` | |
+| `border_type` | select | `""` | `"none"` / `"solid"` / `"dotted"` / `"dashed"` / `"double"` / `"ridge"` |
+| `border_width` | range | `"4"` | 0–50 |
+| `border_color` | color | — | |
+| `border_radius` | range | `"4"` | 0–100 |
+
+#### Card Layout
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `block_break` | checkbox | `"false"` | Place on its own row |
+| `padding_desktop` | spacer | 0/0/0/0 | Inside spacing |
+| `padding_text` | spacer | 10/10/10/10 | Text & button spacing |
+
+#### Desktop / Mobile Layout
+
+| Setting ID | Type | Default | Notes |
+|---|---|---|---|
+| `show_block_desktop` | pill_tabs | `"show"` | `"show"` / `"hide"` |
+| `text_align` | align | `"left"` | |
+| `margin_desktop` | spacer | 5/5/5/5 | |
+| `show_block_mobile` | pill_tabs | `"show"` | `"show"` / `"hide"` |
+| `text_align_mobile` | align | `"left"` | |
+| `margin_mobile` | spacer | 5/5/5/5 | |

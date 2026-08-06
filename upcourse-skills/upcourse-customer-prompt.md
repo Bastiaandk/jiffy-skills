@@ -8,5 +8,4 @@ https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/upcourse-skills/u
 If the file cannot be fetched, STOP and tell me. Do not continue from
 what you think you know about UpCourse.
 
-Then follow the instructions in that file. It will tell you what to ask me
-and which additional file to fetch for filling a lesson from a transcript.
+Then follow the instructions in that file. It will tell you what to ask me.
