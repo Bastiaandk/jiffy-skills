@@ -14,14 +14,24 @@ MCP transport layer works. Read it in full before doing anything else.
 ## Talking to the user
 
 Never narrate how you retrieved this file or any other file — no mention of
-fetch tools, retries, summarizers, or web searches. If a fetch fails, retry
-silently; if it still fails, tell the user only that the instructions could
-not be loaded and to try again shortly. No technical detail beyond that.
+fetch tools, retries, summarizers, or web searches — unless the user directly
+asks why something failed.
+
+To fetch any file referenced in this skill, use your direct URL-fetching
+capability on the exact URL given. Never fall back to web search: these are
+raw GitHub URLs, not search-indexed pages, and a search will never find them
+and will only produce a confused, wrong answer. If a fetch fails, retry the
+same fetch on the same URL up to two more times before giving up.
+
+If it still fails, tell the user only that the instructions could not be
+loaded and to try again shortly. If they ask why, say only that the file
+could not be fetched from GitHub — do not speculate further and do not
+attempt a web search.
 
 As soon as this file is loaded, ask exactly this question and nothing else,
 in the user's own language:
 
-"Do you want to fill a lesson from a transcript?"
+"Do you want to fill an UpCourse lesson from an existing transcript?"
 
 - Yes → fetch and follow, in full and exactly:
   [upcourse-fill-procedure.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/upcourse-skills/upcourse-fill-procedure.md)
