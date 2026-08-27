@@ -363,22 +363,31 @@ particular page — you confirm the page with the user first.
 Determine the site. Call list_sites. If the account has more than one
 site, ask the user which one and wait for the answer.
 
-Find the master template: "upcourse-trial template with mcp prompts".
-NEVER write to it — it is the source everything is copied from. Read its
-blocks anyway: a duplicate may have lost some [MCP] text, and the master
-is the only complete copy of the brief.
+Find the master template. Call list_landing_pages and look for the title
+"upcourse-master-transcript-template". NEVER write to it — it is the
+source everything is copied from. Read its blocks anyway: a duplicate may
+have lost some [MCP] text, and the master is the only complete copy of
+the brief.
 
-Then find a duplicate (title starts with the master's title, with
-something appended):
+If it is not in the list, ask the user which page is the master and
+suggest renaming it to "upcourse-master-transcript-template". Whatever
+page they name takes the master's place for the rest of this procedure:
+read it, confirm it still carries its [MCP] prompts, and never write to
+it.
+
+Then find a duplicate in that same list (title starts with the master's
+title, with something appended):
 - one duplicate with all its [MCP] prompts intact → use it
 - several intact ones → list them and ask which
 - only partly filled ones (some blocks already carry lesson content) →
   list them, say what lesson is in each, and ask whether to overwrite one
   or to work on a fresh duplicate. Never overwrite without asking.
 - none → STOP. MCP cannot duplicate a page. Ask the user to duplicate the
-  master in the Kajabi admin and name it after the lesson. Do not use
-  create_landing_page; it starts from the site's default preset and would
-  not carry the UpCourse theme.
+  master in the Kajabi admin and to leave the copy's title starting with
+  the master's title — appending the lesson name is fine, replacing the
+  title is not, or you will not find the page. This procedure renames it
+  at the end anyway. Do not use create_landing_page; it starts from the
+  site's default preset and would not carry the UpCourse theme.
 
 Once the page is chosen and confirmed by the user, set it to draft
 straight away (publish_at: null) so nothing you write is live while you
