@@ -262,8 +262,8 @@ Container that lays out child blocks in a row or column. Allowed children: `gami
 |---|---|---|---|---|---|
 | `width` | Group Width | grid | `"1"`–`"12"` | `"12"` | |
 | `direction` | Direction | select | `"vertical"`, `"horizontal"` | `"horizontal"` | Horizontal wraps. |
-| `align` | Vertical alignment | select | `"start"`, `"center"`, `"end"`, `"stretch"` | `"start"` | Cross axis. `start` in a vertical group = stretch. |
-| `justify` | Horizontal alignment | select | `"start"`, `"center"`, `"end"`, `"between"` (Space Between), `"around"` (Space Around) | `"start"` | Main axis. Works here (unlike the section setting). |
+| `align` | Vertical alignment | select | `"start"` (Top), `"center"` (Center), `"end"` (Bottom), `"stretch"` (Stretch) | `"start"` | Cross axis. `start` in a vertical group = stretch. |
+| `justify` | Horizontal alignment | select | `"start"` (Left), `"center"` (Center), `"end"` (Right), `"between"` (Space Between), `"around"` (Space Around) | `"start"` | Main axis. |
 
 ### Layout
 | Setting ID | Label | Type | Values / range | Default | Notes |

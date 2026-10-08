@@ -153,14 +153,12 @@ The `ba_*` override is all-or-nothing: as soon as any of the three is set, the b
 ### Desktop Layout
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `show_section_desktop` | Show on desktop | pill_tabs | `"show"`, `"hide"` | `"show"` | No visible effect: the tab switch forces the active tab visible. Use `badges_position` / blocks instead. |
 | `padding_desktop` | Inside spacing | spacer | px | placeholder 10/10/10/10 | Blank side → 10. |
 | `margin_desktop` | Outside spacing | spacer | px | placeholder 10/10/10/10 | Blank side → 10. |
 
 ### Mobile Layout
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `show_section_mobile` | Show on mobile | pill_tabs | `"show"`, `"hide"` | `"show"` | No visible effect (see `show_section_desktop`). |
 | `two_column_mobile` | Mobile view | pill_tabs | `"columns"` (Columns), `"cascade"` (Cascade) | `"cascade"` | ≤767px. Cascade stacks blocks; Columns keeps block widths side by side. |
 | `margin_mobile` | Outside spacing | spacer | px | placeholder 10/10/10/10 | ≤767px. Blank side → 10. |
 
@@ -195,5 +193,5 @@ Only block type. All settings → **`nexus-blocks-skill.md`**. Identical to the 
 - Blank `item_border_type` means solid 1px `#cccccc`, not "no border". Write `"none"` to remove card borders.
 - Leave every `*_admin` preview checkbox off (`false`, boolean) after use, and never turn on more than one.
 - Tab titles and breadcrumb labels are header settings, not settings of these sections.
-- `show_section_desktop`/`show_section_mobile` on Rewards/Downloads do not hide the tab. To remove a tab, hide its sidebar link (`show_favorites` / `show_rewards` / … → sidebar sub-skill); the section itself cannot be removed.
+- To remove a tab for students, hide its sidebar link (sidebar sub-skill); these sections have no show/hide setting.
 - Rewards badge content (which badges, unlock rules) is the `jiffy_badges` section → badges sub-skill. Only position and colour overrides live here.

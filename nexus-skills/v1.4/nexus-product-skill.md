@@ -60,7 +60,7 @@ Three identical sections (only the name differs). Order on the page: Progress Ba
 | `trigger` | Show / hide section | select | `"default"` (Always Show), `"always_hide"` (Always Hide), `"show"` (Show with Offer), `"hide"` (Hide with Offer) | `"default"` | Offer = member currently owns the offer. In the editor the section always shows, except `always_hide`. |
 | `offer` | Select offer to change visibility | offer | numeric offer ID | `""` | Hidden when `trigger` = `"default"` or `"always_hide"`. `show` without an offer never shows. |
 | `vertical` | Vertical alignment | select | `"start"` (Top), `"center"` (Center), `"end"` (Bottom) | `"start"` | Ignored when `equal_height` is on. |
-| `horizontal` | Horizontal alignment | select | `"start"` (Left), `"center"` (Center), `"end"` (Right), `"between"` (Space Between), `"around"` (Space Around) | `"start"` | `between` / `around` currently have no effect (see Pitfalls). |
+| `horizontal` | Horizontal alignment | select | `"start"` (Left), `"center"` (Center), `"end"` (Right), `"between"` (Space Between), `"around"` (Space Around) | `"start"` | `between` / `around` spread the blocks over the row (space-between / space-around). |
 | `equal_height` | Equal height blocks | checkbox | — | `"false"` | Stretches blocks to the tallest in the row; buttons align at the bottom. |
 
 ### Background
@@ -192,10 +192,8 @@ Empty offer / ID list = never shows.
 
 ## Pitfalls
 - `trigger` values: always-hide is `"always_hide"`; the offer variants are `"show"` / `"hide"` — not `"show_offer"`.
-- Section `horizontal` = `"between"` / `"around"` currently does nothing (the value is written as raw CSS, which needs `space-between`). Use a `group` with `justify` (blocks skill) for spacing, or `start`/`center`/`end`.
 - `hidewelcome` / `hide_welcome_text_mobile`: `"true"` = hide.
 - Popups with an empty offer or ID list never show. ID lists are comma-separated and AND.
 - Post-triggered popups need the outline cache: they resolve only after the outline has loaded the listed posts. Never hide the outline other than with its own toggles (main skill).
 - Onboarding / popup "nothing happens" on the trainer's own browser is usually the seen state: use `?preview_onboarding`, or a private window for popups.
 - Two popups due on the same visit: only the last in block order shows; the other is marked seen.
-- Using an offer-or-category popup together with a post popup makes them re-appear on later visits (the cookie is overwritten by each check). Warn the trainer.
