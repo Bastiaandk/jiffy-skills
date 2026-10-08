@@ -98,7 +98,7 @@ cards. The category is always the page's own. No blocks; all settings are sectio
   finished). Unstarted, completed and subcategory cards show no bar, so turning it on can look like
   "nothing happened". Default colour `#ffffff` can vanish on light images.
 - `show_shadow` differs per section: `category_progress_bar` takes boolean `true`/`false`;
-  `jiffy_category` takes `"show"`/`"hide"`. Write CPB as a real boolean, not the string `"false"`.
+  `jiffy_category` takes `"show"`/`"hide"`. The code accepts the boolean and the strings `"true"`/`"false"`.
 - A saved `border_radius` (or `progress_text`) under `category_progress_bar` is a leftover; the
   bar's radius is hard-coded 0. Do not write it.
 - `collection_type`: never write `grid2`, `sliderfocus` or `sliderbanner` here (not selectable in

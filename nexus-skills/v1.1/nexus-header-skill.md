@@ -25,7 +25,7 @@ The h1 title (`*_title` fields, group Titles) and the breadcrumb label (group Br
 | Categories — Downloads tab | `downloads_title` | `home` / `downloads` |
 | Search | `searched_title` followed by the search terms | `home` / `search` |
 | Announcements | `announcements_title` | `home` / `announcements` |
-| Live session | `live_session_title` | `home` / `categories` (not a link) |
+| Live session | `live_session_title` | `home` / `live_session_title` |
 
 On every page except the product homepage the theme hides the in-page post, category and search titles, because the header h1 shows them.
 
@@ -75,6 +75,6 @@ On every page except the product homepage the theme hides the in-page post, cate
 ## Pitfalls
 - "Change the Favorites/Rewards/Downloads page title" is a header setting (`*_title`), not a setting of the Jiffy - Favorites/Rewards/Downloads sections.
 - Changing an h1 title does not change the matching breadcrumb, and the other way round. Post and category titles come from Kajabi content, not from header settings.
-- The live session page has no own breadcrumb label: it shows the Categories text, without a link. Only `show_breadcrumbs` = false removes it, and that applies to every page.
+- On the live session page the breadcrumb shows the "Live session" title (`live_session_title`), like search and announcements show their own label.
 - Blank colours are derived from the background, not inherited from a "header" global. To change the header background together with the sidebar, change global `sidebar_background` (preferences skill); to change only the header, set `background_color`.
 - Header settings are global: there is no per-page or per-module title colour or size.
