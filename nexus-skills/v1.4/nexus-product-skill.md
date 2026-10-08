@@ -1,6 +1,8 @@
 # Nexus — Product Homepage Skill
 
-Part of the Nexus skill set. Read `nexus-skill.md` first: payload shapes, value formats and working rules are there, not repeated here.
+> **Before any write:** if you have not fetched the main skill [`nexus-skill.md`](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-skill.md) in this
+> conversation, fetch it now. It holds the payload shapes, value formats and working rules
+> (send only changed keys, read back after every write), which this file does not repeat.
 
 Covers the product homepage (`templates/product.liquid`) except the collections and the content blocks. **Dashboard - Collections (`jiffy_collections`) → `nexus-collections-skill.md`.** Blocks in the Dashboard Top / Middle / Bottom sections → `nexus-blocks-skill.md`. Badge content → badges skill. `community_widget` is Kajabi-native and out of scope.
 

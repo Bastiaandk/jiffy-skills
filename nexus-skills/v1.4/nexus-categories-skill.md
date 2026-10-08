@@ -1,6 +1,8 @@
 # Nexus — Categories Page Skill
 
-Part of the Nexus skill set. Read `nexus-skill.md` first: payload shapes, value formats and working rules are there, not repeated here.
+> **Before any write:** if you have not fetched the main skill [`nexus-skill.md`](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-skill.md) in this
+> conversation, fetch it now. It holds the payload shapes, value formats and working rules
+> (send only changed keys, read back after every write), which this file does not repeat.
 
 ## How the tabs work
 
