@@ -165,7 +165,7 @@ Send the complete `block_order` (existing IDs from `get_theme_content` plus the 
 
 ## Pitfalls
 - **One `outline` collection per page.** A second `outline` block renders nothing live (only a red warning in the editor). `outline_categories` has no such limit. To show lessons from specific modules, use `category`.
-- **`show_finished` is read even when hidden.** Switching an existing block to `replay` while it holds `"hide"` empties it (replay shows only completed posts); on `favorites`/`demo` it silently drops completed posts. Write `"show_finished": "show"` when switching to `replay`, `favorites`, `demo` or `continue_watching`.
+- `show_finished` only applies where the editor shows it; on `replay`, `continue_watching`, `demo` and `favorites` a saved value is ignored.
 - **Filter fields are content-specific.** `hashtags`/`lesson_ids` are ignored outside `highlights`, `category_id` outside `category`. The `hashtags` default `"#hashtag1, #hashtag2"` matches nothing real — replace or clear it for highlights.
 - **Empty collections disappear.** A non-outline collection with no matching posts hides entirely (heading included); `outline` hides empty rows and the whole block when all rows are empty; `outline_categories` omits the heading when no card remains. Favorites/continue watching/replay are per student, so an empty result for the trainer is normal.
 - **sliderbanner reads hidden focus settings**: its card border only draws when `show_focus_border` = `show`, post info follows `show_focus_post_info`, hover text follows `focus_text_display`, mobile description follows `show_focus_description_mobile` (default `hide`). Change these via the API if the trainer asks; they cannot in the editor.
