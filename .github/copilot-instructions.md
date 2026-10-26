@@ -46,5 +46,8 @@ containing it; a link fetched after an intervening user turn has been observed t
 
 ## Unversioned files
 
-`upcourse-skills/upcourse-skill.md` is a redirect to `v1.3/` for anyone still using the old
-customer prompt. Do not add new unversioned skill files.
+`upcourse-skills/upcourse-skill.md` and `upcourse-customer-prompt.md` are the **legacy** skill and
+prompt, frozen as they were before UpCourse 1.3.5. Customers on UpCourse 1.3.4 and older still use
+them: the prompt fetches this skill, which carries the transcript procedure for pages without an
+AI brief. The only change is a note at the top that sends pages with an AI brief to `v1.3/`.
+Never edit or remove these two files. Do not add new unversioned skill files.
