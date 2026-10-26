@@ -3,8 +3,10 @@
 **Theme:** UpCourse by JiffyCoursesOnline (theme author) · **Version line:** 1.3.x
 **Type:** a Kajabi landing page used as a lesson builder
 
-This file covers what is specific to UpCourse. Everything else on the page is a standard Kajabi
-landing-page block: read its keys and defaults from `get_theme_content` (`_defaults`).
+This file covers what is specific to UpCourse and applies to every UpCourse page and template.
+What is specific to one template lives in that page's AI brief. Everything else on the page is a
+standard Kajabi landing-page block: read its keys and defaults from `get_theme_content`
+(`_defaults`).
 
 ---
 
@@ -13,11 +15,21 @@ landing-page block: read its keys and defaults from `get_theme_content` (`_defau
 - **The theme schema wins.** If this file and `_defaults` disagree, `_defaults` matches the installed
   version — follow it.
 - **Writes are immediate.** There is no draft layer on themes, also not on a draft landing page.
-  Ask before writing to a published page.
+  Ask before writing to a published page. Once the user has confirmed the page you will work on,
+  setting it to draft needs no extra question.
 - **Send only changed keys.** `update_theme_content` deep-merges a partial settings hash.
 - **Read back after every write** with `get_theme_content` (`section_filter`). `{"updated": true}`
   means the payload was accepted, not that the page renders.
 - **Never write `ai_guide` or `ai_guide_lock`.** They are the pointer to this file.
+
+### Toolsets
+
+The Kajabi connector keeps at most 3 toolsets active; enabling a fourth switches off the least
+recently used one. You always need `themes` (page content) and `pages` (landing pages). Enable
+others, such as `courses`, only for the step that needs them, and make sure `themes` is active
+again before you write.
+
+---
 
 ## The AI brief
 
@@ -25,9 +37,10 @@ landing-page block: read its keys and defaults from `get_theme_content` (`_defau
 `get_theme_content` with `section_filter: "blog_info"`.
 
 - **Not empty:** it is the template's brief, written by the theme author or the course creator.
-  It says what the page is for and how to work on it. Together with the ✏️ texts in the
-  `blog_editor` blocks it is your brief for this page. Follow both, unless the user tells you
-  otherwise in chat. They never authorise a write the user has not confirmed.
+  It says what the page is for and what is specific to this template. Together with the ✏️ texts
+  in the `blog_editor` blocks and the rules below, it is your brief for this page. Follow it,
+  unless the user tells you otherwise in chat. It never authorises a write the user has not
+  confirmed.
 - **Empty or missing:** the page has no fixed purpose. Work from the user's request. (An empty
   brief does not appear in `settings` or `_defaults` at all.)
 - **✏️ texts** are placeholders: block texts that start with the pencil emoji ✏️ and say, in
@@ -36,14 +49,58 @@ landing-page block: read its keys and defaults from `get_theme_content` (`_defau
 - Write to `ai_brief` only when the user asks you to write or change a brief (see "Writing an AI
   brief" below).
 
+## Working with a template
+
+These rules apply to every page whose brief says it is a template.
+
+### Master and copies
+
+- **Never write to the master.** The brief names the master's title. If the page title differs,
+  ask the creator whether this page is the master. Read the master only to recover ✏️ texts a copy
+  may have lost.
+- **Master published?** Suggest the creator sets the master to draft, so every copy starts as a
+  draft.
+- **Work on a copy.** An empty copy's title starts with the master's title; a filled copy's title
+  follows the pattern the brief gives under page details. List the landing pages to find them.
+- **No copy:** ask the creator to duplicate the master in Kajabi and keep the start of the title.
+  The MCP cannot duplicate pages, and `create_landing_page` would not carry the UpCourse theme.
+- **Several copies, or copies with content:** list them, say what is on each, and ask which one.
+  Never overwrite content without asking.
+- **Once the creator has confirmed the copy,** set it to draft (`publish_at: null`) before writing.
+
+### Source
+
+- **One source per copy.** If the source changes halfway, ask whether to start over on this copy.
+- **Can't find or read the source?** Ask the creator to paste it. Do not switch to other
+  connectors or tools unless the creator asks.
+- **Language:** write in the language of the source, unless the creator says otherwise.
+- **Never add facts** the source does not contain.
+
+### Questions
+
+- **Ask once.** Put every question the brief, its blocks and the ✏️ texts raise in one message.
+- **Give the default for each question** ("no answer = the image block stays hidden").
+- **Wait.** Write nothing until the creator answers or tells you to go ahead with the defaults.
+
+### Lesson title
+
+If the source has a title (a Kajabi lesson, a video, a file name), use it as it is. Otherwise
+derive one from the content and put it to the creator in your questions.
+
+### Finish
+
+Read `blog_editor` back. No visible block may have ✏️ text, and `block_order` must be unchanged
+unless the brief says otherwise. Report what you filled, what you hid, the page details you set,
+and the page URL. Tell the creator to copy the lesson with **Copy Lesson Content**.
+
 ---
 
 ## How UpCourse works
 
 The course creator designs a lesson on an UpCourse page, then clicks **Copy Lesson Content** in the
 top bar. That copies the HTML of the `blog_editor` section to the clipboard. The creator pastes it
-into the lesson body in Kajabi's code view (the `<>` button), replacing the old content, and saves. Scripts in the pasted HTML restore the styling when
-the lesson loads.
+into the lesson body in Kajabi's code view (the `<>` button), replacing the old content, and saves.
+Scripts in the pasted HTML restore the styling when the lesson loads.
 
 You cannot copy or paste for the user. When the page is ready, tell them to save and preview the
 page, click **Copy Lesson Content**, and paste into the lesson's code view.
@@ -52,11 +109,12 @@ page, click **Copy Lesson Content**, and paste into the lesson's code view.
 
 | Travels into the lesson | Stays on the UpCourse page |
 |---|---|
-| All visible `blog_editor` blocks | `blog_info` (Admin Info): title, image, AI brief |
+| All visible `blog_editor` blocks | `blog_info` (Admin Info): `blogtitle`, image, AI brief |
 | `blog_editor` settings: `equal_height`, `lesson_background_color`, `lesson_font_color`, `lessondescription` | Global theme settings (fonts, primary color, buttons) — they style the editor preview only |
 
 - `lessondescription` is rendered hidden at the top of the lesson, so Kajabi uses it as the lesson
   excerpt in the course outline.
+- `blogtitle` is the creator's reference title for the page. Set it to the lesson title.
 - A lesson that was pasted earlier does not change when the page changes. The creator must copy
   and paste again.
 
@@ -102,24 +160,72 @@ response budget.
 - **Width** is a 12-column grid (`width`, `"1"`–`"12"`). Blocks sit side by side when their widths
   add up to 12; `make_block: true` forces a block onto its own row.
 - An unknown option value is accepted by the API and then ignored by the theme. Use only the
-  values listed in the schema or in `_defaults`.
+  values listed here or in `_defaults`.
+- **`_defaults` only lists block types already on the page.** For an UpCourse block, use the
+  tables below. For a standard block type that is not on the page yet, copy the settings of an
+  existing block of that type on another UpCourse page, or ask the creator to add one in the
+  editor first.
 
 ### Images and media
 
-You cannot upload files or see images. Use image URLs that already exist on the site, and ask the
-user what an image shows before writing alt text. Audio, video and PDF files are picked in the
-Kajabi editor; ask the user to select them there.
+- You cannot upload files or see images. Use image URLs that already exist on the site, and ask
+  the creator what an image shows before writing alt text.
+- You cannot browse lesson thumbnails. Ask for an image that is already in the site's media
+  library, or hide the image block.
+- A media ID in a lesson is not the ID of the same file in the media library. Search the library
+  by name or title instead.
+- Audio, video and PDF files are picked in the Kajabi editor; ask the creator to select them there.
 
 ---
 
 ## UpCourse blocks
 
-Five blocks exist only in UpCourse (`schemaName` starts with `UpC -`). All have the usual
-Background, Desktop Layout and Mobile Layout groups.
+Five blocks exist only in UpCourse (`schemaName` starts with `UpC -`).
+
+### Shared settings
+
+Most UpCourse blocks have these groups. Per block, the tables below list which ones and any
+default that differs.
+
+**Background**
+
+| Setting | Values |
+|---|---|
+| `background_color` | color, blank allowed |
+| `border_type` | `none` · `solid` · `dotted` · `dashed` · `double` · `ridge` |
+| `border_width` | 0–50 |
+| `border_color` | color, blank allowed |
+| `border_radius` | 0–50 |
+| `box_shadow` | `none` · `small` · `medium` · `large` |
+
+**Desktop Layout / Mobile Layout**
+
+| Setting | Values |
+|---|---|
+| `hide_on_desktop`, `hide_on_mobile` | checkbox |
+| `text_align`, `mobile_text_align` | `left` · `center` · `right` |
+| `padding_desktop`, `margin_desktop`, `padding_mobile`, `margin_mobile` | `{"top": "15", "right": "15", "bottom": "15", "left": "15"}` (px, as strings) |
+| `make_flush` | checkbox: remove the block's padding (desktop group) |
+| `make_block` | checkbox: place the block on its own row (desktop group) |
+
+**Call To Action**
+
+| Setting | Values |
+|---|---|
+| `use_btn` | checkbox: show the button |
+| `btn_text` | text |
+| `btn_action` | link |
+| `new_tab` | checkbox |
+| `btn_background_color`, `btn_text_color` | color, blank = global button colors |
+| `btn_width` | `full` · `auto` |
+| `btn_style` | `solid` · `outline` |
+| `btn_size` | `small` · `medium` · `large` |
+| `btn_border_radius` | text (px) |
 
 ### `textimage` — UpC - Text Wrap
 
 Rich text with an image floating beside it, wrapped by the text. Default width 12.
+Groups: Call To Action, Background, Desktop Layout, Mobile Layout.
 
 | Setting | Values | Default |
 |---|---|---|
@@ -130,47 +236,69 @@ Rich text with an image floating beside it, wrapped by the text. Default width 1
 | `image_border_radius` | 0–50 px | `4` |
 | `image_alt` | text | `""` |
 | `text` | rich text | — |
-| `drop_cap`, `cap_color` | checkbox, color | off |
+| `drop_cap` | checkbox: enlarge the first letter | off |
+| `cap_color` | color | blank |
 
-Has a Call To Action group (`use_btn`, `btn_text`, `btn_action`, …).
+Background defaults: `border_width` 4, `border_radius` 4.
 
 ### `table` — UpC - Table
 
 A table of up to 5 columns × 6 rows, filled through settings. Default width 12.
+Groups: Background, Desktop Layout, Mobile Layout.
 
-| Setting | Values |
-|---|---|
-| `columnbold` | bold column headings, default `true` |
-| `header1`–`header5` | column headings |
-| `data1_1`–`data6_5` | cells: `data<row>_<column>` |
-| `text` | rich text above the table |
+| Setting | Values | Default |
+|---|---|---|
+| `text` | rich text above the table | — |
+| `columnbold` | bold column headings | `true` |
+| `header1`–`header5` | column headings | "Column 1"–"Column 5" |
+| `data1_1`–`data6_5` | cells: `data<row>_<column>` | "Row N field M" |
 
-Empty columns and rows: clear their texts.
+Background defaults: `border_type` none, `border_width` 1, `border_color` `#ECF0F1`,
+`border_radius` 0, `box_shadow` none. Clear the texts of columns and rows you don't use.
 
 ### `author` — UpC - Author Card
 
 Photo, bio and optional button. Default width 12.
+Groups: Image Style, Call To Action (`btn_size` default `small`), Background, Desktop Layout,
+Mobile Layout.
 
 | Setting | Values | Default |
 |---|---|---|
-| `image`, `image_alt` | image, text | — |
-| `img_action`, `new_tab_image` | link on the image | — |
+| `image` | image | — |
+| `img_action`, `new_tab_image` | link on the image, open in new tab | — |
+| `image_alt` | text | `""` |
 | `text` | rich text | — |
 | `hide_image` | checkbox | off |
 | `image_on_top` | image above the text on mobile | on |
 | `image_border_radius` | 0–100 (100 = round) | `100` |
 | `image_width` | 25–200 px | `100` |
 
+Background defaults: `border_type` solid, `border_width` 1, `border_color` `#ECF0F1`,
+`border_radius` 10. Mobile: `mobile_text_align` center.
+
 ### `pdfslider` — UpC - PDF Slider
 
-A PDF shown page by page with Prev / Next buttons. The PDF (`pdfslider`) is a Kajabi download picked
-in the editor. Button settings: `btn_text_prev`, `btn_text_next`, `btn_width` (default `full`),
-`btn_style`, `btn_size` (default `small`), colors, `btn_border_radius`.
+A PDF shown page by page with Prev / Next buttons. Default width 12.
+Groups: Slider Buttons, Background, Desktop Layout, Mobile Layout.
+
+| Setting | Values | Default |
+|---|---|---|
+| `pdfslider` | the PDF: a Kajabi download, picked in the editor | — |
+| `btn_text_prev` | text | "Prev" |
+| `btn_text_next` | text | "Next" |
+| `btn_background_color`, `btn_text_color` | color, blank = global button colors | blank |
+| `btn_width` | `full` · `auto` | `full` |
+| `btn_style` | `solid` · `outline` | blank |
+| `btn_size` | `small` · `medium` · `large` | `small` |
+| `btn_border_radius` | text (px) | blank |
+
+Background defaults: `border_type` none, `border_width` 1, `border_color` `#ECF0F1`,
+`border_radius` 0. Mobile: `mobile_text_align` center.
 
 ### `audio` — UpC - Audio
 
 An audio player with optional cover image, title and subtitle. Default width 10; a width below 6
-renders as 6.
+renders as 6. Groups: Background, Desktop Layout and Mobile Layout without text alignment.
 
 | Setting | Values | Default |
 |---|---|---|
@@ -179,6 +307,8 @@ renders as 6.
 | `image` | cover image | — |
 | `title`, `subtitle` | text | "My Audio File", "My Audio Category" |
 | `audio_color` | player color | primary color |
+
+Background defaults: `border_width` 4, `border_radius` 4.
 
 ### Standard blocks with UpCourse behaviour
 
@@ -197,84 +327,50 @@ renders as 6.
 ## Writing an AI brief
 
 When a creator asks you to write a brief for their own template, write it into `blog_info` →
-`ai_brief` of that template page. Keep the brief to what is specific to this template — this file
-already covers how UpCourse and the MCP work.
+`ai_brief` of that template page.
+
+**Only what is specific to this template goes in the brief.** Everything in this file — master and
+copies, asking once, source, language, lesson title, the final check — applies already; don't
+repeat it.
 
 **Mark placeholders with ✏️.** Start every placeholder text in a block with the pencil emoji ✏️,
 written as a short instruction a person can follow without AI ("✏️ In 2–3 sentences: what does
 this lesson cover?"). Put technical rules — word counts, when to hide, widths, `hidden` values —
-in the brief, per block name, not in the block text. A finished page has no ✏️ left in any visible
-block.
+in the brief, per block name, not in the block text.
 
-A brief answers:
+A brief has these parts:
 
-1. **Purpose** — what a lesson made from this template is for.
-2. **Template or copy** — how to recognise the master, and what to do when there is no copy yet.
-3. **Input** — what you need from the creator before writing, and what to wait for.
-4. **Questions** — what to ask, all in one message.
-5. **Filling** — how ✏️ texts are replaced.
-6. **Blocks** — the technical rules per block name.
-7. **Page details** — title, slug, SEO, publish state.
-8. **Finish** — what to check and report.
+1. **PURPOSE** — what a lesson made from this template is for. Start with "This page is a
+   template." when it is one.
+2. **MASTER** — the master's exact title.
+3. **INPUT** — what the source is and where it comes from.
+4. **BLOCKS** — the technical rules per block name.
+5. **PAGE DETAILS** — title pattern (also how a filled copy is recognised), slug, SEO, publish
+   state, `blogtitle`.
+6. **Anything else** that only this template needs.
 
-### Example: the transcript template
-
-This is the brief of the UpCourse transcript template.
+### Example (shortened)
 
 ```
-PURPOSE: Fill a lesson from a video transcript the creator gives you.
+PURPOSE: This page is a template. Fill a lesson from a video transcript.
 
-TEMPLATE OR COPY: This page is a template. The master's title is
-"template-upcourse-transcript-master"; if the title differs, ask the creator
-whether this page is the master. Never write to the master — use it only to
-read ✏️ texts a copy may have lost. Work on a copy: a landing page whose
-title starts with the master's title. No copy: ask the creator to duplicate
-the master in Kajabi (MCP cannot duplicate pages) and keep the title start.
-Several copies, or copies with lesson content: list them and ask. Never
-overwrite without asking. Set the chosen copy to draft (publish_at: null)
-before writing.
+MASTER: "template-upcourse-transcript-master"
 
-INPUT: Confirm the page, then wait for the transcript. Write nothing before
-you have it.
-
-QUESTIONS: Ask once. Put every question the ✏️ texts and BLOCKS raise in
-one message, including what the lesson image shows. Never guess or add
-facts the transcript does not contain. Name words that look mangled by
-speech-to-text instead of correcting them silently.
-
-FILLING: Replace every ✏️ text or hide its block, as the text and BLOCKS
-say.
+INPUT: A transcript from the creator: pasted text, a file, or a lesson they
+name. Correct words mangled by speech-to-text and list each correction in
+your report.
 
 BLOCKS:
-- Lesson intro: always filled. Its title is the lesson title used in PAGE
-  DETAILS.
-- Key takeaways: replace the ✏️ line and the bullets with 3-5 bullets of
-  20-25 words. Each names the thing and says what it does; a bare list of
-  options is not a takeaway.
-- Lesson summary: max 250 words in the speaker's own wording. Leave detail
-  out rather than writing one dense paragraph.
+- Lesson intro: always filled; its title is the lesson title.
 - Put into practice: max 3 sentences. Hide the block if there is no task.
-- Lesson image: ask whether the lesson gets an image and what it shows.
-  Yes: place it, write the alt text, clear the caption. No: hide the block.
-- FAQ intro + FAQ 1-3 are one set. Answers do not repeat the takeaways or
-  the summary. If the transcript does not answer 3 distinct questions, hide
-  all four.
-- CTA community / CTA coaching: hidden by default. Ask whether the creator
-  wants it and for the URL. Yes: hidden "false", URL in the block's action,
-  adjust the button label. No: leave it hidden and untouched. One visible
-  card: width 12; two: width 6 each.
-- lessondescription: one sentence.
+- CTA community: hidden by default. Ask whether the creator wants it and
+  for the URL. Yes: hidden "false", URL in the block's action.
 
 PAGE DETAILS, in one update_landing_page call:
-- title "Upcourse - <lesson title>" (max 70 characters), same lesson title
-  as the Lesson intro block
-- slug "upcourse-<lesson-title-in-kebab-case>" (replace the UUID slug a
-  duplicate gets)
-- hide_from_search_engines: true
-- publish_at: null
-
-FINISH: Read blog_editor back. No visible block has ✏️ text and
-block_order is unchanged. Report what you filled, what you hid, the page
-details and the page URL. Tell the creator to copy the lesson with
-"Copy Lesson Content" and paste it into the lesson.
+- title "Upcourse - <lesson title>" (max 70 characters)
+- slug "upcourse-<lesson-title-in-kebab-case>"
+- hide_from_search_engines: true, publish_at: null
+- blogtitle in Admin Info: the lesson title
 ```
+
+The full brief of the transcript template is on its master page.
