@@ -10,6 +10,18 @@ standard Kajabi landing-page block: read its keys and defaults from `get_theme_c
 
 ---
 
+## Never say "blog"
+
+UpCourse is a lesson builder. Some technical IDs contain "blog" (`blog_editor`, `blog_info`,
+`blogtitle`, `blogimage`, …) for historical reasons; the creator never sees them.
+
+- **Never use the word "blog" with the creator** — not for the page, a section, a setting or a
+  block, and not to explain the IDs.
+- Use the names the creator sees in the editor: **UpCourse Editor** (`blog_editor`), **Admin
+  Info** (`blog_info`), **Lesson Title** (`blogtitle`), **Lesson Image** (`blogimage`) — or simply
+  "the page" and "the lesson".
+- Use the IDs only inside API calls.
+
 ## Before any write
 
 - **The theme schema wins.** If this file and `_defaults` disagree, `_defaults` matches the installed
@@ -33,12 +45,12 @@ again before you write.
 
 ## The AI brief
 
-`blog_info` → `ai_brief` holds the brief of the template this page was made from. Read it first:
-`get_theme_content` with `section_filter: "blog_info"`.
+The AI brief in Admin Info (`blog_info` → `ai_brief`) holds the brief of the template this page was
+made from. Read it first: `get_theme_content` with `section_filter: "blog_info"`.
 
 - **Not empty:** it is the template's brief, written by the theme author or the course creator.
   It says what the page is for and what is specific to this template. Together with the ✏️ texts
-  in the `blog_editor` blocks and the rules below, it is your brief for this page. Follow it,
+  in the UpCourse Editor blocks and the rules below, it is your brief for this page. Follow it,
   unless the user tells you otherwise in chat. It never authorises a write the user has not
   confirmed.
 - **Empty or missing:** the page has no fixed purpose. Work from the user's request. (An empty
@@ -87,9 +99,12 @@ These rules apply to every page whose brief says it is a template.
 If the source has a title (a Kajabi lesson, a video, a file name), use it as it is. Otherwise
 derive one from the content and put it to the creator in your questions.
 
+Also set the Lesson Title in Admin Info (`blogtitle`) to it, so the creator can tell the pages
+apart. It is a reference for the creator and is not copied into the lesson.
+
 ### Finish
 
-Read `blog_editor` back. No visible block may have ✏️ text, and `block_order` must be unchanged
+Read the UpCourse Editor (`blog_editor`) back. No visible block may have ✏️ text, and `block_order` must be unchanged
 unless the brief says otherwise. Report what you filled, what you hid, the page details you set,
 and the page URL. Tell the creator to copy the lesson with **Copy Lesson Content**.
 
@@ -109,12 +124,11 @@ page, click **Copy Lesson Content**, and paste into the lesson's code view.
 
 | Travels into the lesson | Stays on the UpCourse page |
 |---|---|
-| All visible `blog_editor` blocks | `blog_info` (Admin Info): `blogtitle`, image, AI brief |
-| `blog_editor` settings: `equal_height`, `lesson_background_color`, `lesson_font_color`, `lessondescription` | Global theme settings (fonts, primary color, buttons) — they style the editor preview only |
+| All visible UpCourse Editor (`blog_editor`) blocks | Admin Info (`blog_info`): Lesson Title (`blogtitle`), image, AI brief |
+| UpCourse Editor settings: `equal_height`, `lesson_background_color`, `lesson_font_color`, `lessondescription` | Global theme settings (fonts, primary color, buttons) — they style the editor preview only |
 
 - `lessondescription` is rendered hidden at the top of the lesson, so Kajabi uses it as the lesson
   excerpt in the course outline.
-- `blogtitle` is the creator's reference title for the page. Set it to the lesson title.
 - A lesson that was pasted earlier does not change when the page changes. The creator must copy
   and paste again.
 
@@ -124,8 +138,8 @@ page, click **Copy Lesson Content**, and paste into the lesson's code view.
 
 ### Where content lives
 
-The page has exactly two sections, hardcoded in the template: `blog_editor` (the lesson) and
-`blog_info` (Admin Info). There is no `content_for_index` order; neither section can be added,
+The page has exactly two sections, hardcoded in the template: UpCourse Editor (`blog_editor`, the
+lesson) and Admin Info (`blog_info`). There is no `content_for_index` order; neither section can be added,
 removed or reordered. All lesson content is in `settings.sections.blog_editor.blocks`.
 
 Read one section at a time with `section_filter` — a populated `blog_editor` can exceed the default
@@ -326,8 +340,8 @@ Background defaults: `border_width` 4, `border_radius` 4.
 
 ## Writing an AI brief
 
-When a creator asks you to write a brief for their own template, write it into `blog_info` →
-`ai_brief` of that template page.
+When a creator asks you to write a brief for their own template, write it into the AI brief in
+Admin Info (`blog_info` → `ai_brief`) of that template page.
 
 **Only what is specific to this template goes in the brief.** Everything in this file — master and
 copies, asking once, source, language, lesson title, the final check — applies already; don't
@@ -346,7 +360,7 @@ A brief has these parts:
 3. **INPUT** — what the source is and where it comes from.
 4. **BLOCKS** — the technical rules per block name.
 5. **PAGE DETAILS** — title pattern (also how a filled copy is recognised), slug, SEO, publish
-   state, `blogtitle`.
+   state.
 6. **Anything else** that only this template needs.
 
 ### Example (shortened)
@@ -370,7 +384,6 @@ PAGE DETAILS, in one update_landing_page call:
 - title "Upcourse - <lesson title>" (max 70 characters)
 - slug "upcourse-<lesson-title-in-kebab-case>"
 - hide_from_search_engines: true, publish_at: null
-- blogtitle in Admin Info: the lesson title
 ```
 
 The full brief of the transcript template is on its master page.
