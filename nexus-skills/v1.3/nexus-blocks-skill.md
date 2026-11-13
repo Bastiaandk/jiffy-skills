@@ -279,7 +279,7 @@ Container that lays out child blocks in a row or column. Allowed children: `gami
 Child blocks are stored inside the group, not in the section's top-level `block_order`. Copy the exact nesting from a saved group in `get_theme_content`; if none exists, ask the trainer to add a group in the editor first.
 
 ## Block: `badge_area` — "Badge Area Block"
-Renders the global Jiffy - Badges section at this spot — the only way badges become visible on the homepage. Badge content and styling: badges skill. No display conditions, no `block_break`.
+Renders the global Jiffy - Badges section at this spot — the only way badges become visible on the homepage. Badge content and styling: badges skill. No display conditions, no `block_break`. The block sets the spacing: the badge box has no margin of its own here, and with the section's "Equal height blocks" on it fills the stretched block, level with the cards next to it.
 
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|

@@ -6,8 +6,9 @@
 
 ## Section: `jiffy_collections` — "Dashboard - Collections"
 Product homepage only. A stack of configurable collections: each `collection_banner` block is one
-collection with its own content source, style and styling. All collection settings are **block-level**;
-the section itself has only outer margins. Cards are filled client-side from the outline data cache
+collection with its own content source, style and styling. Collection settings are **block-level**;
+the section holds the outer margins and, from 1.3.2, the **Collection filter** (a bar above the
+collections that lets a student show one group of collections, or everything from a group onward). Cards are filled client-side from the outline data cache
 (`NexusDataCache`), so a collection depends on the sidebar outline markup being in the page.
 
 ### Desktop Layout
@@ -19,6 +20,30 @@ the section itself has only outer margins. Cards are filled client-side from the
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `margin_mobile` | Outside spacing all collections | spacer | px | placeholder 10/10/10/10 | ≤767px. Blank side = 10. |
+
+### Collection filter (since 1.3.2)
+Section level; on a theme below 1.3.2 these settings do not exist, do not write them. The bar renders above all collections and lists the distinct **Filter titles** of the
+collection blocks (`filter_title`, see the block table) in block order, first appearance wins. A
+collection without a title never gets a button and is always shown. The student's choice is kept in
+`localStorage` (`nexus-filter-v1-{productId}-{memberId}`) and applied before the collections paint;
+Display Conditions still apply underneath. **The bar needs at least two titles**; with fewer it renders
+nothing (the editor shows a note). Everything below `filter_mode` is hidden while it is `off`.
+
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `filter_mode` | Filter | select | `"off"` (Off), `"only"` (Show only), `"from"` (From here on) | `"off"` | `only`: the chosen group alone. `from`: the chosen group and every later one; earlier groups hide and their buttons dim. Default state for a student is always "All". |
+| `filter_style` | Style | pill_tabs | `"tabs"` (Tabs), `"buttons"` (Buttons), `"dropdown"` (Dropdown) | `"tabs"` | Mobile uses the same style; tabs and buttons become one line that scrolls sideways. |
+| `filter_all_text` | "All" button text | text | | `"All"` | Tabs/Buttons: empty = no All button (a second click on the active button shows everything). Dropdown: always its first option, the way back to everything; empty shows "All". Shown dimmed while nothing is chosen. |
+| `filter_align` | Alignment | align | `left` / `center` / `right` | `left` | |
+| `filter_sticky` | Make filter sticky | pill_tabs | `"yes"` / `"no"` | `"no"` | Sticks under the sticky header (`--nexus-header-offset`), same construction as the post action bar. |
+| `filter_remember` | Remember choice | pill_tabs | `"yes"` / `"no"` / `"auto"` | `"yes"` | `no`: every visit starts at "All", nothing is stored. `auto`: after the collections load, Nexus selects the first group (button order) that still has an unfinished lesson or module card, or "All" when everything is finished; the result is stored for the next visit's first paint. A manual choice holds for the browser session (sessionStorage), the next visit is automatic again. |
+| `filter_font_size` | Font size | range | 12–20 px | `"14"` | Buttons and dropdown. |
+| `filter_radius` | Button border radius | range | 0–30 | `"20"` | Buttons and dropdown; tabs keep fixed top corners. |
+| `filter_active_bg` | Active color | color | hex, blank | `""` | Blank = theme accent colour (`settings.accent_color`). Buttons: fill; Tabs: underline. |
+| `filter_active_text` | Active text color | color | hex, blank | `""` | Buttons only (hidden for tabs/dropdown). Blank = light or dark to match the active colour. |
+| `filter_bg` | Button color | color | hex, blank | `""` | Blank = transparent. Inactive buttons, tabs and the dropdown. |
+| `filter_text` | Button text color | color | hex, blank | `""` | Blank = page text colour. |
+| `filter_spacing` | Spacing below filter | range | 0–40 px | `"16"` | |
 
 ### Block: `collection_banner` — "Collection"
 
@@ -35,6 +60,7 @@ the section itself has only outer margins. Cards are filled client-side from the
 | `show_finished` | Finished posts & categories | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"show"` | `hide` drops completed posts and fully completed (sub)categories; for `outline_categories` it drops completed top-level categories. Always forced to show in the editor. Hidden when `collection_content` = `replay`, `continue_watching`, `demo`, `favorites` (but still read — see Pitfalls). |
 | `show_two` | Mobile posts per row | pill_tabs | `"one"` (1), `"two"` (2) | `"two"` | ≤767px. Hidden when `collection_type` = `lines`, `slider3`, `slider4`, `sliderbanner`. |
 | `heading` | Collection heading | rich_text | HTML | `"<h4>Collection Title</h4>"` | Title above the collection. |
+| `filter_title` | Filter title | text | one or more titles, comma separated | `""` | Since 1.3.2; Collection filter only (section setting `filter_mode`). The button text for this collection; same title on several blocks = one button. Empty = no button, always shown. Matching is case- and spacing-insensitive (`Level 3` = `level 3`); titles of several words work, quotes, backslashes and `<` `>` are ignored in the match. |
 
 #### Display Conditions
 | Setting ID | Label | Type | Values / range | Default | Notes |
@@ -174,3 +200,8 @@ Send the complete `block_order` (existing IDs from `get_theme_content` plus the 
 - **Max posts on `outline` is per row**, not total; total length is set by `outline_paginate_count` (rows per page).
 - **No focus slider in 1.3.** `collection_type` has no `"sliderfocus"` option; never write it. The `show_focus_*` / `focus_*` / `show_preview_*` / `preview_text_display` settings exist but are hidden for every style; only the ones sliderbanner reads (above) have any effect. If the trainer asks for a focus slider, it is not in this Nexus version yet.
 - Block saved without a key: JS falls back to `grid3`/`demo`/no limit, not to the schema defaults. Always write `collection_content` and `collection_type` on new blocks.
+- **Collection filter order is block order.** For `from` ("From here on") the button order is the level order, so reorder blocks, not titles. A block with two titles sits at the position of its first title.
+- **A filter title on a condition-hidden collection** (offer or category not met) produces no button; a post-based condition is checked by JS, so that button does appear even when the collection is hidden later.
+- Renaming or removing a title invalidates a student's stored choice: they land on "All" on the next visit.
+- **Buttons follow the collections.** A group whose collections all turn out empty for this student (every lesson finished with `show_finished` = hide, a post condition not met) loses its button once the collections have loaded. An active choice that disappears moves on to the next group under `from`, and falls back to "All" under `only`.
+- **Auto reads the cards.** Finished lesson and module cards carry `data-completed`; a group counts as "open" when one visible card lacks it. Lessons only visible through a hidden-finished filter never count, which is what you want.

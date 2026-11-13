@@ -16,6 +16,7 @@ Button bar under the header. No blocks. Below 992px every button shows its icon 
 | `icon_alignment_mobile` | Position mobile | pill_tabs | `"center"` (Center), `"between"` (Space between) | `"center"` | Below 992px. |
 | `show_home` | Home | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"show"` | Links to the product homepage. |
 | `show_duration` | Duration | pill_tabs | `"show"`, `"hide"` | `"show"` | Video lessons only; hidden on mobile. |
+| `show_community` | Community | pill_tabs | `"show"`, `"hide"` | `"hide"` | Button between Downloads and Badges. Opens the community popup when the sidebar's Community is set to Popup (the sidebar renders the popup on every page); otherwise links to `/products/communities`. Hidden on the live site when the course has no community or the widget is not configured; the editor shows it. |
 | `show_badges` | Badges | pill_tabs | `"show"`, `"hide"` | `"show"` | The Badges button opens the badges area (see Pitfalls). |
 | `show_lesson_completion` | Lesson Completion | pill_tabs | `"show"`, `"hide"` | `"show"` | The "Mark as complete" toggle. |
 | `show_favorite` | Favorite | pill_tabs | `"show"`, `"hide"` | `"show"` | Favorite toggle; favorited lessons appear on the Favorites tab. |
@@ -32,6 +33,7 @@ Blank text = icon only.
 | `next` | Next button | text | — | `"Next"` | |
 | `home` | Home button | text | — | `"Home"` | |
 | `downloads` | Download button | text | — | `"Downloads"` | |
+| `community` | Community button | text | — | `"Community"` | Hidden when `show_community` = `"hide"`. Icon only below 992px. |
 | `badges` | Badges button | text | — | `"Badges"` | Hidden when `show_badges` = `"hide"`. |
 | `complete` | Complete button | text | — | `"Complete Lesson"` | Shown while the lesson is not completed. Hidden when `show_lesson_completion` = `"hide"`. |
 | `completed` | Completed button | text | — | `"Lesson Completed"` | Shown once completed. Hidden when `show_lesson_completion` = `"hide"`. |
@@ -217,6 +219,7 @@ Extra button inside the modal, separate from the purchase button.
 | `btn_alignment` | Button alignment | align | `"left"`, `"center"`, `"right"` | `"center"` | Visible with `btn_width` = `"auto"`. |
 
 ## Pitfalls
+- A completion popup and lesson confetti fire once per real completion. Replaying a lesson that was already complete when the page loaded triggers neither.
 - **Badges sit in a hidden slide-down** under the action bar, opened only by the Badges button. With `show_badges` = `"hide"` students cannot reach the badges on the post page. Badge content and unlock rules are in the badges skill; only the area colours (`ba_*`) live here.
 - **Edit/test toggles** (`show-edit`, `editconfetti`, `edit_paywall_modal`) only affect the Kajabi editor, but leave them off after a preview so the editor stays usable.
 - `show-edit` is a pill with string values: write `"true"`/`"false"`, not booleans.
