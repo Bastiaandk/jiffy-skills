@@ -123,7 +123,7 @@ Confetti on lesson completion. No blocks.
 |---|---|---|---|---|---|
 | `confetti_lessoncompleted` | Add instant confetti when a post is completed | checkbox | — | `"false"` | Fires on `nexus:lesson-completed` and at the end of an audio lesson (see Completion events). |
 | `editconfetti` | Test confetti | checkbox | — | `"false"` | Plays the confetti on every load inside the Kajabi editor only. Turn off when done. |
-| `lessonconfettistyle` | Confetti style | select | `"cannon"` (Confetti Cannon), `"fireworks"` (Fireworks), `"school"` (School Parade), `"rain"` (Rain), `"stars"` (Stars) | `"cannon"` | |
+| `lessonconfettistyle` | Confetti style | select | `"cannon"` (Confetti Cannon), `"fireworks"` (Fireworks), `"school"` (School Parade), `"rain"` (Rain), `"stars"` (Stars), `"random"` (Random — picks one of the five styles each time) | `"cannon"` | |
 | `confetti_action_color` | Confetti color | color | hex or blank | `""` | Blank = theme `primary_color`. |
 
 ## Section: `post_completion` — "Jiffy - Completion Message"
