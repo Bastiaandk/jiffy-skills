@@ -71,7 +71,7 @@ XP is not visible in the Kajabi mobile app or a branded app: those ignore the th
 
 The popup shows on the product page only, also for a level reached on a post page (kept in localStorage until then; several level-ups merge into one popup). It opens with the box scaling in, the level icon bouncing in with a ring burst, then "Level 1 · Starter → Level 2 · Explorer" and the XP to the next level (`xp_next_text` / `xp_max_text`) fading in; confetti as set. With `xp_animations` off or reduced motion it simply appears.
 | `xp_levelup_confetti` | Confetti on level-up | checkbox | `true` / `false` | `"true"` | |
-| `xp_levelup_confetti_style` | Confetti style | select | `"cannon"`, `"fireworks"`, `"school"`, `"rain"`, `"stars"` | `"cannon"` | |
+| `xp_levelup_confetti_style` | Confetti style | select | `"cannon"`, `"fireworks"`, `"school"`, `"rain"`, `"stars"`, `"random"` (picks one of the five styles each time) | `"cannon"` | |
 | `xp_levelup_confetti_color` | Confetti color | color | hex or `""` | `""` | Blank: primary color. |
 | `box_background` | Popup background | color | hex or `""` | `""` | Blank: white. |
 | `box_text_color` | Popup text color | color | hex or `""` | `""` | Blank: dark grey. |

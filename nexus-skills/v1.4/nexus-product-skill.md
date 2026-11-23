@@ -126,7 +126,7 @@ Empty offer / ID list = never shows.
 #### Popup Content
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `confettistyle` | Confetti style | select | `"none"` (No Confetti), `"cannon"` (Confetti Cannon), `"fireworks"` (Fireworks), `"school"` (School Parade), `"rain"` (Rain), `"stars"` (Stars) | `"cannon"` | |
+| `confettistyle` | Confetti style | select | `"none"` (No Confetti), `"cannon"` (Confetti Cannon), `"fireworks"` (Fireworks), `"school"` (School Parade), `"rain"` (Rain), `"stars"` (Stars), `"random"` (Random — picks one of the five styles each time; since 1.4.0) | `"cannon"` | |
 | `confetti_action_color` | Confetti color | color | blank allowed | `""` | Blank = `primary_color`. Hidden when `confettistyle` = `"none"`. |
 | `contenttitle` | Shoutout | text | — | `"Congratulations!"` | Empty = no title. |
 | `contentname` | Add students name | checkbox | — | `"true"` | Appends the first name to the shoutout. |
