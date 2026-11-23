@@ -7,7 +7,7 @@
 ## Section: `jiffy_collections` — "Dashboard - Collections"
 Product homepage only. A stack of configurable collections: each `collection_banner` block is one
 collection with its own content source, style and styling. Collection settings are **block-level**;
-the section holds the outer margins and, from 1.3.2, the **Collection filter** (a bar above the
+the section holds the outer margins and, from 1.4.0, the **Collection filter** (a bar above the
 collections that lets a student show one group of collections, or everything from a group onward). Cards are filled client-side from the outline data cache
 (`NexusDataCache`), so a collection depends on the sidebar outline markup being in the page.
 
@@ -21,8 +21,8 @@ collections that lets a student show one group of collections, or everything fro
 |---|---|---|---|---|---|
 | `margin_mobile` | Outside spacing all collections | spacer | px | placeholder 10/10/10/10 | ≤767px. Blank side = 10. |
 
-### Collection filter (since 1.3.2)
-Section level; on a theme below 1.3.2 these settings do not exist, do not write them. The bar renders above all collections and lists the distinct **Filter titles** of the
+### Collection filter (since 1.4.0)
+Section level; on a theme below 1.4.0 these settings do not exist, do not write them. The bar renders above all collections and lists the distinct **Filter titles** of the
 collection blocks (`filter_title`, see the block table) in block order, first appearance wins. A
 collection without a title never gets a button and is always shown. The student's choice is kept in
 `localStorage` (`nexus-filter-v1-{productId}-{memberId}`) and applied before the collections paint;
@@ -60,7 +60,7 @@ nothing (the editor shows a note). Everything below `filter_mode` is hidden whil
 | `show_finished` | Finished posts & categories | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"show"` | `hide` drops completed posts and fully completed (sub)categories; for `outline_categories` it drops completed top-level categories. Always forced to show in the editor. Hidden when `collection_content` = `replay`, `continue_watching`, `demo`, `favorites` (but still read — see Pitfalls). |
 | `show_two` | Mobile posts per row | pill_tabs | `"one"` (1), `"two"` (2) | `"two"` | ≤767px. Hidden when `collection_type` = `lines`, `slider3`, `slider4`, `sliderbanner`. |
 | `heading` | Collection heading | rich_text | HTML | `"<h4>Collection Title</h4>"` | Title above the collection. |
-| `filter_title` | Filter title | text | one or more titles, comma separated | `""` | Since 1.3.2; Collection filter only (section setting `filter_mode`). The button text for this collection; same title on several blocks = one button. Empty = no button, always shown. Matching is case- and spacing-insensitive (`Level 3` = `level 3`); titles of several words work, quotes, backslashes and `<` `>` are ignored in the match. |
+| `filter_title` | Filter title | text | one or more titles, comma separated | `""` | Since 1.4.0; Collection filter only (section setting `filter_mode`). The button text for this collection; same title on several blocks = one button. Empty = no button, always shown. Matching is case- and spacing-insensitive (`Level 3` = `level 3`); titles of several words work, quotes, backslashes and `<` `>` are ignored in the match. |
 
 #### Display Conditions
 | Setting ID | Label | Type | Values / range | Default | Notes |
