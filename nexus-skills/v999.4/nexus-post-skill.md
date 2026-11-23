@@ -20,7 +20,7 @@ Button bar under the header. No blocks. Below 992px every button shows its icon 
 | `show_badges` | Badges | pill_tabs | `"show"`, `"hide"` | `"show"` | The Badges button opens the badges area (see Pitfalls). |
 | `show_lesson_completion` | Lesson Completion | pill_tabs | `"show"`, `"hide"` | `"show"` | The "Mark as complete" toggle. |
 | `show_favorite` | Favorite | pill_tabs | `"show"`, `"hide"` | `"show"` | Favorite toggle; favorited lessons appear on the Favorites tab. |
-| `show_xp` | XP & level | pill_tabs | `"show"`, `"hide"` | `"show"` | XP chip that links to the Rewards tab; below 992px only the XP icon (`icon_xp`, Jiffy - Icons), like the other buttons. The icon takes the XP Icon color with Button fill None, the button text when filled. Only visible when `jiffy_xp.xp_enabled` = `"show"` (see the xp skill). |
+| `show_xp` | XP & level | pill_tabs | `"show"`, `"hide"` | `"show"` | XP chip; hover shows level, bar and XP to the next level; below 992px only the XP icon (`icon_xp`, Jiffy - Icons), like the other buttons. The icon takes the XP Icon color with Button fill None, the button text when filled. Only visible when `jiffy_xp.xp_enabled` = `"show"` (see the xp skill). |
 | `show_pagination` | Prev/Next | pill_tabs | `"show"`, `"hide"` | `"show"` | Each button only renders when a previous/next post exists. |
 | `sticky_action_bar` | Make action bar sticky | pill_tabs | `"yes"` (Yes), `"no"` (No) | `"no"` | Sticks under the header while scrolling. |
 
