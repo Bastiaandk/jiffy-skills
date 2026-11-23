@@ -16,9 +16,11 @@ Button bar under the header. No blocks. Below 992px every button shows its icon 
 | `icon_alignment_mobile` | Position mobile | pill_tabs | `"center"` (Center), `"between"` (Space between) | `"center"` | Below 992px. |
 | `show_home` | Home | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"show"` | Links to the product homepage. |
 | `show_duration` | Duration | pill_tabs | `"show"`, `"hide"` | `"show"` | Video lessons only; hidden on mobile. |
+| `show_community` | Community | pill_tabs | `"show"`, `"hide"` | `"hide"` | Button between Downloads and Badges. Opens the community popup when the sidebar's Community is set to Popup (the sidebar renders the popup on every page); otherwise links to `/products/communities`. Hidden on the live site when the course has no community or the widget is not configured; the editor shows it. |
 | `show_badges` | Badges | pill_tabs | `"show"`, `"hide"` | `"show"` | The Badges button opens the badges area (see Pitfalls). |
 | `show_lesson_completion` | Lesson Completion | pill_tabs | `"show"`, `"hide"` | `"show"` | The "Mark as complete" toggle. |
 | `show_favorite` | Favorite | pill_tabs | `"show"`, `"hide"` | `"show"` | Favorite toggle; favorited lessons appear on the Favorites tab. |
+| `show_xp` | XP & level | pill_tabs | `"show"`, `"hide"` | `"show"` | XP chip that links to the Rewards tab; below 992px only the XP icon (`icon_xp`, Jiffy - Icons), like the other buttons. The icon takes the XP Icon color with Button fill None, the button text when filled. Only visible when `jiffy_xp.xp_enabled` = `"show"` (see the xp skill). |
 | `show_pagination` | Prev/Next | pill_tabs | `"show"`, `"hide"` | `"show"` | Each button only renders when a previous/next post exists. |
 | `sticky_action_bar` | Make action bar sticky | pill_tabs | `"yes"` (Yes), `"no"` (No) | `"no"` | Sticks under the header while scrolling. |
 
@@ -32,19 +34,30 @@ Blank text = icon only.
 | `next` | Next button | text | — | `"Next"` | |
 | `home` | Home button | text | — | `"Home"` | |
 | `downloads` | Download button | text | — | `"Downloads"` | |
+| `community` | Community button | text | — | `"Community"` | Hidden when `show_community` = `"hide"`. Icon only below 992px. |
 | `badges` | Badges button | text | — | `"Badges"` | Hidden when `show_badges` = `"hide"`. |
 | `complete` | Complete button | text | — | `"Complete Lesson"` | Shown while the lesson is not completed. Hidden when `show_lesson_completion` = `"hide"`. |
 | `completed` | Completed button | text | — | `"Lesson Completed"` | Shown once completed. Hidden when `show_lesson_completion` = `"hide"`. |
 | `favorite` | Favorite button | text | — | `"Favorite"` | Hidden when `show_favorite` = `"hide"`. |
 
 ### Action Bar Styling
+Two headers in the editor: "Action bar" (the bar itself) and "Button styling" (every button in the bar: Home, Downloads, Community, Badges, Mark as complete, Favorite, Prev/Next, the XP chip and the duration badge).
+
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `icon_font_size` | Font size | range | 10–32 px | `"14"` | Button text and icon size. |
-| `background_color` | Background color | color | hex or blank | `""` | Blank = theme setting `text_area_background`. |
-| `text_color` | Text color | color | hex or blank | — | Also the button border and the fill of active buttons (completed, favorited, open). Blank = `text_light`/`text_dark`, picked by background brightness. |
-| `hover_color` | Hover color | color | hex or blank | — | Button hover background. Blank = background mixed 50% with black (light bar) or white (dark bar). |
-| `show_shadow` | Show shadow | checkbox | — | `false` | |
+| `background_color` | Background color | color | hex or blank | `""` | Bar background. Blank = theme setting `text_area_background`. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the bar background. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Hidden when the gradient is `"none"`. |
+| `show_shadow` | Show shadow | checkbox | `true`/`false` | `"true"` | Shadow under the bar and on the buttons. |
+| `icon_font_size` | Font size | range | 10–32 px | `"14"` | Icons and button text; button padding scales with it. |
+| `text_color` | Text color | color | hex or blank | — | Text and icons of the bar and of outlined buttons. Blank: light or dark from the bar background. |
+| `button_fill` | Button color | select | `"none"` (None), `"solid"`, `"gradient"` | `"none"` | None = outlined buttons (the classic look). Solid and Gradient fill them; the text turns light or dark to match the color. Active buttons (completed, favorite on, downloads or badges open) are filled when None, outlined when Solid or Gradient. |
+| `button_color` | Color | color | hex or `""` | `""` | Border color for None, fill for Solid and Gradient. Blank: the text color. |
+| `button_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic shade of the color. Hidden unless `button_fill` = `"gradient"`. |
+| `button_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Hidden unless `button_fill` = `"gradient"`. |
+| `button_radius` | Border radius | range | 0–30 px | `"4"` | 30 gives pill-shaped buttons. |
+| `hover_color` | Hover color | color | hex or blank | — | Button fill on hover; blank = an automatic tint. Hidden when `button_fill` = `"gradient"` (a gradient dims on hover instead). |
 
 ### Downloads Styling
 | Setting ID | Label | Type | Values / range | Default | Notes |
@@ -113,20 +126,22 @@ Confetti on lesson completion. No blocks.
 | `confetti_action_color` | Confetti color | color | hex or blank | `""` | Blank = theme `primary_color`. |
 
 ## Section: `post_completion` — "Jiffy - Completion Message"
-Popup after a lesson is completed. Section settings = the default popup for every lesson; Individual Popup blocks replace it on specific lessons.
+Popup after a lesson is completed. One popup for every lesson; there are no per-lesson popups in 1.4. No blocks.
 
 ### Top level (no group)
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `show-popup` | Use a completion popup | pill_tabs | `"show"` (Yes), `"hide"` (No) | `"show"` | `"hide"` turns off the default and all individual popups. Confetti is not affected. |
+| `show-popup` | Use a completion popup | pill_tabs | `"show"` (Yes), `"hide"` (No) | `"show"` | `"hide"` turns off the popup. Confetti is not affected. |
+| `show_xp` | XP earned in popup | pill_tabs | `"show"`, `"hide"` | `"show"` | A large "+XP" with the XP icon, a "You reached …" label on a new level and the XP to the next level, in the popup. On close the XP flies to the action bar chip (see the xp skill). Only visible when XP & Levels is on. |
 
 ### General popup
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `show-edit` | Edit popup completion | pill_tabs | `"true"` (Edit), `"false"` (Hide) | `"false"` | `"true"` keeps the default popup open in the Kajabi editor. Editor only; set back to `"false"` when done. |
-| `show-avatar` | Show avatar (Refresh page after update) | checkbox | — | `"true"` | Student's avatar inside a ring showing course completion %. |
+| `show-edit` | Edit popup completion | pill_tabs | `"true"` (Edit), `"false"` (Hide) | `"false"` | `"true"` keeps the popup open in the Kajabi editor. Editor only; set back to `"false"` when done. |
+| `show_progress_avatar` | Progress avatar | pill_tabs | `"show"`, `"hide"` | `"show"` | The ring showing course completion % at the top of the popup. Hide removes it (and hides `show-avatar`). |
+| `show-avatar` | Show avatar (Refresh page after update) | checkbox | — | `"true"` | Student's avatar inside the progress ring. Hidden when `show_progress_avatar` = hide. |
 | `message_text` | Title | text | — | `"Nice Work,"` | Followed by the student's first name. |
-| `lesson_text` | Lesson text | rich_text | — | `"You just completed the lesson:"` | Followed directly by the lesson title. |
+| `lesson_text` | Lesson text | rich_text | — | `"You just completed the lesson:"` | Shown small and lighter, with the lesson title bold below it. |
 | `cta-action` | Button action | select | `"video"` (Next Video), `"dashboard"` (Course Home) | `"video"` | `"video"`: no button on the last lesson. |
 | `next_text` | Next text | text | — | `"Go to Next Lesson"` | Hidden when `cta-action` = `"dashboard"`. |
 | `cancel_text` | Cancel text | text | — | `"Cancel"` | Closes the popup (as do Esc and a click on the overlay). |
@@ -139,30 +154,16 @@ Popup after a lesson is completed. Section settings = the default popup for ever
 | `text_color` | Text color | color | hex | `"#000000"` | Blank = stylesheet default. |
 | `button_color` | Button background color | color | hex | `"#000000"` | Blank = `#000000`. Hover is 10% darker. |
 | `button_text_color` | Button text color | color | hex | `"#ffffff"` | Blank = `#ffffff`. |
+| `button_gradient` | Button gradient | select | `"none"`, `"linear"` | `"none"` | From `button_color`, fixed 135°. A gradient button dims on hover. |
+| `button_gradient_color` | Button gradient second color | color | hex or blank | `""` | Blank = an automatic shade of the button color. Hidden while `button_gradient` = none. |
+| `button_radius` | Button border radius | range | 0–30 | `"4"` | |
+| `box_radius` | Box border radius | range | 0–40 | `"16"` | The box also has a soft shadow and scales in (pop-in) when it opens; no pop-in with reduced motion. |
 | `box_padding` | Box padding | spacer | px | placeholder 40/40/10/40 | Blank side = 40/40/10/40 (top/right/bottom/left). |
-
-### Block: `gamify_post_completion_individual` — "Individual Popup"
-Replaces the default popup on the listed lessons. No auto-advance, no avatar. Defaults match the general popup except where noted.
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
-| `show-edit-block` | Edit popup completion | pill_tabs | `"show"` (Edit), `"hide"` (Hide) | `"hide"` | `"show"` shows this popup in the editor, with a label listing the matched lesson titles. Editor only. |
-| `lesson_id` | Lesson IDs (comma separated) | text | post IDs | `""` | The lessons that use this popup (any listed lesson, not all). Commas or spaces. Empty = never used. |
-| `image` | Image | image_picker | — | — | Shown above the title when set. |
-| `image_size` | Image size | range | 50–400 px | `"200"` | Max width. |
-| `title` | Title | text | — | `"Congratulations!"` | No first name appended. |
-| `message` | Message | rich_text | — | `"You've completed this lesson!"` | No lesson title appended. |
-| `button_text` | Button text | text | — | `"Continue"` | |
-| `button_action_type` | Button action | select | `"next"` (Next lesson), `"home"` (Course home), `"url"` (Custom URL) | `"url"` | No button when the target is empty (`"next"` on the last lesson, `"url"` without URL). |
-| `button_action` | URL | action | URL | — | Hidden when `button_action_type` = `"next"` or `"home"`. |
-| `link_target` | Open in new tab | checkbox | — | `"false"` | Hidden when `button_action_type` = `"next"` or `"home"`. |
-| `cancel_text` | Cancel | text | — | `"Cancel"` | |
-| `overlay_background` … `box_padding` | as general popup | | | same | Same six settings, same fallbacks. |
 
 ## Completion events
 - The popup and confetti fire on `nexus:lesson-completed`, sent once per page by: a real student click on "Mark as complete" while the lesson is not yet completed (Kajabi's own auto-complete at ~90% of a video does not count), or the end of the video (unless the student already completed it with the button on this page). Fullscreen is exited first.
 - At the end of an audio lesson, confetti fires and the popup fades in (no countdown).
 - With `show_lesson_completion` = `"hide"` only the video/audio end can trigger them; text-only lessons never do.
-- Popup choice: the Individual Popup whose `lesson_id` contains the current post ID; otherwise the default popup. The default popup renders also when the section has no blocks.
 
 ## Section: `post_paywall` — "Paywall"
 Modal over the lesson when Kajabi shows the post as paywalled (paywall enabled in the course settings). Also on the live session page. Content comes from blocks, rendered in `block_order`; the purchase button sits below them.
@@ -235,12 +236,13 @@ Extra button inside the modal, separate from the purchase button.
 | `btn_alignment` | Button alignment | align | `"left"`, `"center"`, `"right"` | `"center"` | Visible with `btn_width` = `"auto"`. |
 
 ## Pitfalls
+- A completion popup and lesson confetti fire once per real completion. Replaying a lesson that was already complete when the page loaded triggers neither.
 - **Badges sit in a hidden slide-down** under the action bar, opened only by the Badges button. With `show_badges` = `"hide"` students cannot reach the badges on the post page. Badge content and unlock rules are in the badges skill; only the area colours (`ba_*`) live here.
-- **Edit/test toggles** (`show-edit`, `show-edit-block`, `editconfetti`, `edit_paywall_modal`) only affect the Kajabi editor, but leave them off after a preview so the editor stays usable.
+- **Edit/test toggles** (`show-edit`, `editconfetti`, `edit_paywall_modal`) only affect the Kajabi editor, but leave them off after a preview so the editor stays usable.
 - `show-edit` is a pill with string values: write `"true"`/`"false"`, not booleans.
 - `lessonconfettistyle` "School Parade" is `"school"`.
-- Auto-advance does nothing on the last lesson and is not available on Individual Popups. The 8 s timer cannot be changed.
-- An Individual Popup is matched by **post** ID (from `get_course` lessons). If two blocks list the same post, both popups render on top of each other; keep each ID in one block.
+- Auto-advance does nothing on the last lesson. The 8 s timer cannot be changed.
+- `post_completion` has no blocks in 1.4: a different popup per lesson is not possible. Do not add `gamify_post_completion_individual` blocks; the editor does not offer them.
 - `margin_desktop` left/right have no effect; to narrow content use `kgvideo_width` / `kgpost_width`.
 - Paywall block margins are **rem**, not px: `"1"` = 16px. Blank = 0, not the 1/0/1/0 placeholder.
 - The paywall only appears when the course has a paywall enabled in Kajabi; no theme setting turns it on for students.

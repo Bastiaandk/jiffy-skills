@@ -48,6 +48,8 @@ All `"show"` (Show) / `"hide"` (Hide) unless noted; all hidden in the editor whe
 | `logo_type` | Show | pill_tabs | `"image"` (Logo), `"title"` (Title), `"custom"` (Custom) | `"title"` | Title = product title. |
 | `custom_logo_text` | Custom title | text | — | — | Used when `logo_type` = `"custom"`; blank = empty title. Hidden when `logo_type` = `"image"` or `"title"`. |
 | `logo` | Logo image | image_picker | suggested 360×80 | — | Used when `logo_type` = `"image"`. Hidden when `logo_type` = `"title"` or `"custom"`. |
+| `logo_link` | Logo / title link | select | `"none"` (No link), `"library"` (Website Library), `"site_home"` (Website Home Page), `"community"` (Community), `"course"` (Product Home), `"custom"` (Custom URL) | `"none"` | Wraps the logo, title or custom title in a link; same destinations as the back link (Community opens in `_top`). On mobile the sidebar closes first. |
+| `logo_link_custom` | Custom URL | text | URL | — | Used when `logo_link` = `"custom"`; blank = no link. Hidden otherwise. |
 
 ### Item Titles
 | Setting ID | Label | Type | Values / range | Default | Notes |
@@ -129,7 +131,7 @@ Rendered per `show_external`: inside the dropdown (`"show"`), as top-level items
 | `new_tab` | Open in new tab | checkbox | — | `""` | `true` = `target="_blank"`. |
 
 ### Block: `gamify_card` — "Jiffy Card"
-All card settings → **`nexus-blocks-skill.md`**. Rendered below the navigation, hidden while the slider is collapsed. The sidebar card differs from the dashboard card only in:
+All card settings → **`nexus-blocks-skill.md`**, which also covers the sidebar's `code` block (Jiffy Custom Code; same `background_color` fallback as the card). Rendered below the navigation, hidden while the slider is collapsed. The sidebar card differs from the dashboard card only in:
 
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|

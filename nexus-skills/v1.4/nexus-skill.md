@@ -42,10 +42,10 @@ Setting labels are given in the sub-skills; trainers describe what they see ("Sm
 
 | Page | Sections (in order) |
 |---|---|
-| Product homepage | `header`, `product_outline`, `product_welcome`, `product_section_top`, `product_section_middle`, `jiffy_collections`, `product_section_bottom`, `jiffy_onboarding`, `jiffy_popups` (badges appear only through a Badge Area block in a dashboard section) |
-| Post / lesson | `header`, `product_outline`, `post_actions`, `jiffy_post_media`, `jiffy_post_body`, `jiffy_badges` (slide-down under the Badges button), `jiffy_post_confetti`, `post_completion`, `post_paywall` |
+| Product homepage | `header`, `product_outline`, `product_welcome`, `product_section_top`, `jiffy_collections`, `product_section_bottom`, `jiffy_popups`, `jiffy_xp` (data only, last) (badges appear only through a Badge Area block in a dashboard section) |
+| Post / lesson | `header`, `product_outline`, `post_actions`, `jiffy_post_media`, `jiffy_post_body`, `jiffy_badges` (slide-down under the Badges button), `jiffy_post_confetti`, `post_completion`, `post_paywall`, `jiffy_xp` (data only) |
 | Category | `header`, `product_outline`, `category_progress_bar`, `jiffy_category` |
-| Categories (tabs) | `header`, `product_outline`, `jiffy_categories` (Modules), `jiffy_categories_favorites`, `jiffy_categories_rewards`, `jiffy_categories_downloads` |
+| Categories (tabs) | `header`, `product_outline`, `jiffy_categories` (Modules), `jiffy_categories_favorites`, `jiffy_categories_rewards` (embeds `jiffy_badges` and the XP overview), `jiffy_categories_downloads`, `jiffy_xp` (data only) |
 | Search, announcements, comment, live session | `header`, `product_outline` plus Kajabi-native sections |
 
 | Section | Name in editor | Sub-skill |
@@ -53,8 +53,7 @@ Setting labels are given in the sub-skills; trainers describe what they see ("Sm
 | `header` | Header (global) | header |
 | `product_outline` | Sidebar (global) | sidebar |
 | `product_welcome` | Dashboard - Progress Banner | product |
-| `product_section_top` / `_middle` / `_bottom` | Dashboard - Top / Middle / Bottom Section | product (section), blocks (its blocks) |
-| `jiffy_onboarding` | Jiffy - Onboarding | product |
+| `product_section_top` / `_bottom` | Dashboard - Top / Bottom Section | product (section), blocks (its blocks) |
 | `jiffy_popups` | Jiffy - Popups | product |
 | `jiffy_collections` | Dashboard - Collections | collections |
 | `post_actions` | Post - Action Bar | post |
@@ -68,14 +67,19 @@ Setting labels are given in the sub-skills; trainers describe what they see ("Sm
 | `jiffy_categories` | Categories - Collection | categories |
 | `jiffy_categories_favorites` / `_rewards` / `_downloads` | Jiffy - Favorites / Rewards / Downloads | categories |
 | `jiffy_badges` | Jiffy - Badges (global) | badges |
+| `jiffy_xp` | Jiffy - XP & Levels (global) | xp |
 | — (top-level `settings`) | Theme settings: fonts, colors, icons, pagination | preferences |
 
-Content blocks (Jiffy Card, Form, Certificate, Coaching Widget, Group, Badge Area) in the Dashboard
-Top / Middle / Bottom, Jiffy - Rewards, Jiffy - Downloads and Sidebar sections are covered by the
+Content blocks (Jiffy Card, Custom Code, Form, Certificate, Coaching Widget, Group, Badge Area) in the Dashboard
+Top / Bottom, Jiffy - Rewards, Jiffy - Downloads and Sidebar sections are covered by the
 `blocks` sub-skill; the section's own sub-skill covers its section-level settings.
 
 `announcements`, `live_session_details`, `search_results` and `community_widget` are Kajabi-native
 sections, covered by Kajabi's own guidance — not by these skills.
+
+Nexus 1.4 has no `jiffy_onboarding` section. `product_section_middle` (Dashboard - Middle Section)
+exists in the theme files, but the 1.4 product page does not render it: edits there have no
+visible effect. Put middle content in Dashboard - Top or Bottom instead, and tell the trainer.
 
 ### Routing — fetch before writing
 
@@ -92,6 +96,7 @@ Base URL: `https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-
 | category | [nexus-category-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-category-skill.md) |
 | categories | [nexus-categories-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-categories-skill.md) |
 | badges | [nexus-badges-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-badges-skill.md) |
+| xp | [nexus-xp-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-xp-skill.md) |
 | preferences | [nexus-preferences-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v1.4/nexus-preferences-skill.md) |
 
 Fetch every sub-skill the task touches before the first write. Fetching a link from a file read

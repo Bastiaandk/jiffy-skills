@@ -67,6 +67,9 @@ cards. The category is always the page's own. No blocks; all settings are sectio
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Background color | color | hex or `""` | `""` | Collection box background. Blank = transparent. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the collection background. With a gradient the slider edges fade with a mask, like a collection without own colour. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Hidden when the gradient is `"none"`. |
 | `show_shadow` | Section shadow | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"hide"` | Pill with `show`/`hide`, not a checkbox. |
 | `border_type` | Border type | select | `"none"` (None), `"solid"` (Solid), `"dotted"` (Dotted), `"dashed"` (Dashed), `"double"` (Double), `"ridge"` (Ridge) | `"none"` | Collection box border. |
 | `border_width` | Border width | range | 0–50 px | `"1"` | Blank = 4. |

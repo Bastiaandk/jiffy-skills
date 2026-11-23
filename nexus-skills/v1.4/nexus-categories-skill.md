@@ -68,6 +68,9 @@ The Banner Layout (`banner_*`), Focus Card Settings (`*focus*`) and Preview Card
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Background color | color | hex or `""` | `""` | Behind the whole collection. Blank → transparent. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the collection background. With a gradient the slider edges fade with a mask, like a collection without own colour. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Hidden when the gradient is `"none"`. |
 | `show_shadow` | Section shadow | pill_tabs | `"show"`, `"hide"` | `"hide"` | |
 | `border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"none"` | |
 | `border_width` | Border width | range | 0–50 px | `"1"` | Blank → 4. |
@@ -113,20 +116,57 @@ Card fields act on posts here: `show_duration` = video duration, `show_favorite`
 
 ## Section: `jiffy_categories_rewards` — "Jiffy - Rewards"
 
-Rewards tab. Renders the global badges section (`jiffy_badges`) above or below a row of blocks. Blocks: yes.
+Rewards tab, in a fixed order: the XP overview (when XP & Levels is on), the global badges section (`jiffy_badges`) above or below the blocks, and the row of blocks. Blocks: yes.
 
 ### Top-level settings (no group)
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `show_awards_admin` | Preview Rewards in editor | checkbox | `true`/`false` | `"false"` | Editor-only tab preview. |
+| `xp_overview` | XP overview | pill_tabs | `"show"`, `"hide"` | `"show"` | Always the first part of the tab. Only visible when `jiffy_xp.xp_enabled` = `"show"`; its texts and styling are in the XP & Levels Overview group below. |
+| `badges_position` | Badges | select | `"top"` (Above the blocks), `"bottom"` (Below the blocks), `"none"` (Do not show badges) | `"top"` | Where `jiffy_badges` renders. Badge content and badge styling → badges sub-skill; the `ba_*` colours below. |
 
 ### Badge Area Styling
+Hidden in the editor when `badges_position` = `"none"`.
+
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `badges_position` | Badges Area position | select | `"top"` (Top of section), `"bottom"` (Bottom of section), `"none"` (Do not show badges) | `"top"` | Where the `jiffy_badges` section renders. Badge content and badge styling → badges sub-skill. |
 | `ba_background_color` | Background color | color | hex or `""` | — | Overrides the badges section background on this tab only. |
 | `ba_text_color` | Text color | color | hex or `""` | — | Overrides badge text colour on this tab only. Blank → auto-contrast with the badge-area background. |
 | `ba_shadow` | Show shadow | checkbox | `true`/`false` | `false` | Shadow on the badge area. |
+
+With `badges_position` = `"none"` the badges still render hidden, so XP & Levels can count their XP.
+
+### Group: XP & Levels Overview
+The XP overview on the Rewards tab. Only visible when `jiffy_xp.xp_enabled` = `"show"`; points, levels and
+the XP icon and bar colours live in `jiffy_xp` (xp sub-skill). The overview is always the first part of the tab, above the badges. Every setting below except
+`xp_overview` is hidden when `xp_overview` = `"hide"`; the texts of a hidden part are hidden too.
+
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `xp_show_max` | Maximum XP | pill_tabs | `"show"`, `"hide"` | `"show"` | The "/ 1,120" after the total. |
+| `xp_show_stats` | Progress blocks | pill_tabs | `"show"`, `"hide"` | `"show"` | The blocks share the row; badges and bonus hide by themselves when there are none. |
+| `xp_show_levels` | Levels list | pill_tabs | `"show"`, `"hide"` | `"show"` | With one of the two lists hidden, the other takes the full width. |
+| `xp_show_earn` | How to earn XP | pill_tabs | `"show"`, `"hide"` | `"show"` | |
+| `xp_title` | Title | text | — | `"Your progress"` | |
+| `xp_stat_lessons` / `xp_stat_modules` / `xp_stat_badges` / `xp_stat_bonus` | Lessons / Modules / Badges / Bonus lessons | text | — | `"Lessons"`, `"Modules"`, `"Badges"`, `"Bonus lessons"` | Stat labels. The badges and bonus stats hide when there are none. |
+| `xp_ladder_title` | Levels title | text | — | `"Levels"` | |
+| `xp_earn_title` | How to earn title | text | — | `"How to earn XP"` | |
+| `xp_earn_lesson` / `_module` / `_course` / `_badge` / `_bonus` | Earn: … | text | — | `"Complete a lesson"`, `"Complete a module"`, `"Complete the course"`, `"Unlock a badge"`, `"Complete a bonus lesson"` | A row with 0 XP is hidden. |
+| `xp_background_color` | Background color | color | hex or `""` | `""` | Blank: none. |
+| `xp_background_gradient` | Background Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the overview background. |
+| `xp_background_gradient_color` | Background Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `xp_background_gradient_angle` | Background Gradient angle | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
+| `xp_text_color` | Text color | color | hex or `""` | `""` | Blank: theme text color. |
+| `xp_block_background` | Background color (XP blocks styling) | color | hex or `""` | `""` | The stat blocks and the two lists. Blank: no background, the lists sit flush. With a colour the blocks and lists get it (lists with padding) and the text turns light or dark to match. |
+| `xp_block_gradient` | Gradient (XP blocks styling) | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the blocks background (blank: page colour). |
+| `xp_block_gradient_color` | Gradient second color (XP blocks styling) | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `xp_block_gradient_angle` | Gradient angle (XP blocks styling) | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
+| `xp_shadow` | Add shadow | checkbox | `true` / `false` | `"false"` | |
+| `xp_border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"none"` | |
+| `xp_border_width` | Border width | range | 0–50 px | `"1"` | Hidden when `xp_border_type` = `"none"`. |
+| `xp_border_color` | Border color | color | hex or `""` | `""` | Blank: the overview's text colour (`xp_text_color` or the theme text colour). Hidden when `xp_border_type` = `"none"`. |
+| `xp_border_radius` | Border radius | range | 0–40 px | `"8"` | Section, stat blocks and the two lists. |
+| `xp_padding` | Padding | spacer | top/right/bottom/left px | placeholder 20 | Empty side: 20px. |
 
 The `ba_*` override is all-or-nothing: as soon as any of the three is set, the badge area gets a forced background — `ba_background_color`, or theme `text_area_background` when that one is blank. With all three empty/off, the badges section keeps its own colours.
 
@@ -144,6 +184,9 @@ The `ba_*` override is all-or-nothing: as soon as any of the three is set, the b
 | `bgimage` | Background image | image_picker | — | `""` | Hidden when `showbgimage` = false. |
 | `bgimage_blur` | Background image blur | range | 0–20 px | `"0"` | Hidden when `showbgimage` = false. |
 | `background_color` | Background color | color | hex or `""` | — | Overlay on top of the image. Blank → transparent; text colour auto-contrasts with page background. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the section background (own colour, else the page colour). Hidden and inactive while `showbgimage` is on: the image wins. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
 | `shadow` | Add shadow to section | checkbox | `true`/`false` | `"false"` | |
 | `border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"none"` | |
 | `border_width` | Border width | range | 0–50 px | `"4"` | Blank → no border. |
@@ -163,18 +206,18 @@ The `ba_*` override is all-or-nothing: as soon as any of the three is set, the b
 | `margin_mobile` | Outside spacing | spacer | px | placeholder 10/10/10/10 | ≤767px. Blank side → 10. |
 
 ### Blocks
-`gamify_card` ("Jiffy Card"), `gamify_certificate` ("Jiffy Certificate") and `coaching_scheduling_widget` ("Coaching Scheduling Widget") → **`nexus-blocks-skill.md`**. Their schemas are identical to the dashboard blocks, including `width` `"4"`, `background_color` `"#ffffff"` and `margin_desktop`/`margin_mobile` default 5/5/5/5. `block_break` (Place on its own row) works here. No Group, Form or Badge Area blocks.
+`gamify_card` ("Jiffy Card"), `code` ("Jiffy Custom Code"), `gamify_certificate` ("Jiffy Certificate") and `coaching_scheduling_widget` ("Coaching Scheduling Widget") → **`nexus-blocks-skill.md`**. Their schemas are identical to the dashboard blocks, including `width` `"4"`, `background_color` `"#ffffff"` and `margin_desktop`/`margin_mobile` default 5/5/5/5. `block_break` (Place on its own row) works here. No Group, Form or Badge Area blocks.
 
 ---
 
 ## Section: `jiffy_categories_downloads` — "Jiffy - Downloads"
 
-Downloads tab. A row of Jiffy Cards (typically one per download). Blocks: yes. No badges.
+Downloads tab. A row of Jiffy Cards (typically one per download), plus Jiffy Custom Code blocks. Blocks: yes. No badges.
 
-Same settings as `jiffy_categories_rewards` minus the Badge Area Styling group, with `show_downloads_admin` ("Preview Downloads in editor", checkbox, default `"false"`) instead of `show_awards_admin`. Groups, values, defaults and fallbacks are identical, including `border_width` `"4"`.
+Same settings as `jiffy_categories_rewards` minus `xp_overview`, `badges_position`, the XP & Levels Overview and Badge Area Styling groups, with `show_downloads_admin` ("Preview Downloads in editor", checkbox, default `"false"`) instead of `show_awards_admin`. Groups, values, defaults and fallbacks are identical, including `border_width` `"4"`.
 
 ### Block: `gamify_card` — "Jiffy Card"
-Only block type. All settings → **`nexus-blocks-skill.md`**. Identical to the dashboard `gamify_card` except:
+All settings → **`nexus-blocks-skill.md`**; the other block type here is `code` (Jiffy Custom Code, same margin rule as below). Identical to the dashboard `gamify_card` except:
 
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|

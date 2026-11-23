@@ -4,26 +4,27 @@
 > conversation, fetch it now. It holds the payload shapes, value formats and working rules
 > (send only changed keys, read back after every write), which this file does not repeat.
 
-Covers the content blocks: Jiffy Card, Jiffy Form, Jiffy Certificate, Coaching Scheduling Widget, Group and Badge Area Block. Section-level settings of the sections that hold them → product skill (dashboard sections), categories skill (Rewards, Downloads), sidebar skill (Sidebar, plus its Filter and External Link blocks).
+Covers the content blocks: Jiffy Card, Jiffy Custom Code, Jiffy Form, Jiffy Certificate, Coaching Scheduling Widget, Group and Badge Area Block. Section-level settings of the sections that hold them → product skill (dashboard sections), categories skill (Rewards, Downloads), sidebar skill (Sidebar, plus its Filter and External Link blocks).
 
 ## Where each block is available
-| Block type | Name in editor | Dashboard Top / Middle / Bottom | Jiffy - Rewards | Jiffy - Downloads | Sidebar (global) |
+| Block type | Name in editor | Dashboard Top / Bottom | Jiffy - Rewards | Jiffy - Downloads | Sidebar (global) |
 |---|---|---|---|---|---|
 | `gamify_card` | Jiffy Card | yes | yes | yes | yes |
+| `code` | Jiffy Custom Code | yes | yes | yes | yes |
 | `gamify_form` | Jiffy Form | yes | — | — | — |
 | `gamify_certificate` | Jiffy Certificate | yes | yes | — | — |
 | `coaching_scheduling_widget` | Coaching Scheduling Widget | yes | yes | — | — |
 | `group` | Group | yes | — | — | — |
 | `badge_area` | Badge Area Block | yes | — | — | — |
 
-Section IDs: `product_section_top` / `product_section_middle` / `product_section_bottom`, `jiffy_categories_rewards`, `jiffy_categories_downloads`, `product_outline`. Block settings live in `sections.<section_id>.blocks.<block_id>.settings`.
+Section IDs: `product_section_top` / `product_section_bottom`, `jiffy_categories_rewards`, `jiffy_categories_downloads`, `product_outline`. Block settings live in `sections.<section_id>.blocks.<block_id>.settings`. Nexus 1.4 has no Dashboard - Middle Section on the product page: never write blocks to `product_section_middle`.
 
 ## Per-section differences
 The block schemas are identical in every section except for the rows below. Everything else in this file (settings, defaults, placeholders) applies everywhere the block is available.
 
 | Section | Block | Difference |
 |---|---|---|
-| Dashboard Top / Middle / Bottom | all | Reference schema; the three sections are identical. |
+| Dashboard Top / Bottom | all | Reference schema; the two sections are identical. |
 | Jiffy - Rewards | card, certificate, coaching | No differences: `width` `"4"`, `background_color` `"#ffffff"`, `margin_desktop` / `margin_mobile` default 5/5/5/5. |
 | Jiffy - Downloads | `gamify_card` | `margin_desktop` / `margin_mobile`: no saved default, placeholder 5/5/5/5 (dashboard: default 5/5/5/5, placeholder 0). Blank side = 0, so a new Downloads card has no outside spacing unless you write it. |
 | Sidebar (global) | `gamify_card` | `width` default `"12"` (dashboard `"4"`): share of the 330px sidebar, `"12"` = full width. `background_color` default `""` (dashboard `"#ffffff"`): blank = transparent, the sidebar background shows through. Text-contrast fallback when the card background is blank: sidebar `background_color` → global `sidebar_background` (dashboard: section `background_color` → `page_background`). Gap between cards = sidebar `item_spacing`. Cards render below the navigation and are hidden while the desktop slider is collapsed. |
@@ -31,17 +32,20 @@ The block schemas are identical in every section except for the rows below. Ever
 `block_break` (Place on its own row) works in all four sections: each section loop adds a row break before and after the block. It is ignored inside a `group`.
 
 ## Shared groups
-`gamify_card`, `gamify_form`, `gamify_certificate` and `coaching_scheduling_widget` share the groups below (schema order: top-level fields, Display Conditions, block-specific groups, Background, Card Layout, Desktop Layout, Mobile Layout). Differences are listed per block.
+`gamify_card`, `gamify_form`, `gamify_certificate` and `coaching_scheduling_widget` share the groups below (schema order: top-level fields, Display Conditions, block-specific groups, Background, Card Layout, Desktop Layout, Mobile Layout). `code` shares Display Conditions and Background and has a trimmed Desktop/Mobile Layout (see its block). Differences are listed per block.
 
 ### Display Conditions (shared)
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `visibility` | Block visibility | pill_tabs | `"show"` (Show), `"conditional"` (Conditional) | `"show"` | |
 | `visibility_action` | When condition is met | pill_tabs | `"show"`, `"hide"` | `"show"` | Hidden when `visibility` = `"show"`. |
-| `visibility_trigger` | Trigger | select | `"offer"` (Offer), `"category"` (Category completed), `"post"` (Post completed) | `"offer"` | Hidden when `visibility` = `"show"`. |
+| `visibility_trigger` | Trigger | select | `"offer"` (Offer), `"category"` (Category completed), `"post"` (Post completed), `"date"` (Date period), `"level"` (Level reached) | `"offer"` | Hidden when `visibility` = `"show"`. |
 | `visibility_offer` | Select offer | offer | numeric offer ID | `""` | Condition = member currently owns the offer. Hidden unless trigger `offer`. |
 | `visibility_categories` | Category IDs | text | comma-separated IDs | `""` | **AND**: all listed categories complete. Checked server-side; matches top-level categories and their direct subcategories of this product; a category with 0 posts counts as complete; an unknown ID never completes. Hidden unless trigger `category`. |
 | `visibility_posts` | Post IDs | text | comma-separated IDs | `""` | **AND**: all listed posts completed. Checked in the browser from the outline cache: a "show" block stays hidden (and a "hide" block visible) until every listed post is in the cache. Hidden unless trigger `post`. |
+| `visibility_date_start` | Start date | text | date, write `YYYY-MM-DD` | `""` | Trigger `date`. Checked server-side against today in **UTC** (switches at midnight UTC). Blank = no start ("until"). Kajabi also reads `01-12-2026` (day first) and `December 1, 2026`, but write ISO: `03-04-2027` is read as 3 April. An unreadable date hides a Show block and shows a red editor note. Hidden unless trigger `date`. |
+| `visibility_date_end` | End date | text | date, write `YYYY-MM-DD` | `""` | Trigger `date`. Inclusive. Blank = no end ("from"). Both blank = condition never met (red editor note). Hidden unless trigger `date`. |
+| `visibility_level` | Level | range | 1–10 | `"2"` | Trigger `level`. Met from this level on: level N is the Nth step of the XP ladder as numbered on the Rewards tab (1 = start level, incl. the automatic base level). Checked in the browser by `nexus-xp.js`: a "show" block arrives hidden. Needs XP & Levels on (Jiffy - XP & Levels): without it a "show" block never shows and a "hide" block always shows; the editor note says "XP & Levels is off" in red, or names the level ("= Achiever (300 XP)"). Hidden unless trigger `level`. |
 
 A conditional block with no offer / no IDs renders for nobody (whatever the action). In the editor every block shows, with an indicator line describing the condition.
 
@@ -49,6 +53,9 @@ A conditional block with no offer / no IDs renders for nobody (whatever the acti
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Block background color | color | blank allowed | `"#ffffff"` (Sidebar: `""`) | Blank = transparent. Text colour auto-contrasts against block → section → `page_background` (Sidebar: block → sidebar `background_color` → `sidebar_background`). |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the card background. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
 | `shadow` | Add shadow to block | checkbox | — | `"true"` | |
 | `border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `""` | `""` = no border. |
 | `border_width` | Border width | range | 0–50 px | `"4"` | |
@@ -130,6 +137,23 @@ Then Display Conditions (shared).
 | `btn_border_radius` | Border radius | range | 0–100 px | `"4"` | |
 
 Then Background, Card Layout, Desktop/Mobile Layout (shared).
+
+## Block: `code` — "Jiffy Custom Code"
+Raw HTML, CSS and JavaScript, printed as-is (the same technique as Kajabi's own code block: a textarea, no sanitising). Available in all four sections and inside a Group. Deliberately bare: no inside spacing, text settings or button; the code brings its own. Unstyled by default: `background_color` `""` (transparent), `shadow` `"false"`, no border — the Background group is there when you want it. The block still gets the shared wrapper from `block_styles`: width, outside spacing, and headings and paragraphs inside it auto-contrast against the block (or section) background.
+
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `width` | Width | grid | `"1"`–`"12"` (twelfths) | `"6"` | |
+| `code` | HTML, CSS and JavaScript | textarea | raw markup | `""` | Wrap CSS in `<style>` and JavaScript in `<script>` tags. Liquid is not executed. A `<style>` here is page-wide; scope it with the block (`#block-<block id>`) when it must not leak. In the editor an empty block shows a placeholder line; for students it renders nothing. |
+
+Then Display Conditions (shared) and Background (shared, but defaults `background_color` `""` and `shadow` `"false"` in every section). Its layout groups are shorter than the card's:
+
+| Group | Settings |
+|---|---|
+| Desktop Layout | `show_block_desktop`, `block_break` (Place on its own row — moved here from Card Layout), `margin_desktop` |
+| Mobile Layout | `show_block_mobile`, `margin_mobile` |
+
+No `padding_desktop`, `padding_text`, `text_align`, `text_align_mobile` or `card_textcolor`. Mobile stacking follows the section's `two_column_mobile`, like every block. Margin defaults follow the section (dashboard/Rewards: real default 5/5/5/5; Downloads and Sidebar: placeholder only, blank = 0).
 
 ## Block: `gamify_form` — "Jiffy Form"
 A Kajabi form with optional autofill and a "wait for automations" popup.
@@ -279,7 +303,7 @@ Container that lays out child blocks in a row or column. Allowed children: `gami
 Child blocks are stored inside the group, not in the section's top-level `block_order`. Copy the exact nesting from a saved group in `get_theme_content`; if none exists, ask the trainer to add a group in the editor first.
 
 ## Block: `badge_area` — "Badge Area Block"
-Renders the global Jiffy - Badges section at this spot — the only way badges become visible on the homepage. Badge content and styling: badges skill. No display conditions, no `block_break`.
+Renders the global Jiffy - Badges section at this spot — the only way badges become visible on the homepage. Badge content and styling: badges skill. No display conditions, no `block_break`. The block sets the spacing: the badge box has no margin of its own here, and with the section's "Equal height blocks" on it fills the stretched block, level with the cards next to it.
 
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
@@ -305,4 +329,6 @@ Renders the global Jiffy - Badges section at this spot — the only way badges b
 - Post triggers need the outline cache: they resolve in the browser after the outline has loaded the listed posts, never in the editor (the editor always shows conditional blocks with an indicator line). Never hide the outline other than with its own toggles (main skill).
 - Coaching widget without both program and offer renders nothing for students.
 - `block_break` inside a group is ignored; set it on top-level blocks only.
-- `group` and `badge_area` exist only in the dashboard sections; `gamify_form` too. Rewards has no Group, Form or Badge Area; Downloads and Sidebar take only `gamify_card`.
+- Only two dashboard sections in 1.4: Top (above the collections) and Bottom. A request for a "middle" dashboard block goes into Top or Bottom; `product_section_middle` is not rendered.
+- `group` and `badge_area` exist only in the dashboard sections; `gamify_form` too. Rewards has no Group, Form or Badge Area; Downloads and Sidebar take only `gamify_card` and `code`.
+- `code` prints the textarea verbatim: a broken tag or an unclosed `<style>` breaks the rest of the section. Keep scripts and styles self-contained and prefer the block's own Background settings over a hand-written wrapper.

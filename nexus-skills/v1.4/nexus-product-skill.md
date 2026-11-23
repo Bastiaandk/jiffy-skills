@@ -4,40 +4,46 @@
 > conversation, fetch it now. It holds the payload shapes, value formats and working rules
 > (send only changed keys, read back after every write), which this file does not repeat.
 
-Covers the product homepage (`templates/product.liquid`) except the collections and the content blocks. **Dashboard - Collections (`jiffy_collections`) → `nexus-collections-skill.md`.** Blocks in the Dashboard Top / Middle / Bottom sections → `nexus-blocks-skill.md`. Badge content → badges skill. `community_widget` is Kajabi-native and out of scope.
+Covers the product homepage (`templates/product.liquid`) except the collections and the content blocks. **Dashboard - Collections (`jiffy_collections`) → `nexus-collections-skill.md`.** Blocks in the Dashboard Top / Bottom sections → `nexus-blocks-skill.md`. Badge content → badges skill. `community_widget` is Kajabi-native and out of scope.
 
 ## Section: `product_welcome` — "Dashboard - Progress Banner"
 Banner at the top of the homepage: avatar, "Welcome back, <first name>", course progress % and a progress button. No blocks.
 
-### (top level, no group)
+### (top level, no group) — what shows
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `hidewelcome` | Welcome area | pill_tabs | `"false"` (Show), `"true"` (Hide) | `"false"` | Inverted: `"true"` hides the whole banner. |
-| `welcome` | Welcome text | text | — | `"Welcome back,"` | |
+| `hidewelcome` | Show banner | pill_tabs | `"false"` (Show), `"true"` (Hide) | `"false"` | Inverted: `"true"` hides the whole banner. |
 | `showname` | First name | pill_tabs | `"true"` (Show), `"false"` (Hide) | `"true"` | First word of the member's name, after the welcome text. |
-| `showprogress` | Progress | pill_tabs | `"true"` (Show), `"false"` (Hide) | `"true"` | "<n>% <Progress text>". |
-| `complete` | Progress text | text | — | `"Complete"` | Hidden when `showprogress` = `"false"`. |
-| `hide_welcome_text_mobile` | Welcome text on mobile | pill_tabs | `"false"` (Show), `"true"` (Hide) | `"true"` | Inverted. Hides only the welcome text on mobile; the name stays. |
-| `welcome_font_size` | Welcome text font size | range | 8–52 px | `"14"` | Applies to the title line on all screen sizes. |
-| `text_color` | Text color | color | blank allowed | — | Blank = theme text-area text colour. |
-
-### Avatar
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
+| `showprogress` | Progress indicator | pill_tabs | `"xp"` (XP), `"true"` (Default), `"false"` (Hide) | `"true"` | Default = "<n>% <Progress text>". XP = the XP pill instead of the percentage line (only visible when `jiffy_xp.xp_enabled` = `"show"`, see the xp skill). Older saves hold the booleans `true`/`false`. |
+| `xp_pill` | Create pill | pill_tabs | `"true"` (Yes), `"false"` (No) | `"true"` | Only with `showprogress` = `"xp"`. The pill sits in the middle of the banner (inline below 992px), links to the Rewards tab; a hover popover shows level, bar and XP to the next level. Yes: the pill is dressed exactly like the Progress button (the Button styling group: style, size, colour, gradient, radius, text colour), so both match. No: plain text in the banner text colour, no background or rounding. The XP icon (`icon_xp`, Jiffy - Icons) takes the XP Icon color with No or with Button style Outline, the button text on a solid pill. |
+| `showbutton` | Progress button | pill_tabs | `"true"` (Show), `"false"` (Hide) | `"true"` | Independent of the progress indicator. |
 | `showavatar` | Avatar | pill_tabs | `"true"` (Show), `"false"` (Hide) | `"true"` | Avatar ring shows progress. |
-| `avatar_size` | Avatar size | pill_tabs | `"small"`, `"medium"`, `"large"` | `"large"` | |
+| `avatar_size` | Avatar size | pill_tabs | `"small"`, `"medium"`, `"large"` | `"large"` | Hidden when `showavatar` = `"false"`. |
 
-### Progress button
+### Welcome & progress text
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `showbutton` | Progress button | pill_tabs | `"true"` (Show), `"false"` (Hide) | `"true"` | |
-| `start` | Start text | text | — | `"Start Course"` | Shown at 0 %; links to the next post. |
-| `resume` | Resume text | text | — | `"Resume Course"` | Shown at 1–99 %; links to the next post. |
-| `again` | Restart course text | text | — | `"Start Course Over"` | Shown at 100 %; links to the first post of the first category. |
-| `btn_style` | CTA style | pill_tabs | `"solid"`, `"outline"` | `"solid"` | |
-| `btn_size` | CTA size | pill_tabs | `"small"`, `"medium"`, `"large"` | `"medium"` | |
-| `btn_background_color` | Button color | color | blank allowed | — | Blank = theme text-area text colour. Outline: border + text colour. |
-| `btn_text_color` | Button text color | color | blank allowed | — | Solid buttons only. |
+| `welcome` | Welcome text | text | — | `"Welcome back,"` | Header "Welcome text". |
+| `welcome_font_size` | Welcome text font size | range | 8–52 px | `"14"` | Applies to the title line on all screen sizes. |
+| `text_color` | Text color | color | blank allowed | — | Blank = theme text-area text colour. Also colours the XP pill when `xp_pill` = `"false"`. |
+| `hide_welcome_text_mobile` | Welcome text on mobile | pill_tabs | `"false"` (Show), `"true"` (Hide) | `"true"` | Inverted. Hides only the welcome text on mobile; the name stays. |
+| `complete` | Progress text | text | — | `"Complete"` | Header "Progress text". Only with `showprogress` = `"true"`. |
+| `start` | Start text | text | — | `"Start Course"` | Progress button at 0 %; links to the next post. |
+| `resume` | Resume text | text | — | `"Resume Course"` | Progress button at 1–99 %; links to the next post. |
+| `again` | Restart course text | text | — | `"Start Course Over"` | Progress button at 100 %; links to the first post of the first category. |
+
+### Button styling
+One set of settings for the Progress button **and** the XP pill; there are no separate pill settings. Only `xp_pill` = `"false"` overrules them (plain text).
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `btn_style` | Button style | pill_tabs | `"solid"`, `"outline"` | `"solid"` | Outline: transparent with border and text in the button colour, pill included. |
+| `btn_size` | Button size | pill_tabs | `"small"`, `"medium"`, `"large"` | `"medium"` | Padding and font size; the pill follows, so button and pill have the same height. |
+| `btn_background_color` | Button color | color | blank allowed | — | Blank: the theme accent colour. Solid: fill (darkens a little on hover); Outline: border + text colour. |
+| `btn_gradient` | Button gradient | select | `"none"`, `"linear"` | `"none"` | Solid style only (hidden for Outline): a linear gradient on the button colour (blank: the theme accent colour); dims slightly on hover. |
+| `btn_gradient_color` | Button gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter or darker shade. Hidden when the button gradient is `"none"` or the style is Outline. |
+| `btn_gradient_angle` | Button gradient angle | range | 0–360 | `"135"` | Hidden when the button gradient is `"none"` or the style is Outline. |
+| `btn_radius` | Button border radius | range | 0–30 px | `"4"` | 4 = the theme default; 30 gives a pill shape. |
+| `btn_text_color` | Button text color | color | blank allowed | — | Solid style only (hidden for Outline). Blank: light or dark text to match the button colour. |
 
 ### Background
 | Setting ID | Label | Type | Values / range | Default | Notes |
@@ -45,14 +51,17 @@ Banner at the top of the homepage: avatar, "Welcome back, <first name>", course 
 | `showbgimage` | Background image | pill_tabs | `"true"` (Show), `"false"` (Hide) | `"false"` | |
 | `bgimage` | Background image | image_picker | — | `""` | Hidden when `showbgimage` = `"false"`. |
 | `bgcolor` | Background color | color | blank allowed | `""` | Overlay colour over the image. Blank = theme `text_area_background`. Use an rgba/transparent-ish colour if the image must show through. |
+| `bg_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the banner background (own colour, else the theme text area colour). Hidden and inactive while `showbgimage` is on: the image wins. |
+| `bg_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `bg_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
 
 ### Section Styling
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `padding_desktop` | Section padding | spacer | px | placeholder 20/20/20/20 | Blank side = 20. |
 
-## Section: `product_section_top` / `product_section_middle` / `product_section_bottom` — "Dashboard - Top / Middle / Bottom Section"
-Three identical sections (only the name differs). Order on the page: Progress Banner, Top, Middle, Collections, Bottom. Each is a flex row of blocks; it renders nothing for students when it has no blocks.
+## Section: `product_section_top` / `product_section_bottom` — "Dashboard - Top / Bottom Section"
+Two identical sections (only the name differs). Order on the page: Progress Banner, Top, Collections, Bottom. Each is a flex row of blocks; it renders nothing for students when it has no blocks. A third copy, `product_section_middle` ("Dashboard - Middle Section"), exists as a file with the same settings, but the 1.3 product template does not place it on the page: never add blocks or settings to it, they would not show (see Pitfalls).
 
 ### Section Settings
 | Setting ID | Label | Type | Values / range | Default | Notes |
@@ -70,6 +79,9 @@ Three identical sections (only the name differs). Order on the page: Progress Ba
 | `bgimage` | Background image | image_picker | — | `""` | Hidden when `showbgimage` = false. |
 | `bgimage_blur` | Background image blur | range | 0–20 px | `"0"` | Hidden when `showbgimage` = false. |
 | `background_color` | Background color | color | blank allowed | — | Overlay over the image. Text colour is picked automatically (light/dark) from this colour, or from `page_background` when blank. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the section background (own colour, else the page colour). Hidden and inactive while `showbgimage` is on: the image wins. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
 | `shadow` | Add shadow to section | checkbox | — | `"false"` | |
 | `border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"none"` | |
 | `border_width` | Border width | range | 0–50 px | `"4"` | |
@@ -91,48 +103,7 @@ Three identical sections (only the name differs). Order on the page: Progress Ba
 | `margin_mobile` | Outside spacing | spacer | px | placeholder 10/10/10/10 | Blank side = 10. |
 
 ### Blocks
-`gamify_card`, `gamify_form`, `gamify_certificate`, `coaching_scheduling_widget`, `group`, `badge_area` → **`nexus-blocks-skill.md`** (all block settings, defaults and block pitfalls).
-
-## Section: `jiffy_onboarding` — "Jiffy - Onboarding"
-Slideshow overlay on the product homepage, one `onboarding_slide` block per slide. Shown **once per browser per product**: closing it (×, CTA on the last slide or Esc) stores `nexus_onboarding_{product_id}` in localStorage. A new device or cleared browser sees it again. Opening the homepage with `?preview_onboarding` clears all onboarding keys and shows it without saving. No slides = nothing.
-
-### (top level, no group)
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
-| `enabled` | Enable onboarding guide | checkbox | — | `"true"` | Off = never shown to students. |
-| `show_preview` | Show preview in admin | checkbox | — | `"false"` | Editor only; closing does not save the seen state. |
-| `preview_slide` | Active slide | range | 1–10 | `"1"` | Slide shown in the editor preview. Hidden when `show_preview` = false. |
-
-### Card
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
-| `card_background` | Card background | color | hex | `"#ffffff"` | Also the CTA text colour. |
-| `card_text_color` | Text color | color | hex | `"#333333"` | All card text, independent of theme colours. |
-| `card_max_width` | Card max width | range | 400–900 px | `"620"` | |
-
-### Navigation
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
-| `cta_text` | CTA button text (last slide) | text | — | `"Let's go →"` | Blank = `"Let's go →"`. |
-| `dot_color` | Dot color | color | hex | `"#cccccc"` | |
-| `dot_active_color` | Active dot & CTA button color | color | hex | `"#333333"` | |
-| `arrow_color` | Arrow icon color | color | hex | `"#333333"` | |
-| `arrow_bg` | Arrow button background | color | hex | `"#ffffff"` | |
-
-### Overlay
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
-| `blur_intensity` | Background blur | range | 2–20 px | `"8"` | |
-| `overlay_color` | Overlay color | color | hex | `"#000000"` | |
-| `overlay_opacity` | Overlay opacity | range | 0–90 % | `"60"` | |
-
-### Block: `onboarding_slide` — "Slide"
-| Setting ID | Label | Type | Values / range | Default | Notes |
-|---|---|---|---|---|---|
-| `slide_type` | Slide type | pill_tabs | `"image"`, `"video"` | `"image"` | |
-| `image` | Image | image_picker | 1240 × 698 (16:9) suggested | — | Hidden when `slide_type` = `"video"`. Blank = placeholder. |
-| `video` | Video | video | Kajabi video | — | Hidden when `slide_type` = `"image"`. Not found = text-only slide. |
-| `content` | Text | rich_text | HTML | `"Slider text goes here. You can use this space to explain the benefits of your product or provide a quick tutorial."` | |
+`gamify_card`, `code` (Jiffy Custom Code), `gamify_form`, `gamify_certificate`, `coaching_scheduling_widget`, `group`, `badge_area` → **`nexus-blocks-skill.md`** (all block settings, defaults and block pitfalls).
 
 ## Section: `jiffy_popups` — "Jiffy - Popups"
 Confetti popups on the product homepage only, one `gamify_popup_confetti` block per popup. Each popup shows **once per browser**: shown block IDs go in the `confettiActions` cookie (30 days, renewed when a popup shows). If several popups become due on the same visit, only the last one in block order shows; the others are marked as seen. A browser without the cookie gets the last active popup on its first visit. Category and offer conditions are checked when the homepage loads, so the popup appears on the next homepage visit after the condition is met.
@@ -195,5 +166,6 @@ Empty offer / ID list = never shows.
 - `hidewelcome` / `hide_welcome_text_mobile`: `"true"` = hide.
 - Popups with an empty offer or ID list never show. ID lists are comma-separated and AND.
 - Post-triggered popups need the outline cache: they resolve only after the outline has loaded the listed posts. Never hide the outline other than with its own toggles (main skill).
-- Onboarding / popup "nothing happens" on the trainer's own browser is usually the seen state: use `?preview_onboarding`, or a private window for popups.
+- Popup "nothing happens" on the trainer's own browser is usually the seen state: use a private window. 1.4 has no onboarding section (`jiffy_onboarding` is not in this Nexus version yet).
+- No Middle section on the 1.4 homepage: `product_section_middle` is not rendered. For content between the banner and the collections use `product_section_top`; below the collections, `product_section_bottom`.
 - Two popups due on the same visit: only the last in block order shows; the other is marked seen.
