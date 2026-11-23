@@ -3,6 +3,13 @@
 **Theme:** Nexus, a licensed Kajabi course theme by JiffyCoursesOnline (author: Bastiaan de Koning).
 **Skill version:** Nexus 1.3.x.
 
+> **Version check first.** Compare the skill version above with `theme.version` in the
+> `get_theme_content` response (the `theme` object; it always comes from the installed code). If
+> its first two numbers differ, this is the wrong folder: an older guide stored in the theme's
+> settings can lead here. Read `https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v<X.Y>/nexus-skill.md`
+> instead (X.Y = the first two numbers of `theme.version`, e.g. 1.4.2 → `v1.4`), and take every
+> sub-skill from that folder too.
+
 Read this file before reading or writing any Nexus setting, then read the sub-skill for the
 section you are working on (routing table below). The rules here apply to every edit.
 
