@@ -70,6 +70,7 @@ Two headers in the editor: "Action bar" (the bar itself) and "Button styling" (e
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `ba_background_color` | Background color | color | hex or blank | — | Badges area under the bar. Overrides the `jiffy_badges` section background on this page. Blank = action bar background. |
+| `ba_background_gradient` / `ba_background_gradient_color` / `ba_background_gradient_angle` | Gradient / second color / angle | | | `"none"` / `""` / `"135"` | A linear gradient on the badges area; an own colour or gradient replaces the badges section's own gradient here. |
 | `ba_text_color` | Text color | color | hex or blank | — | Overrides badge text/label colours here. Blank = `text_light`/`text_dark` by area background. |
 | `ba_shadow` | Show shadow | checkbox | — | `false` | |
 
@@ -179,6 +180,7 @@ Modal over the lesson when Kajabi shows the post as paywalled (paywall enabled i
 | `show_purchase_cta` | Show purchase CTA | checkbox | — | `"true"` | Opens Kajabi's checkout popup for the paywall offer. |
 | `purchase_cta_text` | Purchase CTA text | text | — | `"Purchase"` | |
 | `btn_background_color` | Button background color | color | hex or blank | `""` | Blank = theme `primary_color`. Outline/subtle use it as text/border colour. |
+| `btn_gradient` / `btn_gradient_color` | Button gradient / second color | select / color | `"none"`, `"linear"` / hex or blank | `"none"` / `""` | Solid only (hidden for Outline and Subtle), fixed 135°, dims on hover. Blank second colour: an automatic shade. |
 | `btn_text_color` | Button text color | color | hex or blank | `""` | Solid only. Blank = `text_light`/`text_dark` by button colour. |
 | `btn_width` | Button width | pill_tabs | `"full"` (Full), `"auto"` (Auto) | `"full"` | |
 | `btn_style` | Button style | pill_tabs | `"solid"` (Solid), `"outline"` (Outline), `"subtle"` (Subtle) | `"solid"` | Subtle = text only, transparent background and border. |
@@ -190,6 +192,7 @@ Modal over the lesson when Kajabi shows the post as paywalled (paywall enabled i
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Background color | color | hex or blank | `""` | Modal background. Blank = theme `text_area_background`, else `#ffffff`. |
+| `background_gradient` / `background_gradient_color` / `background_gradient_angle` | Gradient / second color / angle | | | `"none"` / `""` / `"135"` | A linear gradient on the modal background. |
 | `text_color` | Text color | color | hex or blank | `""` | Text, headings and close icon. Blank = `text_light`/`text_dark` by background. |
 | `border_type` | Border type | select | `"none"` (None), `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"none"` | |
 | `border_width` | Border width | range | 0–50 px | `"1"` | Needs `border_type` ≠ `"none"`. |
@@ -229,6 +232,7 @@ Extra button inside the modal, separate from the purchase button.
 | `btn_action` | Button action | action | URL | `""` | |
 | `btn_new_tab` | Open in new tab | checkbox | — | `""` | `true` opens in a new tab. |
 | `btn_background_color` | Button background color | color | hex or blank | `""` | Blank = theme `primary_color`. |
+| `btn_gradient` / `btn_gradient_color` | Button gradient / second color | select / color | `"none"`, `"linear"` / hex or blank | `"none"` / `""` | Solid only, fixed 135°, dims on hover. |
 | `btn_text_color` | Button text color | color | hex or blank | `""` | Solid only. Blank = `text_light`/`text_dark` by button colour. |
 | `btn_width` | Button width | pill_tabs | `"full"` (Full), `"auto"` (Auto) | `"full"` | |
 | `btn_style` | Button style | pill_tabs | `"solid"`, `"outline"`, `"subtle"` | `"solid"` | Subtle = text only. |

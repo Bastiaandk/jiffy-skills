@@ -53,7 +53,7 @@ A conditional block with no offer / no IDs renders for nobody (whatever the acti
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Block background color | color | blank allowed | `"#ffffff"` (Sidebar: `""`) | Blank = transparent. Text colour auto-contrasts against block → section → `page_background` (Sidebar: block → sidebar `background_color` → `sidebar_background`). |
-| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the card background. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the block background. Card, form, certificate and coaching widget. |
 | `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
 | `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Degrees. Hidden when the gradient is `"none"`. |
 | `shadow` | Add shadow to block | checkbox | — | `"true"` | |
@@ -79,7 +79,7 @@ A conditional block with no offer / no IDs renders for nobody (whatever the acti
 | `text_align_mobile` | Text alignment | align | `"left"`, `"center"`, `"right"` | `"left"` | |
 | `margin_mobile` | Outside spacing | spacer | px | `{"top":"5","right":"5","bottom":"5","left":"5"}` (placeholder 0) | Real default (Downloads card: none, placeholder 5/5/5/5). Blank side = 0. |
 
-Block button colours (card, form, coaching): `btn_background_color` blank = `accent_color` (outline style uses it as text/border colour); `btn_text_color` blank = auto light/dark against the button colour.
+Block button colours (card, form, coaching, certificate download): `btn_background_color` blank = `accent_color` (outline style uses it as text/border colour); `btn_text_color` blank = auto light/dark against the button colour; `btn_gradient` adds a 135° gradient on solid buttons.
 
 ## Block: `gamify_card` — "Jiffy Card"
 Video, image, text and button, each optional. Available in all four sections. Defaults: `width` `"4"`, `background_color` `"#ffffff"` (Sidebar: `"12"` and `""` — see Per-section differences).
@@ -130,6 +130,8 @@ Then Display Conditions (shared).
 | `btn_action` | Button action | action | URL | `""` | |
 | `new_tab` | Open in new tab | checkbox | — | `""` | |
 | `btn_background_color` | Button background color | color | blank allowed | `""` | |
+| `btn_gradient` | Button gradient | select | `"none"`, `"linear"` | `"none"` | From the button colour, fixed 135°. Solid only (hidden for Outline); dims on hover. |
+| `btn_gradient_color` | Button gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter or darker shade of the button colour. Hidden for Outline or no gradient. |
 | `btn_text_color` | Button text color | color | blank allowed | `""` | Solid buttons only. |
 | `btn_width` | Button width | pill_tabs | `"full"` (Full), `"auto"` (Auto) | `"full"` | |
 | `btn_style` | Button style | pill_tabs | `"solid"`, `"outline"` | `"solid"` | |
@@ -180,6 +182,8 @@ Then Display Conditions (shared).
 | `text1` … `text4` | Text 1 … Text 4 | text | — | `"Analyzing your results…"`, `"Setting things up…"`, `"Finalizing your progress…"`, `"Preparing your next steps…"` | Hidden when `gamify_form_ty` = `"custom"`. |
 | `thank_you` | Page after form submission | action | URL | — | Hidden when `gamify_form_ty` = `"course"`. |
 | `btn_background_color` | Button background color | color | blank allowed | `""` | |
+| `btn_gradient` | Button gradient | select | `"none"`, `"linear"` | `"none"` | From the button colour, fixed 135°. Solid only (hidden for Outline); dims on hover. |
+| `btn_gradient_color` | Button gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter or darker shade of the button colour. Hidden for Outline or no gradient. |
 | `btn_text_color` | Button text color | color | blank allowed | `""` | Solid buttons only. |
 | `btn_width` | Button width | pill_tabs | `"full"`, `"auto"` | `"full"` | |
 | `btn_style` | Button style | pill_tabs | `"solid"`, `"outline"` | `"solid"` | |
@@ -234,16 +238,25 @@ Then Display Conditions (shared). Text fields use the global certificate font (p
 ### Certificate Body Text
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
-| `downloadtext` | Download link text | text | — | `"Download certificate"` | Empty = no download link. |
-| `downloadmobile` | Mobile download text | text | — | `"Hold image to download certificate"` | Mobile: canvas becomes an image to long-press. |
-| `body` | Body | rich_text | HTML | `"Congrats! You did it!"` | Empty = no body. |
+| `body` | Body | rich_text | HTML | `"Congrats! You did it!"` | Empty = no body. Shown between the certificate and the download button. |
+
+### Download button
+The download under the certificate is a button like the card's Call to Action (same colours, gradient and radius, `block_styles`), with the block's text spacing all round. On mobile the button is replaced by a hint (the certificate becomes an image to long-press). With equal height (section "Equal height blocks", or a horizontal Group on Stretch) the button sits at the bottom of the block.
+
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `downloadtext` | Download link text | text | — | `"Download certificate"` | Button text. Empty = no button and no mobile hint. |
+| `downloadmobile` | Mobile download text | text | — | `"Hold image to download certificate"` | The mobile hint (with a hand icon), not a link. |
+| `show_download_icon` | Download icon | pill_tabs | `"show"`, `"hide"` | `"show"` | The Downloads icon from Jiffy - Icons (`icon_downloads`) before the text. |
+| `btn_background_color` / `btn_gradient` / `btn_gradient_color` / `btn_text_color` / `btn_width` / `btn_style` / `btn_size` / `btn_border_radius` | as the card's Call to Action | | | same | Blank colour = `accent_color`, like the card. |
 
 ### Certificate Colors
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `certtextcolor` | Text color on certificate | color | hex | `"#444444"` | Drawn on the image. |
 | `card_textcolor` | Text color on body | color | — | `""` | Blank = auto contrast. |
-| `downloadcolor` | Download link color on body | color | blank allowed | `""` | |
+
+`downloadcolor` (the old link colour) is no longer read; the button colours replace it.
 
 Then Background, Card Layout, Desktop/Mobile Layout (shared).
 
@@ -271,6 +284,8 @@ Then Display Conditions (shared).
 |---|---|---|---|---|---|
 | `btn_text` | Text | text | — | `"Call To Action"` | |
 | `btn_background_color` | Button background color | color | blank allowed | `""` | |
+| `btn_gradient` | Button gradient | select | `"none"`, `"linear"` | `"none"` | From the button colour, fixed 135°. Solid only (hidden for Outline); dims on hover. |
+| `btn_gradient_color` | Button gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter or darker shade of the button colour. Hidden for Outline or no gradient. |
 | `btn_text_color` | Button text color | color | blank allowed | `""` | Solid buttons only. |
 | `btn_width` | Button width | pill_tabs | `"full"`, `"auto"` | `"full"` | |
 | `btn_style` | Button style | pill_tabs | `"solid"`, `"outline"` | `"solid"` | |
@@ -286,7 +301,7 @@ Container that lays out child blocks in a row or column. Allowed children: `gami
 |---|---|---|---|---|---|
 | `width` | Group Width | grid | `"1"`–`"12"` | `"12"` | |
 | `direction` | Direction | select | `"vertical"`, `"horizontal"` | `"horizontal"` | Horizontal wraps. |
-| `align` | Vertical alignment | select | `"start"` (Top), `"center"` (Center), `"end"` (Bottom), `"stretch"` (Stretch) | `"start"` | Cross axis. `start` in a vertical group = stretch. |
+| `align` | Vertical alignment | select | `"start"` (Top), `"center"` (Center), `"end"` (Bottom), `"stretch"` (Stretch) | `"start"` | Cross axis. `start` in a vertical group = stretch. A horizontal group on `stretch` makes its blocks equal height, with the same inner layout as the section's "Equal height blocks" (text grows, buttons line up at the bottom); the section setting itself does not reach inside a group. |
 | `justify` | Horizontal alignment | select | `"start"` (Left), `"center"` (Center), `"end"` (Right), `"between"` (Space Between), `"around"` (Space Around) | `"start"` | Main axis. |
 
 ### Layout
@@ -299,6 +314,7 @@ Container that lays out child blocks in a row or column. Allowed children: `gami
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Background color | color | blank allowed | — | Blank = transparent. |
+| `background_gradient` / `background_gradient_color` / `background_gradient_angle` | Gradient / second color / angle | | | `"none"` / `""` / `"135"` | As the card's Background; with a blank colour the gradient runs on the page colour. |
 
 Child blocks are stored inside the group, not in the section's top-level `block_order`. Copy the exact nesting from a saved group in `get_theme_content`; if none exists, ask the trainer to add a group in the editor first.
 

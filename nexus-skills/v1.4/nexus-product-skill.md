@@ -144,6 +144,7 @@ Empty offer / ID list = never shows.
 | `btn_action` | Button action | action | URL | `""` | |
 | `new_tab` | Open in new tab | checkbox | — | `"false"` | |
 | `btn_background_color` | Button background color | color | blank allowed | `""` | Blank = theme button style. Outline: border + text colour. |
+| `btn_gradient` / `btn_gradient_color` | Button gradient / second color | select / color | `"none"`, `"linear"` / hex or blank | `"none"` / `""` | Solid only, from the button colour (blank: `primary_color`), fixed 135°, dims on hover. |
 | `btn_text_color` | Button text color | color | blank allowed | `""` | Used only for solid buttons with a background colour; blank = white. |
 | `btn_width` | Button width | pill_tabs | `"full"`, `"auto"` | `"full"` | |
 | `btn_style` | Button style | pill_tabs | `"solid"`, `"outline"` | `"solid"` | |
@@ -155,6 +156,7 @@ Empty offer / ID list = never shows.
 |---|---|---|---|---|---|
 | `confetti_width` | Container Block Width in % Screen | range | 20–100 % | `"40"` | Desktop only. |
 | `background_color` | Block background color | color | blank allowed | `"#f9f9f9"` | |
+| `background_gradient` / `background_gradient_color` / `background_gradient_angle` | Gradient / second color / angle | | | `"none"` / `""` / `"135"` | A linear gradient on the popup box. |
 | `border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"solid"` | |
 | `border_width` | Border width | range | 0–50 px | `"1"` | |
 | `border_color` | Border color | color | blank allowed | `"#ccc"` | |

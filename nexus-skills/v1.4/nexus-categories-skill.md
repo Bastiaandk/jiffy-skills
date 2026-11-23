@@ -131,6 +131,7 @@ Hidden in the editor when `badges_position` = `"none"`.
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `ba_background_color` | Background color | color | hex or `""` | — | Overrides the badges section background on this tab only. |
+| `ba_background_gradient` / `ba_background_gradient_color` / `ba_background_gradient_angle` | Gradient / second color / angle | | | `"none"` / `""` / `"135"` | A linear gradient on the badge area (on `ba_background_color`, blank: `text_area_background`); replaces the badges section's own gradient here. |
 | `ba_text_color` | Text color | color | hex or `""` | — | Overrides badge text colour on this tab only. Blank → auto-contrast with the badge-area background. |
 | `ba_shadow` | Show shadow | checkbox | `true`/`false` | `false` | Shadow on the badge area. |
 
@@ -168,7 +169,7 @@ the XP icon and bar colours live in `jiffy_xp` (xp sub-skill). The overview is a
 | `xp_border_radius` | Border radius | range | 0–40 px | `"8"` | Section, stat blocks and the two lists. |
 | `xp_padding` | Padding | spacer | top/right/bottom/left px | placeholder 20 | Empty side: 20px. |
 
-The `ba_*` override is all-or-nothing: as soon as any of the three is set, the badge area gets a forced background — `ba_background_color`, or theme `text_area_background` when that one is blank. With all three empty/off, the badges section keeps its own colours.
+The `ba_*` override is all-or-nothing: as soon as any of the three is set, the badge area gets a forced background — `ba_background_color`, or theme `text_area_background` when that one is blank. With all three empty/off, the badges section keeps its own colours. An own colour or gradient here replaces the badges section's own gradient on this tab.
 
 ### Section Settings
 | Setting ID | Label | Type | Values / range | Default | Notes |
