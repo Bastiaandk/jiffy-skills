@@ -51,6 +51,20 @@ Desktop and mobile sizes share labels in the editor (under "Desktop font sizes" 
 | `text_area_background` | Text area background | color | hex or `""` | `"#fff"` | Content panels: post body, action bar, popups, Rewards/Downloads tabs, paywall. Blank → `#fff`. |
 | `page_background_img` | Page background image | image_picker | suggested 2500×2500 | — | Fixed, cover-sized body background behind all pages. |
 
+### Background gradients (header in Settings - Colors & Background)
+A linear colour run on top of the page or navigation colour. Off by default; the text colours keep following the base colour. The group is ordered Color Scheme → Background colors → Background gradients → Page background image.
+
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `page_gradient` | Page background gradient | select | `"none"`, `"linear"` | `"none"` | Ignored while `page_background_img` is set. |
+| `page_gradient_color` | Page second color | color | hex or `""` | `""` | Blank: an automatic shade of `page_background` (lighter on a dark base, darker on a light one). Hidden when `page_gradient` = `"none"`. |
+| `page_gradient_angle` | Page angle | range | 0–360 | `"135"` | Degrees; 180 = top to bottom. Hidden when `page_gradient` = `"none"`. |
+| `sidebar_gradient` | Navigation background gradient | select | `"none"`, `"linear"` | `"none"` | One viewport-anchored run painted by the sidebar and by the header, so they join seamlessly. A header with its own `background_color` (Header (global)) keeps that colour. iOS Safari paints the header part within its own box. |
+| `sidebar_gradient_color` | Navigation second color | color | hex or `""` | `""` | Blank: automatic shade of `sidebar_background`. Hidden when `sidebar_gradient` = `"none"`. |
+| `sidebar_gradient_angle` | Navigation angle | range | 0–360 | `"135"` | Hidden when `sidebar_gradient` = `"none"`. |
+
+Text area backgrounds stay solid by design: they sit on many small panels where a repeating gradient looks restless.
+
 ## Settings - Custom Code
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
@@ -86,6 +100,8 @@ Font Awesome 5 Free. Write the **value** (full class string), not the label. Eac
 | `icon_favorite_custom` | Custom favorite icon | text | **`far` class** | — | Must be a `far` (outline) class, else the favorited state looks identical. |
 | `icon_badges` | Rewards / Badges icon | select | `fas fa-trophy` (Trophy), `fas fa-award` (Award), `fas fa-gift` (Gift), `custom` (Custom) | `"fas fa-trophy"` | Action bar and sidebar. |
 | `icon_badges_custom` | Custom rewards / badges icon | text | FA class or `<i>` tag | — | |
+| `icon_xp` | XP icon | select | `fas fa-bolt` (Bolt), `fas fa-star` (Star), `fas fa-gem` (Gem), `fas fa-heart` (Heart), `fas fa-fire` (Fire), `custom` (Custom) | `"fas fa-bolt"` | The XP symbol everywhere: banner pill, action bar chip, completion popups, Rewards total, sparks. Its colour is `xp_icon_color` in Jiffy - XP & Levels. |
+| `icon_xp_custom` | Custom XP icon | text | FA class or `<i>` tag | — | |
 | `icon_downloads` | Downloads icon | select | `fas fa-file-download` (File download), `fas fa-download` (Download arrow), `fas fa-archive` (Archive), `custom` (Custom) | `"fas fa-file-download"` | Action bar, sidebar, post downloads list. |
 | `icon_downloads_custom` | Custom downloads icon | text | FA class or `<i>` tag | — | |
 | `icon_external` | External links icon | select | `fas fa-link` (Link), `fas fa-external-link-alt` (External link), `fas fa-globe` (Globe), `fas fa-compass` (Compass), `custom` (Custom) | `"fas fa-link"` | External links in the sidebar. |

@@ -6,8 +6,9 @@
 
 ## Section: `jiffy_collections` — "Dashboard - Collections"
 Product homepage only. A stack of configurable collections: each `collection_banner` block is one
-collection with its own content source, style and styling. All collection settings are **block-level**;
-the section itself has only outer margins. Cards are filled client-side from the outline data cache
+collection with its own content source, style and styling. Collection settings are **block-level**;
+the section holds the outer margins and the **Collection filter** (a bar above the collections that lets
+a student show one group of collections, or everything from a group onward). Cards are filled client-side from the outline data cache
 (`NexusDataCache`), so a collection depends on the sidebar outline markup being in the page.
 
 ### Desktop Layout
@@ -19,6 +20,36 @@ the section itself has only outer margins. Cards are filled client-side from the
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `margin_mobile` | Outside spacing all collections | spacer | px | placeholder 10/10/10/10 | ≤767px. Blank side = 10. |
+
+### Collection filter
+Section level. The bar renders above all collections and lists the distinct **Filter titles** of the
+collection blocks (`filter_title`, see the block table) in block order, first appearance wins. A
+collection without a title never gets a button and is always shown. The student's choice is kept in
+`localStorage` (`nexus-filter-v1-{productId}-{memberId}`) and applied before the collections paint;
+Display Conditions still apply underneath. **The bar needs at least two titles**; with fewer it renders
+nothing (the editor shows a note). Everything below `filter_mode` is hidden while it is `off`.
+
+| Setting ID | Label | Type | Values / range | Default | Notes |
+|---|---|---|---|---|---|
+| `filter_mode` | Filter | select | `"off"` (Off), `"only"` (Show only), `"from"` (From here on) | `"off"` | `only`: the chosen group alone. `from`: the chosen group and every later one; earlier groups hide and their buttons dim. Default state for a student is always "All". |
+| `filter_style` | Style | pill_tabs | `"tabs"` (Tabs), `"buttons"` (Buttons), `"dropdown"` (Dropdown) | `"tabs"` | Mobile uses the same style; tabs and buttons become one line that scrolls sideways. |
+| `filter_all_text` | "All" button text | text | | `"All"` | Tabs/Buttons: empty = no All button (a second click on the active button shows everything). Dropdown: always its first option, the way back to everything; empty shows "All". Shown dimmed while nothing is chosen. |
+| `filter_align` | Alignment | align | `left` / `center` / `right` | `left` | |
+| `filter_sticky` | Make filter sticky | pill_tabs | `"yes"` / `"no"` | `"no"` | Sticks under the sticky header (`--nexus-header-offset`), same construction as the post action bar. |
+| `filter_remember` | Remember choice | pill_tabs | `"yes"` / `"no"` / `"auto"` | `"yes"` | `no`: every visit starts at "All", nothing is stored. `auto`: after the collections load, Nexus selects the first group (button order) that still has an unfinished lesson or module card, or "All" when everything is finished; the result is stored for the next visit's first paint. A manual choice holds for the browser session (sessionStorage), the next visit is automatic again. |
+| `filter_font_size` | Font size | range | 12–20 px | `"14"` | Buttons and dropdown. |
+| `filter_radius` | Button border radius | range | 0–30 | `"20"` | Buttons and dropdown; tabs keep fixed top corners. |
+| `filter_active_bg` | Active color | color | hex, blank | `""` | Blank = theme accent colour (`settings.accent_color`). Buttons: fill; Tabs: underline. |
+| `filter_active_gradient` | Active gradient | select | `"none"`, `"linear"` | `"none"` | Buttons only (hidden for tabs/dropdown). Fills the active button with a linear gradient from the active colour. |
+| `filter_active_gradient_color` | Active gradient second color | color | hex, blank | `""` | Blank = an automatic lighter or darker shade of the active colour. Hidden while `filter_active_gradient` = none. |
+| `filter_active_gradient_angle` | Active gradient angle | range | 0–360 | `"135"` | Hidden while `filter_active_gradient` = none. |
+| `filter_active_text` | Active text color | color | hex, blank | `""` | Buttons only (hidden for tabs/dropdown). Blank = light or dark to match the active colour. |
+| `filter_bg` | Button color | color | hex, blank | `""` | Blank = transparent. Inactive buttons, tabs and the dropdown. Tabs with a colour (or a gradient) get an outline on top and sides; the underline stays the active marker. |
+| `filter_gradient` | Button gradient | select | `"none"`, `"linear"` | `"none"` | All styles: buttons, tabs and the dropdown (under its arrow). Without `filter_bg` the gradient runs on the page colour. A gradient button dims a little on hover. |
+| `filter_gradient_color` | Button gradient second color | color | hex, blank | `""` | Blank = an automatic lighter or darker shade of the button colour. Hidden while `filter_gradient` = none. |
+| `filter_gradient_angle` | Button gradient angle | range | 0–360 | `"135"` | Hidden while `filter_gradient` = none. |
+| `filter_text` | Button text color | color | hex, blank | `""` | Blank = light or dark to match `filter_bg` when set, else the page text colour. Lines (button border, tab outline and baseline) follow this setting or the page text colour, never the automatic text. |
+| `filter_spacing` | Spacing below filter | range | 0–40 px | `"16"` | |
 
 ### Block: `collection_banner` — "Collection"
 
@@ -33,18 +64,23 @@ the section itself has only outer margins. Cards are filled client-side from the
 | `max_posts` | Max posts in a row | range | 1–100 | `"16"` | Cap on cards. For `outline` the cap is **per category row**. Hidden when `collection_content` = `outline_categories`. |
 | `outline_paginate_count` | Max rows per page | range | 4–16 | `"8"` | `outline` only: categories (rows) per page; more pages get theme pagination. Blank = 8. Hidden unless `collection_content` = `outline`. |
 | `show_finished` | Finished posts & categories | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"show"` | `hide` drops completed posts and fully completed (sub)categories; for `outline_categories` it drops completed top-level categories. Always forced to show in the editor. Hidden when `collection_content` = `replay`, `continue_watching`, `demo`, `favorites` (but still read — see Pitfalls). |
+| `lesson_navigation` | Next / previous lesson | pill_tabs | `"outline"` (Outline), `"collection"` (This collection) | `"outline"` | `collection`: a lesson opened from this collection gets Previous / Next (Post - Action Bar), the Next button of the completion popups and Up next along this collection instead of the outline. The list is taken at the click: card order, not cut by `max_posts`, locked and dripping lessons left out, finished lessons left out only with `show_finished` = hide. After the last lesson Next goes to the first unfinished lesson of the course; Previous is hidden on the first. A click in another collection or the sidebar ends it. Use for learning routes (a bonus series, a week); leave `outline` on Favorites and Continue watching. Hidden for `outline` and `outline_categories`. |
 | `show_two` | Mobile posts per row | pill_tabs | `"one"` (1), `"two"` (2) | `"two"` | ≤767px. Hidden when `collection_type` = `lines`, `slider3`, `slider4`, `sliderfocus`, `sliderbanner`. |
 | `heading` | Collection heading | rich_text | HTML | `"<h4>Collection Title</h4>"` | Title above the collection. |
+| `filter_title` | Filter title | text | one or more titles, comma separated | `""` | Collection filter only (section setting `filter_mode`). The button text for this collection; same title on several blocks = one button. Empty = no button, always shown. Matching is case- and spacing-insensitive (`Level 3` = `level 3`); titles of several words work, quotes, backslashes and `<` `>` are ignored in the match. |
 
 #### Display Conditions
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `visibility` | Visibility | pill_tabs | `"show"` (Show), `"conditional"` (Conditional) | `"show"` | `conditional` enables the trigger below. In the editor the block always shows, with an info line. |
 | `visibility_action` | When condition is met | pill_tabs | `"show"` (Show), `"hide"` (Hide) | `"show"` | Hidden when `visibility` = `show`. |
-| `visibility_trigger` | Trigger | select | `"offer"` (Offer), `"category"` (Category completed), `"post"` (Post completed) | `"offer"` | Hidden when `visibility` = `show`. |
+| `visibility_trigger` | Trigger | select | `"offer"` (Offer), `"category"` (Category completed), `"post"` (Post completed), `"date"` (Date period), `"level"` (Level reached) | `"offer"` | Hidden when `visibility` = `show`. |
 | `visibility_offer` | Select offer | offer | numeric offer ID | `""` | Condition = student owns the offer. Hidden unless conditional + trigger `offer`. |
 | `visibility_categories` | Category IDs | text | IDs, **comma**-separated | `""` | All must be completed (top-level or direct subcategories). Hidden unless conditional + trigger `category`. |
 | `visibility_posts` | Post IDs | text | IDs, **comma**-separated | `""` | All must be completed; checked client-side from the cache. Hidden unless conditional + trigger `post`. |
+| `visibility_date_start` | Start date | text | date, write `YYYY-MM-DD` | `""` | Trigger `date`. Checked server-side against today in **UTC** (switches at midnight UTC). Blank = no start ("until"). Kajabi also reads `01-12-2026` (day first) and `December 1, 2026`, but write ISO: `03-04-2027` is read as 3 April. An unreadable date hides a Show block and shows a red editor note. Hidden unless trigger `date`. |
+| `visibility_date_end` | End date | text | date, write `YYYY-MM-DD` | `""` | Trigger `date`. Inclusive. Blank = no end ("from"). Both blank = condition never met (red editor note). Hidden unless trigger `date`. |
+| `visibility_level` | Level | range | 1–10 | `"2"` | Trigger `level`. Met from this level on: level N is the Nth step of the XP ladder as numbered on the Rewards tab (1 = start level, incl. the automatic base level). Checked in the browser by `nexus-xp.js`: a "show" block arrives hidden. Needs XP & Levels on (Jiffy - XP & Levels): without it a "show" block never shows and a "hide" block always shows; the editor note says "XP & Levels is off" in red, or names the level ("= Achiever (300 XP)"). Hidden unless trigger `level`. |
 
 #### Outline Title Styling
 All four hidden unless `collection_content` = `outline` (styles the category title above each row).
@@ -107,6 +143,9 @@ All four hidden unless `collection_content` = `outline` (styles the category tit
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `background_color` | Background color | color | hex or `""` | `""` | Box around the whole collection. Blank = transparent. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the collection background. With a gradient the slider edges fade with a mask, like a collection without own colour. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Hidden when the gradient is `"none"`. |
 | `show_shadow` | Section shadow | pill_tabs | `"show"`, `"hide"` | `"hide"` | |
 | `border_type` | Border type | select | `"none"`, `"solid"`, `"dotted"`, `"dashed"`, `"double"`, `"ridge"` | `"none"` | |
 | `border_width` | Border width | range | 0–50 px | `"1"` | Blank = 4. |
@@ -174,3 +213,8 @@ Send the complete `block_order` (existing IDs from `get_theme_content` plus the 
 - **Display condition IDs are comma-only**, unlike `category_id`/`lesson_ids`. A conditional block with no offer/IDs never renders live.
 - **Max posts on `outline` is per row**, not total; total length is set by `outline_paginate_count` (rows per page).
 - Block saved without a key: JS falls back to `grid3`/`demo`/no limit, not to the schema defaults. Always write `collection_content` and `collection_type` on new blocks.
+- **Collection filter order is block order.** For `from` ("From here on") the button order is the level order, so reorder blocks, not titles. A block with two titles sits at the position of its first title.
+- **A filter title on a condition-hidden collection** (offer or category not met) produces no button; a post-based condition is checked by JS, so that button does appear even when the collection is hidden later.
+- Renaming or removing a title invalidates a student's stored choice: they land on "All" on the next visit.
+- **Buttons follow the collections.** A group whose collections all turn out empty for this student (every lesson finished with `show_finished` = hide, a post condition not met) loses its button once the collections have loaded. An active choice that disappears moves on to the next group under `from`, and falls back to "All" under `only`.
+- **Auto reads the cards.** Finished lesson and module cards carry `data-completed`; a group counts as "open" when one visible card lacks it. Lessons only visible through a hidden-finished filter never count, which is what you want.

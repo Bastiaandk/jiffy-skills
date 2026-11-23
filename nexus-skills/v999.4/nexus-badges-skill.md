@@ -23,18 +23,21 @@ The value is the number of badges per row (width = 100 / value %), not a 12-colu
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
 | `badge_title` | Title badges | rich_text | — | `"Get all your badges"` | Heading above the badges. Empty removes the heading and its top padding. |
-| `badge_titlecolor` | Title color | color | hex or `""` | `""` | Blank: text colour derived from `background_color` (light/dark), else theme text colour. |
+| `badge_titlecolor` | Title color | color | hex or `""` | `""` | Blank: text colour derived from the section background (light/dark), else theme text colour. |
 | `badge_labelcolor` | Label color | color | hex or `""` | `""` | Colour of the label under each badge (`content`). |
 | `badge_overlaycolor` | Overlay color | color | hex or `""` | `""` | Text and border colour of the hover tooltip (locked/unlocked text). Blank: grey `#666666`. |
-| `background_color` | Background color | color | hex or `""` | — | Section background. Blank: none. |
 | `badge_label_fontsize` | Label font size | range | 6–20 px | `"13"` | |
 | `badge_overlay_fontsize` | Overlay font size | range | 6–20 px | `"14"` | |
 
 ### Badge Section Background Settings
 | Setting ID | Label | Type | Values / range | Default | Notes |
 |---|---|---|---|---|---|
+| `background_color` | Background color | color | hex or `""` | — | Section background. Blank: none. Title and label colours follow it (light/dark) unless set. |
+| `background_gradient` | Gradient | select | `"none"`, `"linear"` | `"none"` | A linear gradient on top of the background colour (blank colour: on the page colour). On the Rewards tab and the post page the `ba_*` overrides paint over colour and gradient. |
+| `background_gradient_color` | Gradient second color | color | hex or `""` | `""` | Blank: an automatic lighter (dark base) or darker (light base) shade. Hidden when the gradient is `"none"`. |
+| `background_gradient_angle` | Gradient angle | range | 0–360 | `"135"` | Hidden when the gradient is `"none"`. |
 | `shadow` | Add shadow to section | checkbox | `true` / `false` | `"false"` | |
-| `border_type` | Border type | select | `"none"` (None), `"solid"` (Solid), `"dotted"` (Dotted), `"dashed"` (Dashed), `"double"` (Double), `"ridge"` (Ridge) | `""` | `""` and `"none"` both mean no border. |
+| `border_type` | Border type | select | `"none"` (None), `"solid"` (Solid), `"dotted"` (Dotted), `"dashed"` (Dashed), `"double"` (Double), `"ridge"` (Ridge) | `"none"` | `""` (older saves) and `"none"` both mean no border. |
 | `border_width` | Border width | range | 0–50 px | `"4"` | Only visible with a border type. |
 | `border_color` | Border color | color | hex or `""` | `""` | Blank: black. |
 | `border_radius` | Border radius | range | 0–100 px | `"4"` | |
@@ -52,6 +55,7 @@ Ungrouped (top of the block):
 |---|---|---|---|---|---|
 | `image_yes_show` | Preview in admin as | pill_tabs | `"false"` (Locked), `"true"` (Unlocked) | `"false"` | Editor only. In the editor real conditions are ignored; this pill decides the state shown. No effect for students. |
 | `content` | Label | text | — | `"Label"` | Text under the badge. Empty: no label. |
+| `xp` | XP when unlocked | range | 0–500 | `"25"` | XP the student earns once this badge is unlocked, any trigger. Only used when `jiffy_xp.xp_enabled` = `"show"` (see the xp skill). |
 
 **Display Conditions**
 | Setting ID | Label | Type | Values / range | Default | Notes |
@@ -95,6 +99,7 @@ Read the section first, then send every existing block ID plus the new one in `b
 ```
 
 ## Pitfalls
+- With XP & Levels on, every badge is worth 25 XP unless `xp` says otherwise; set `xp` to `"0"` for a badge that should not count.
 - `image_no_show` is inverted: `"true"` = **Hide** while locked, `"false"` = Show.
 - `visibility_offer` must be the numeric offer ID (from `list_offers`), not the offer name. A non-numeric or empty value never unlocks.
 - ID lists are AND: every listed category/post must be complete. Use one badge per milestone for "any of". An empty list never unlocks. Separate IDs with commas only.

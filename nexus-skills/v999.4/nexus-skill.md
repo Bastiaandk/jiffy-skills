@@ -3,6 +3,13 @@
 **Theme:** Nexus, a licensed Kajabi course theme by JiffyCoursesOnline (author: Bastiaan de Koning).
 **Skill version:** Nexus 999.4.x (development line, work number).
 
+> **Version check first.** Compare the skill version above with `theme.version` in the
+> `get_theme_content` response (the `theme` object; it always comes from the installed code). If
+> its first two numbers differ, this is the wrong folder: an older guide stored in the theme's
+> settings can lead here. Read `https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v<X.Y>/nexus-skill.md`
+> instead (X.Y = the first two numbers of `theme.version`, e.g. 1.4.2 → `v1.4`), and take every
+> sub-skill from that folder too.
+
 Read this file before reading or writing any Nexus setting, then read the sub-skill for the
 section you are working on (routing table below). The rules here apply to every edit.
 
@@ -42,10 +49,10 @@ Setting labels are given in the sub-skills; trainers describe what they see ("Sm
 
 | Page | Sections (in order) |
 |---|---|
-| Product homepage | `header`, `product_outline`, `product_welcome`, `product_section_top`, `product_section_middle`, `jiffy_collections`, `product_section_bottom`, `jiffy_onboarding`, `jiffy_popups` (badges appear only through a Badge Area block in a dashboard section) |
-| Post / lesson | `header`, `product_outline`, `post_actions`, `jiffy_post_media`, `jiffy_post_body`, `jiffy_badges` (slide-down under the Badges button), `jiffy_post_confetti`, `post_completion`, `post_paywall` |
+| Product homepage | `header`, `product_outline`, `product_welcome`, `product_section_top`, `product_section_middle`, `jiffy_collections`, `product_section_bottom`, `jiffy_onboarding`, `jiffy_popups`, `jiffy_xp` (data only, last) (badges appear only through a Badge Area block in a dashboard section) |
+| Post / lesson | `header`, `product_outline`, `post_actions`, `jiffy_post_media`, `jiffy_post_body`, `jiffy_badges` (slide-down under the Badges button), `jiffy_post_confetti`, `post_completion`, `post_paywall`, `jiffy_xp` (data only) |
 | Category | `header`, `product_outline`, `category_progress_bar`, `jiffy_category` |
-| Categories (tabs) | `header`, `product_outline`, `jiffy_categories` (Modules), `jiffy_categories_favorites`, `jiffy_categories_rewards`, `jiffy_categories_downloads` |
+| Categories (tabs) | `header`, `product_outline`, `jiffy_categories` (Modules), `jiffy_categories_favorites`, `jiffy_categories_rewards` (embeds `jiffy_badges` and the XP overview), `jiffy_categories_downloads`, `jiffy_xp` (data only) |
 | Search, announcements, comment, live session | `header`, `product_outline` plus Kajabi-native sections |
 
 | Section | Name in editor | Sub-skill |
@@ -68,9 +75,10 @@ Setting labels are given in the sub-skills; trainers describe what they see ("Sm
 | `jiffy_categories` | Categories - Collection | categories |
 | `jiffy_categories_favorites` / `_rewards` / `_downloads` | Jiffy - Favorites / Rewards / Downloads | categories |
 | `jiffy_badges` | Jiffy - Badges (global) | badges |
+| `jiffy_xp` | Jiffy - XP & Levels (global) | xp |
 | — (top-level `settings`) | Theme settings: fonts, colors, icons, pagination | preferences |
 
-Content blocks (Jiffy Card, Form, Certificate, Coaching Widget, Group, Badge Area) in the Dashboard
+Content blocks (Jiffy Card, Custom Code, Form, Certificate, Coaching Widget, Group, Badge Area) in the Dashboard
 Top / Middle / Bottom, Jiffy - Rewards, Jiffy - Downloads and Sidebar sections are covered by the
 `blocks` sub-skill; the section's own sub-skill covers its section-level settings.
 
@@ -92,6 +100,7 @@ Base URL: `https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-
 | category | [nexus-category-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v999.4/nexus-category-skill.md) |
 | categories | [nexus-categories-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v999.4/nexus-categories-skill.md) |
 | badges | [nexus-badges-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v999.4/nexus-badges-skill.md) |
+| xp | [nexus-xp-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v999.4/nexus-xp-skill.md) |
 | preferences | [nexus-preferences-skill.md](https://raw.githubusercontent.com/Bastiaandk/jiffy-skills/main/nexus-skills/v999.4/nexus-preferences-skill.md) |
 
 Fetch every sub-skill the task touches before the first write. Fetching a link from a file read
