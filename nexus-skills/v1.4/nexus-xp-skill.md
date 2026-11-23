@@ -22,14 +22,14 @@ XP = completed lessons × xp_per_lesson
 A module is a top-level category with at least one post; posts in its subcategories count too.
 
 Where students see it (each place has its own show/hide setting, see the other skills):
-- **Product homepage** — `product_welcome.showprogress` = `"xp"`: a compact XP pill in the banner (instead of the percentage line) that links to the
-  Rewards tab; hovering it shows the level, a bar and the XP to the next level. A total the student
+- **Product homepage** — `product_welcome.showprogress` = `"xp"`: a compact XP pill in the banner (instead of the percentage line);
+  hovering it shows the level, a bar and the XP to the next level. A total the student
   has not seen here yet counts up 0.5 s after the page has loaded; XP earned since the last visit
   (e.g. a badge unlocked by an automation) also floats "+X". **The level-up popup appears only
   here**: a level reached on the post page waits until the next visit to the product page (noted
   at completion). With a level-up the popup comes **first** and the pill keeps its old total; when
   it closes, XP icons fly from the level circle to the pill and the count starts.
-- **Post page** — `post_actions.show_xp`: compact XP chip that links to the Rewards tab (icon only below 992px); "+XP" floats
+- **Post page** — `post_actions.show_xp`: compact XP chip (icon only below 992px); "+XP" floats
   from it when a lesson is completed. `post_completion.show_xp`: a large "+XP" with the XP icon,
   a "You reached …" label on a new level and the XP to the next level in the completion popup (no
   total, no bar: those live on the chip). While the popup is open the chip keeps its old total;
@@ -90,7 +90,7 @@ Two headers. The icon itself is a theme setting: `icon_xp` in Settings → Jiffy
 
 | Setting ID | Label | Type | Default | Notes |
 |---|---|---|---|---|
-| `xp_icon_color` | Icon color | color | `""` | Header "XP icon". The XP icon (banner pill without "Create pill" or with Button style Outline, action bar chip with Button fill None, completion popup, Rewards total, XP points overview) and the gain animations: floating "+XP", sparks, pulse ring, count-up number. On a filled pill or filled action bar button the icon follows the button text instead. Blank: primary color. |
+| `xp_icon_color` | Icon color | color | `""` | Header "XP icon". The XP icon (banner pill without "Create pill" or with Button style Outline, action bar chip with Button fill None, completion popup, Rewards total, XP points overview) and its effects: sparks and pulse ring. Text (the floating "+XP", the count-up number, the popup's "+XP" number) always keeps its own text colour. On a filled pill or filled action bar button the icon follows the button text instead. The icons flying in after a popup take the colour of the icon they land in. Blank: the colour of the text around it (banner text, action bar button text, Rewards text), so it always stays readable. |
 | `bar_color` | Bar color | color | `""` | Header "Progress bar". The filled part of the bar (hover popover, completion popup, Rewards overview). Blank: primary color. Level icons without their own `icon_color`, and the level-up popup's icon circle and button, use this colour too. |
 | `bar_gradient` | Bar gradient | select | `"none"` | `"none"` or `"linear"`. Fill only, always left to right (no angle setting). |
 | `bar_gradient_color` | Bar gradient second color | color | `""` | Blank: a clearly lighter (dark bar, 50% white) or darker (light bar, 35% black) shade. Hidden while `bar_gradient` = none. |
